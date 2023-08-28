@@ -1,5 +1,5 @@
 # APT-OpenIOC-Detection-Rules
-![vecteezy_radar-detection-icon-on-transparent-background_16326820_126](https://github.com/dfir-ronin/APT-OpenIOC-Detection-Rules/assets/92335456/939481fd-506f-4357-89ba-f713144a2ca9)
+![vecteezy_radar-detection-icon-on-transparent-background_16326820_126](https://github.com/dfir-ronin/APT-OpenIOC-Detection-Rules/assets/92335456/939481fd-506f-4357-89ba-f713144a2ca9 =250x250)
 
 This repository contains OpenIOC rules to aid in hunting for indicators of compromise and TTPs focused on Advanced Persistent Threat groups.
 
