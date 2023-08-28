@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="a14453ce-713e-4ed3-8670-496db08c90e8" last-modified="2023-05-04T03:22:54Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>Default Impacket service creation via registry keys (Utility)</short_description>
+    <description>When creating a service, Impacket’s default naming convention is BTOBTO. 
+
+MITRE ATT&amp;CK REFERENCE: 
+https://attack.mitre.org/techniques/T1543/003/
+https://attack.mitre.org/software/S0357/</description>
+    <authored_by>dfir-ronin</authored_by>
+    <authored_date>2023-05-04T03:22:54Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="c0b08046-0c30-4451-837f-6a25dd587d0e">
+      <Indicator operator="AND" id="414a53b1-5e25-40d2-ad39-df21b5f2bf01">
+        <IndicatorItem id="74ee239f-6cbd-45e6-8577-9180c4627a6f" condition="is" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/regKeyEvent/process" type="endpoint" />
+          <Content type="string">services.exe</Content>
+        </IndicatorItem>
+        <IndicatorItem id="0eb29d0e-c324-4d4d-81b2-055c4a73e598" condition="is" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/regKeyEvent/valueType" type="endpoint" />
+          <Content type="string">3</Content>
+        </IndicatorItem>
+        <IndicatorItem id="7cc12e16-dfaf-4acb-8473-56ea1a77ae22" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/regKeyEvent/keyPath" type="endpoint" />
+          <Content type="string">\System\CurrentControlSet\Services\BTOBTO</Content>
+        </IndicatorItem>
+      </Indicator>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>

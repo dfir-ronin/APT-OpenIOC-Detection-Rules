@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="4572f777-02c8-4bd3-bdbf-e62f290b18d0" last-modified="2023-05-30T09:21:22Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>Suspicious access to Ntds.dit Active Directory database (Methodology)</short_description>
+    <description>Adversaries may attempt to access or create a copy of the Active Directory domain database in order to steal credential information, as well as obtain other information about domain members such as devices, users, and access rights. By default, the NTDS file (NTDS.dit) is located in %SystemRoot%\NTDS\Ntds.dit of a domain controller.
+
+MITRE ATT&amp;CK REFERENCE: https://attack.mitre.org/techniques/T1003/003/</description>
+    <authored_by>dfir-ronin</authored_by>
+    <authored_date>2023-05-30T09:21:22Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="2ed7f005-1f5d-4186-b40b-b760b9d6665b">
+      <Indicator operator="AND" id="fc92043c-7869-4761-b55a-6340af0c4318">
+        <IndicatorItem id="d22c026f-9f16-45a1-a666-5c12e3f2fc81" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">ntds.dit</Content>
+        </IndicatorItem>
+        <IndicatorItem id="bb3b39f3-fe6d-4b64-bbdd-f9303de37546" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">copy</Content>
+        </IndicatorItem>
+      </Indicator>
+      <Indicator operator="AND" id="a79f8407-b47d-47bc-ac6f-960431de7edd">
+        <IndicatorItem id="173ed2a6-4e1b-4fc0-a3a8-624b1169500e" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">ntdsutil</Content>
+        </IndicatorItem>
+        <IndicatorItem id="73c659e9-dda4-4bc8-ab93-e163a2df37cf" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">ac i ntds</Content>
+        </IndicatorItem>
+      </Indicator>
+      <Indicator operator="AND" id="d7aef161-40d0-45ad-a378-142114078dd3">
+        <IndicatorItem id="3afc5cf2-2369-4a1c-b242-6769a1cf470d" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">ntdsutil</Content>
+        </IndicatorItem>
+        <IndicatorItem id="ec7ba7e9-ee98-4566-aaac-b4b2473cbca4" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">activate instance %</Content>
+        </IndicatorItem>
+        <IndicatorItem id="1492c028-fd2b-4858-8ceb-d694638453f9" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">ifm</Content>
+        </IndicatorItem>
+      </Indicator>
+      <Indicator operator="AND" id="858598cb-9b58-4cee-94e2-8e459f838fed">
+        <IndicatorItem id="2f477e43-2c89-415b-b5d5-09bd7bf09fa0" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">ntdsutil</Content>
+        </IndicatorItem>
+        <IndicatorItem id="f89fa8ab-073e-447e-b109-4e289b810a41" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">ac i %</Content>
+        </IndicatorItem>
+        <IndicatorItem id="ad65e53b-c908-4160-bee3-77a50762e098" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">i</Content>
+        </IndicatorItem>
+      </Indicator>
+      <Indicator operator="AND" id="9228ca62-2f9c-4e86-82ef-fa1ca200c9ba">
+        <IndicatorItem id="25c71b81-5ad6-4dfa-86b9-578b4d77fe1f" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">vssadmin create shadow</Content>
+        </IndicatorItem>
+      </Indicator>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>

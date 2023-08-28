@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="1b98ae1d-cf7a-4287-a9f6-726b6cebc674" last-modified="2023-08-16T06:17:11Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>LaZagne (Utility)</short_description>
+    <description>The LaZagne project is an open source application used to retrieve lots of passwords stored on a local computer. Adversaries may search for common password storage locations to obtain user credentials. Passwords are stored in several places on a system, depending on the operating system or application holding the credentials. There are also specific applications that store passwords to make it easier for users manage and maintain. Once credentials are obtained, they can be used to perform lateral movement and access restricted information.
+
+Reference:
+https://github.com/AlessandroZ/LaZagne
+https://attack.mitre.org/techniques/T1555/</description>
+    <authored_by>dfir-ronin</authored_by>
+    <authored_date>2023-08-16T06:17:11Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="420fb651-5c43-4a61-8327-72c03ee8a186">
+      <IndicatorItem id="20ef94af-ab58-4b2e-8727-6549ae49e637" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+        <Content type="string">laZagne.exe</Content>
+      </IndicatorItem>
+      <IndicatorItem id="d3b4c2a3-abd4-44c8-b2bb-5a8ffd66d9c4" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">laZagne.exe</Content>
+      </IndicatorItem>
+      <IndicatorItem id="dc2e0da5-7a1e-45e5-9d5d-c68300b491e4" condition="contains" preserve-case="true" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">all -oN</Content>
+      </IndicatorItem>
+      <IndicatorItem id="e1943d9d-dc34-427d-9de7-e2749b0ccc54" condition="contains" preserve-case="true" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">all -oA</Content>
+      </IndicatorItem>
+      <IndicatorItem id="e820d03a-d5da-42a1-92cb-ea79e8a87150" condition="contains" preserve-case="true" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">all -quiet -oA</Content>
+      </IndicatorItem>
+      <IndicatorItem id="70c53eab-57b8-4de0-bd67-c9e3a02b0b08" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">all -password</Content>
+      </IndicatorItem>
+      <IndicatorItem id="f7a5c29a-df94-444f-b17c-fbc7bb5561aa" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">browsers -firefox</Content>
+      </IndicatorItem>
+      <IndicatorItem id="f843e6fc-bee2-477f-9c80-5520ef7a4225" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">browsers -chrome</Content>
+      </IndicatorItem>
+      <IndicatorItem id="5e8449ce-c6d0-456d-a895-ae9d84509de9" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/fileName" type="endpoint" />
+        <Content type="string">laZagne</Content>
+      </IndicatorItem>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>

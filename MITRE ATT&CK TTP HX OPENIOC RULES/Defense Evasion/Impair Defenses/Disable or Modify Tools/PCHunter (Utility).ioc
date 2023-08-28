@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="6e2b698f-1ae8-437d-b488-b149bc64759a" last-modified="2023-08-10T10:20:50Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>PCHunter (Utility)</short_description>
+    <description>Enables advanced task management including system processes and kernels. It can be abused to terminate and circumvent EDR processes and services. Adversaries may modify and/or disable security tools to avoid possible detection of their malware/tools and activities. 
+
+References:
+https://www.cisa.gov/news-events/cybersecurity-advisories/aa23-165a
+https://attack.mitre.org/versions/v13/techniques/T1562/001/</description>
+    <authored_by>dfir-ronin</authored_by>
+    <authored_date>2023-08-10T10:20:50Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="df4b108c-0b76-4195-98c4-aa2e2d69b2fd">
+      <IndicatorItem id="4dc85b5c-5eab-4ef6-8143-e93706e84a11" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/md5" type="endpoint" />
+        <Content type="md5">d81135333a0eed3e973107891e996505</Content>
+      </IndicatorItem>
+      <IndicatorItem id="9ebe770c-ed4a-467e-ad67-a96c39fec029" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/md5" type="endpoint" />
+        <Content type="md5">02c7df0e0734208afef41eb4f7d359fa</Content>
+      </IndicatorItem>
+      <IndicatorItem id="6425c37b-1a58-4216-8c35-0566cc797b4a" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/fileName" type="endpoint" />
+        <Content type="string">PCHunter</Content>
+      </IndicatorItem>
+      <IndicatorItem id="623974ed-f7dd-474c-a0b5-737bb3a4e04a" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+        <Content type="string">PCHunter</Content>
+      </IndicatorItem>
+      <IndicatorItem id="546ac582-ebb6-4545-af73-9ab20814be9d" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/fileName" type="endpoint" />
+        <Content type="string">pchunter_free[1].htm</Content>
+      </IndicatorItem>
+      <IndicatorItem id="f2b9b00d-4ce6-48b5-b856-9da14db3602b" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/fileName" type="endpoint" />
+        <Content type="string">PCHunter64ar.sys</Content>
+      </IndicatorItem>
+      <IndicatorItem id="276fa177-5dbe-40d7-9abd-6794b2c27a9f" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/fileName" type="endpoint" />
+        <Content type="string">PCHunter32ar.sys</Content>
+      </IndicatorItem>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>

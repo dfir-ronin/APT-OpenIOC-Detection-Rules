@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="ccae56e3-eb66-491c-8f2e-b183f15673dc" last-modified="2023-08-17T12:29:58Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>ServiceMove-BOF (Utility)</short_description>
+    <description>ServiceMove is a POC code for an interesting lateral movement technique by abusing Windows Perception Simulation Service to achieve DLL hijacking code execution.
+
+A non-existing DLL file (i.e., hid.dll) will be loaded everytime when "Windows Perception Simulation Service" was started. By inserting a crafted DLL in "C:\Windows\System32\PerceptionSimulation" and starting the service remotely, we were able to achieve code execution as "NT AUTHORITY\SYSTEM" in a remote system.
+
+
+
+Reference:
+https://github.com/netero1010/ServiceMove-BOF
+https://attack.mitre.org/tactics/TA0008/
+https://attack.mitre.org/techniques/T1574/001/</description>
+    <authored_by>dfir-ronin</authored_by>
+    <authored_date>2023-08-17T12:29:58Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="77c46287-83b3-4063-9da3-cce88b1f08a5">
+      <Indicator operator="AND" id="d1921a70-3292-47cd-9d02-7ffbd92ab3c8">
+        <IndicatorItem id="bdc52f48-5fd9-4824-ba23-6a4ba0b626b3" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/fileWriteEvent/filePath" type="endpoint" />
+          <Content type="string">C:\Windows\System32\PerceptionSimulation</Content>
+        </IndicatorItem>
+        <IndicatorItem id="bb97e108-effb-45af-8f3a-6c70d07729e9" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/fileWriteEvent/fileExtension" type="endpoint" />
+          <Content type="string">dll</Content>
+        </IndicatorItem>
+        <IndicatorItem id="dd284516-6b30-4adf-8181-fc9bd89b6fbb" condition="contains" preserve-case="false" negate="true">
+          <Context document="eventItem" search="eventItem/fileWriteEvent/fileName" type="endpoint" />
+          <Content type="string">VirtualDisplayManager.ProxyStubs.dll</Content>
+        </IndicatorItem>
+        <IndicatorItem id="b6679bca-f137-4545-a0a1-aef177b216ed" condition="contains" preserve-case="false" negate="true">
+          <Context document="eventItem" search="eventItem/fileWriteEvent/fileName" type="endpoint" />
+          <Content type="string">PerceptionSimulationInput.dll</Content>
+        </IndicatorItem>
+        <IndicatorItem id="260bea77-ac3a-449d-b065-8fb7e39c9142" condition="contains" preserve-case="false" negate="true">
+          <Context document="eventItem" search="eventItem/fileWriteEvent/fileName" type="endpoint" />
+          <Content type="string">SixDofControllerManager.ProxyStubs.dll</Content>
+        </IndicatorItem>
+        <IndicatorItem id="044f8316-1ae5-45dc-8425-0c9986e6ee2d" condition="contains" preserve-case="false" negate="true">
+          <Context document="eventItem" search="eventItem/fileWriteEvent/fileName" type="endpoint" />
+          <Content type="string">VirtualCameraManager.dll</Content>
+        </IndicatorItem>
+      </Indicator>
+      <Indicator operator="AND" id="adf3e283-540b-4d9f-b120-072b500a4b32">
+        <IndicatorItem id="f8946c3a-0b44-4a1c-8804-e361364ecee0" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/imageLoadEvent/filePath" type="endpoint" />
+          <Content type="string">C:\Windows\System32\PerceptionSimulation</Content>
+        </IndicatorItem>
+        <IndicatorItem id="60aba7ad-72ad-4dd9-b117-cac9ec542202" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/imageLoadEvent/fileExtension" type="endpoint" />
+          <Content type="string">dll</Content>
+        </IndicatorItem>
+        <IndicatorItem id="d01d14f3-ab30-4895-8387-5a16979b1a60" condition="is" preserve-case="false" negate="true">
+          <Context document="eventItem" search="eventItem/imageLoadEvent/fileName" type="endpoint" />
+          <Content type="string">PerceptionSimulationInput.dll</Content>
+        </IndicatorItem>
+        <IndicatorItem id="74fc2bc1-7493-4c53-b81b-3c1da40a4afe" condition="is" preserve-case="false" negate="true">
+          <Context document="eventItem" search="eventItem/imageLoadEvent/fileName" type="endpoint" />
+          <Content type="string">SixDofControllerManager.ProxyStubs.dll</Content>
+        </IndicatorItem>
+        <IndicatorItem id="c94cbf8c-135b-42c9-b2bc-bffc47e5a3bd" condition="is" preserve-case="false" negate="true">
+          <Context document="eventItem" search="eventItem/imageLoadEvent/fileName" type="endpoint" />
+          <Content type="string">VirtualCameraManager.dll</Content>
+        </IndicatorItem>
+        <IndicatorItem id="2d2d11bf-0018-4b2f-b76f-1c5c85050c44" condition="is" preserve-case="false" negate="true">
+          <Context document="eventItem" search="eventItem/imageLoadEvent/fileName" type="endpoint" />
+          <Content type="string">VirtualDisplayManager.ProxyStubs.dll</Content>
+        </IndicatorItem>
+      </Indicator>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>

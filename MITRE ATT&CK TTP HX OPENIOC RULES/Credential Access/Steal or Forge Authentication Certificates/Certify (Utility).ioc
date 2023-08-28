@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="9a38c574-1a1d-4786-a1c0-741ca1b34d03" last-modified="2023-08-22T08:54:29Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>Certify (Utility)</short_description>
+    <description>Certify is a C# tool to enumerate and abuse misconfigurations in Active Directory Certificate Services (AD CS).
+
+Reference:
+https://github.com/GhostPack/Certify
+https://attack.mitre.org/techniques/T1649/</description>
+    <authored_by>dfir-ronin</authored_by>
+    <authored_date>2023-08-22T08:54:29Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="c088f341-87ab-4e0e-9bd9-39f0f45de05e">
+      <IndicatorItem id="5b689d81-4f43-44df-ac75-1086b95308c8" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/md5" type="endpoint" />
+        <Content type="md5">151951c940e475f154b7a930fa455ee8</Content>
+      </IndicatorItem>
+      <IndicatorItem id="4c0c30db-2db7-4383-8ca2-da30dd748fb2" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+        <Content type="string">certify.exe</Content>
+      </IndicatorItem>
+      <IndicatorItem id="6b14831d-abb1-471f-a50c-939551ad011d" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">find /vulnerable</Content>
+      </IndicatorItem>
+      <IndicatorItem id="0624ad90-5eb5-4664-b6f5-ef0f95517488" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">find /enrolleeSuppliesSubject</Content>
+      </IndicatorItem>
+      <IndicatorItem id="ebe92f1b-0a6e-4933-acab-d2ce6de95be6" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">find /clientauth</Content>
+      </IndicatorItem>
+      <IndicatorItem id="d93e3df3-ee03-45b1-b964-87b504923c23" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">find /showAllPermissions</Content>
+      </IndicatorItem>
+      <IndicatorItem id="6d074208-f0ee-47a9-93b0-eb118848b255" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">request /ca:</Content>
+      </IndicatorItem>
+      <Indicator operator="AND" id="7b82af5d-b225-4f96-b45a-f632790077d2">
+        <IndicatorItem id="1d67313c-33e4-4ff0-8e29-387685e94cc9" condition="is" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/fileWriteEvent/fileName" type="endpoint" />
+          <Content type="string">certify</Content>
+        </IndicatorItem>
+        <IndicatorItem id="ce57e3ca-12ec-4e10-a42e-8f5cdd40eba0" condition="is" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/fileWriteEvent/fileExtension" type="endpoint" />
+          <Content type="string">dll</Content>
+        </IndicatorItem>
+        <IndicatorItem id="090aed69-10c2-4d54-bcd9-081498c6b41e" condition="is" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/fileWriteEvent/fileExtension" type="endpoint" />
+          <Content type="string">exe</Content>
+        </IndicatorItem>
+      </Indicator>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>

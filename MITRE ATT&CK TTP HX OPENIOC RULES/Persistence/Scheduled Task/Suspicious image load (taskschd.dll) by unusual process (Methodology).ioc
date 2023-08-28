@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="4841b231-0a5d-4e4b-990f-78e61004b1d1" last-modified="2023-06-20T07:05:25Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>Suspicious image load (taskschd.dll) by unusual process (Methodology)</short_description>
+    <description>Identifies a suspicious image load (taskschd.dll) from an unusual processes. This behavior may indicate adversarial activity where a scheduled task is configured via Windows Component Object Model (COM). This technique can be used to configure persistence and evade monitoring by avoiding the usage of the traditional Windows binary (schtasks.exe) used to manage scheduled tasks.
+
+
+MITRE ATT&amp;CK REFERENCE: https://attack.mitre.org/techniques/T1053/005/
+
+</description>
+    <authored_by>dfir-ronin</authored_by>
+    <authored_date>2023-06-20T07:05:25Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="b03af938-3f87-4ade-9394-19176a9b85b3">
+      <Indicator operator="AND" id="af96bcaa-3eef-4dba-b34f-60bfc4d3a2b0">
+        <IndicatorItem id="646cd974-68f1-4e03-b145-f9d62a1952d2" condition="is" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/imageLoadEvent/fileName" type="endpoint" />
+          <Content type="string">taskschd.dll</Content>
+        </IndicatorItem>
+        <IndicatorItem id="5e151791-80c7-4f9c-9c6c-d19954542c54" condition="contains" preserve-case="false" negate="true">
+          <Context document="eventItem" search="eventItem/imageLoadEvent/process" type="endpoint" />
+          <Content type="string">task</Content>
+        </IndicatorItem>
+      </Indicator>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="6146391a-e26a-46ef-b362-bf5bc44f527e" last-modified="2023-04-26T09:11:26Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>Suspicious process dump using comsvcs.dll (Methodology)</short_description>
+    <description>This rule will detect the usage of MiniDump export functionality of comsvcs.dll to dump the contents of a process, commonly lsass.exe.
+
+MITRE ATT&amp;CK REFRENCES: 
+https://attack.mitre.org/techniques/T1218/011/ 
+https://attack.mitre.org/techniques/T1003/001/</description>
+    <authored_by>dfir-ronin</authored_by>
+    <authored_date>2023-04-26T09:11:26Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="184058f4-cba1-428b-8faa-4e43cadf6d11">
+      <Indicator operator="AND" id="87a55746-8cae-47a4-8eae-f9922142766b">
+        <IndicatorItem id="3f3e5369-46be-44c7-a797-cbfbc757b8aa" condition="is" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+          <Content type="string">rundll32.exe</Content>
+        </IndicatorItem>
+        <IndicatorItem id="bef399df-c4a4-42e2-8a29-ead0cf8a0d19" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">MiniDump</Content>
+        </IndicatorItem>
+      </Indicator>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>

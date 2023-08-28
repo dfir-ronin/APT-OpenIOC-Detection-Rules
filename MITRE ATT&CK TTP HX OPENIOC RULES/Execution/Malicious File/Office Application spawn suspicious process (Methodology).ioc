@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="501e2de8-ab11-4f56-b7c3-21647a734c7c" last-modified="2023-08-28T06:37:49Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>Office Application spawn suspicious process (Methodology)</short_description>
+    <description>This detection rule was designed to identify suspicious spawned processes of known MS office applications due to macro or malicious code. This technique can be seen in so many initial-delivery malwares.
+
+MITRE ATT&amp;CK Reference:
+https://attack.mitre.org/techniques/T1204/002/</description>
+    <authored_by>dfir-ronin</authored_by>
+    <authored_date>2023-04-13T11:53:00Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="b41a4bee-3683-4244-851e-b364f75cf6f8">
+      <Indicator operator="AND" id="fc3db806-58fc-4e89-a4df-e7ec60c0ee13">
+        <IndicatorItem id="65e6fbd6-ee32-4d63-bec4-65bfd66eee65" condition="contains" preserve-case="false" negate="true">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">rundll32 C:\windows\system32\spool\DRIVERS\x64\3\</Content>
+        </IndicatorItem>
+        <IndicatorItem id="a7ada3d6-c156-4676-abe3-918a10d486a0" condition="contains" preserve-case="false" negate="true">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">C:\Windows\system32\rundll32.exe" ndfapi.dll,NdfRunDllDiagnoseWithAnswerFile</Content>
+        </IndicatorItem>
+        <IndicatorItem id="6e5f21f7-47cf-4c66-a486-7e373dc79c8a" condition="contains" preserve-case="false" negate="true">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">"C:\Windows\System32\rundll32.exe" shell32.dll,Control_RunDLL "srchadmin.dll"</Content>
+        </IndicatorItem>
+        <IndicatorItem id="97400473-a478-4822-9c71-9bbf8e8de012" condition="contains" preserve-case="false" negate="true">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">C:\windows\hh.exe" "mk:@MSITStore:C:\Program Files (x86)\Common Files\Microsoft Shared\OFFICE12\Office Setup Controller\</Content>
+        </IndicatorItem>
+        <IndicatorItem id="a0a3b2c8-eba6-4e67-8612-9cb718842506" condition="matches" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">.</Content>
+        </IndicatorItem>
+        <Indicator operator="OR" id="391ee1b8-6bba-4737-9de0-b227816e0026">
+          <IndicatorItem id="27ed302b-4f89-4293-ac8a-9cbb67f2692d" condition="is" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/parentProcess" type="endpoint" />
+            <Content type="string">winword.exe</Content>
+          </IndicatorItem>
+          <IndicatorItem id="75eb260e-9fb0-4554-bdc3-95ce4d740b68" condition="is" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/parentProcess" type="endpoint" />
+            <Content type="string">excel.exe</Content>
+          </IndicatorItem>
+          <IndicatorItem id="56d80d94-4a44-41c9-81a8-8706f8eb7a9b" condition="is" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/parentProcess" type="endpoint" />
+            <Content type="string">powerpnt.exe</Content>
+          </IndicatorItem>
+          <IndicatorItem id="7f337870-427d-4b68-b871-986287eafb28" condition="is" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/parentProcess" type="endpoint" />
+            <Content type="string">mspub.exe</Content>
+          </IndicatorItem>
+          <IndicatorItem id="0952296e-24e5-4ff4-beda-1d15366f01b6" condition="is" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/parentProcess" type="endpoint" />
+            <Content type="string">visio.exe</Content>
+          </IndicatorItem>
+          <IndicatorItem id="1156043c-1927-44c8-9ccb-2ac95ac00629" condition="is" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/parentProcess" type="endpoint" />
+            <Content type="string">outlook.exe</Content>
+          </IndicatorItem>
+          <IndicatorItem id="b05ccfec-d7f3-4459-99f0-5de62aa4a42c" condition="is" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/parentProcess" type="endpoint" />
+            <Content type="string">graph.exe</Content>
+          </IndicatorItem>
+          <IndicatorItem id="00db3fc4-3f4e-431c-b6fc-31a0fb53f788" condition="is" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/parentProcess" type="endpoint" />
+            <Content type="string">msaccess.exe</Content>
+          </IndicatorItem>
+          <IndicatorItem id="dddc90f9-f625-47f3-82b4-fd4a32be3ccb" condition="is" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/parentProcess" type="endpoint" />
+            <Content type="string">winproj.exe</Content>
+          </IndicatorItem>
+          <IndicatorItem id="600658ea-64e8-4d95-b3e6-1b9018be760c" condition="is" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/parentProcess" type="endpoint" />
+            <Content type="string">wordpad.exe</Content>
+          </IndicatorItem>
+        </Indicator>
+        <Indicator operator="OR" id="904d4b95-e440-46fa-97c5-e721a61b07f5">
+          <IndicatorItem id="14e1df54-1a77-4bc2-896d-8b5d4d926c2e" condition="is" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+            <Content type="string">cmd.exe</Content>
+          </IndicatorItem>
+          <IndicatorItem id="ea3b083f-befc-43ea-9f2d-d7fa1d994844" condition="is" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+            <Content type="string">powershell.exe</Content>
+          </IndicatorItem>
+          <IndicatorItem id="89c4d827-837c-4062-8f13-61ce1e39ebce" condition="is" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+            <Content type="string">cscript.exe</Content>
+          </IndicatorItem>
+          <IndicatorItem id="e1daf4b5-5988-4a9b-97be-967b786f1204" condition="is" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+            <Content type="string">wscript.exe</Content>
+          </IndicatorItem>
+          <IndicatorItem id="e80146e4-2b64-4916-9ef4-545d828f79d6" condition="is" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+            <Content type="string">wmic.exe</Content>
+          </IndicatorItem>
+          <IndicatorItem id="43f00c60-d439-4aae-9aa4-1d8b05f2fb40" condition="is" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+            <Content type="string">regsvr32.exe</Content>
+          </IndicatorItem>
+          <IndicatorItem id="ed1eb35c-6826-45ed-ba8a-581e5d5caa93" condition="is" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+            <Content type="string">schtasks.exe</Content>
+          </IndicatorItem>
+          <IndicatorItem id="3ef6f5a4-d64f-405a-903e-e4b3e4260de8" condition="is" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+            <Content type="string">rundll32.exe</Content>
+          </IndicatorItem>
+          <IndicatorItem id="9f1b04f7-e558-4040-9bc7-9a231eed102e" condition="is" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+            <Content type="string">mshta.exe</Content>
+          </IndicatorItem>
+          <IndicatorItem id="406bc7d9-f745-4dfb-8253-8e238a43a6ed" condition="is" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+            <Content type="string">hh.exe</Content>
+          </IndicatorItem>
+        </Indicator>
+      </Indicator>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="41da2a46-09ab-48ca-b907-955df47a70b1" last-modified="2023-04-13T12:42:57Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>WMI Shadow copy deletion (Methodology)</short_description>
+    <description>This rule detects deletion of volume shadow copy using WMI. This is a common technique by Ransomware gangs to destroy backups.
+
+MITRE ATT&amp;CK REFERENCE: https://attack.mitre.org/techniques/T1490/</description>
+    <authored_by>dfir-ronin</authored_by>
+    <authored_date>2023-04-13T12:42:57Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="a6c4dd60-72a5-4968-8928-9f65bd24f904">
+      <Indicator operator="AND" id="e4e2703a-8f84-4b2c-ba81-c22bf03340db">
+        <IndicatorItem id="8c3bbceb-24bb-4372-ae93-123b588af61a" condition="is" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+          <Content type="string">wmic.exe</Content>
+        </IndicatorItem>
+        <IndicatorItem id="806bfc00-dc68-4d14-adf1-1a02043b8269" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">shadowcopy</Content>
+        </IndicatorItem>
+        <IndicatorItem id="d374dcf0-21ff-4513-b5b7-1620441528da" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">delete</Content>
+        </IndicatorItem>
+      </Indicator>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="ccb6f95b-9c10-4b58-8f5a-64f3901fb55e" last-modified="2023-04-06T04:14:56Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>Indicator Removal (Methodology)</short_description>
+    <description>Adversaries may delete or modify artifacts generated within systems to remove evidence of their presence or hinder defenses. Various artifacts may be created by an adversary or something that can be attributed to an adversary’s actions.
+
+MITRE ATT&amp;CK Reference: https://attack.mitre.org/techniques/T1070/</description>
+    <authored_by>dfir-ronin</authored_by>
+    <authored_date>2023-04-06T02:09:46Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="a4fc735d-e334-4c38-b16c-76aff845faa2">
+      <IndicatorItem id="16cb59de-ab9c-4018-9954-1e98be07c662" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">reg delete "HKEY_CURRENT_USER\Software\Microsoft\Terminal Server Client\Default"</Content>
+      </IndicatorItem>
+      <IndicatorItem id="ada657e1-ac6a-4642-8a91-5f3f08dd6043" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">reg delete "HKEY_CURRENT_USER\Software\Microsoft\Terminal Server Client\Servers"</Content>
+      </IndicatorItem>
+      <IndicatorItem id="bb8c66c6-8e07-4937-baee-0465ff45f7ad" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">attrib Default.rdp -s -h</Content>
+      </IndicatorItem>
+      <IndicatorItem id="2e090ce2-83d9-41a1-b3b9-50e6f8f5a4c1" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">del Dafault.rdp</Content>
+      </IndicatorItem>
+      <IndicatorItem id="15782def-a784-4d8d-9250-196c1c9ba1bc" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">wevutil.exe cl</Content>
+      </IndicatorItem>
+      <IndicatorItem id="9c032bb6-196d-4690-8e58-0ce09d278276" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/fileName" type="endpoint" />
+        <Content type="string">kamikadze</Content>
+      </IndicatorItem>
+      <Indicator operator="AND" id="993f4f4e-79f7-4cd2-b121-0ccf37f00bf5">
+        <IndicatorItem id="46d5c069-f31d-41e4-86bb-5f0acd2943bb" condition="is" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/regKeyEvent/eventType" type="endpoint" />
+          <Content type="int">4</Content>
+        </IndicatorItem>
+        <Indicator operator="OR" id="83b6d7a3-7366-4c9d-9f31-dcf8bbf0c821">
+          <IndicatorItem id="1c98e613-be99-4f2e-8b64-354543d404f2" condition="contains" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/regKeyEvent/path" type="endpoint" />
+            <Content type="string">HKEY_CURRENT_USER\Software\Microsoft\Terminal Server Client\Servers</Content>
+          </IndicatorItem>
+          <IndicatorItem id="3b6b3844-7eac-4d5f-aff4-e707f0c847b2" condition="contains" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/regKeyEvent/path" type="endpoint" />
+            <Content type="string">HKEY_CURRENT_USER\Software\Microsoft\Terminal Server Client\Default</Content>
+          </IndicatorItem>
+        </Indicator>
+      </Indicator>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>

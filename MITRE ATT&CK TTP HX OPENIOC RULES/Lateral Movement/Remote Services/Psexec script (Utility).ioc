@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="143cf4e3-294b-4b0d-a156-827e5bb9d731" last-modified="2023-05-04T03:52:43Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>Psexec script (Utility)</short_description>
+    <description>PsExec is a free Microsoft tool that can be used to execute a program on another computer. It is used by IT administrators and attackers.
+
+MITRE ATT&amp;CK REFERENCE: 
+https://attack.mitre.org/software/S0029/
+https://attack.mitre.org/techniques/T1569/002/</description>
+    <authored_by>dfir-ronin</authored_by>
+    <authored_date>2023-05-04T03:52:43Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="d53aabda-7fd5-4790-a2de-26fc7a3e5435">
+      <IndicatorItem id="45c46202-b0b8-4674-b3ab-331538bc4c10" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">psexec</Content>
+      </IndicatorItem>
+      <IndicatorItem id="b835b588-a941-4595-83d0-0c7776f2e88e" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/fileName" type="endpoint" />
+        <Content type="string">psexec</Content>
+      </IndicatorItem>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>

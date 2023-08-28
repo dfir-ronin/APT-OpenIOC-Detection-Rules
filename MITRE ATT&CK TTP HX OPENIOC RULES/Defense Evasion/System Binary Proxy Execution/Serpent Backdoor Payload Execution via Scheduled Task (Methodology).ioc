@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="25c2c990-70b6-4f4f-bb81-766ad5470ada" last-modified="2023-08-09T03:54:54Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>Serpent Backdoor Payload Execution via Scheduled Task (Methodology)</short_description>
+    <description>Adversaries may bypass process and/or signature-based defenses by proxying execution of malicious content with signed, or otherwise trusted, binaries. Binaries used in this technique are often Microsoft-signed files, indicating that they have been either downloaded from Microsoft or are already native in the operating system.[1] Binaries signed with trusted digital certificates can typically execute on Windows systems protected by digital signature validation. Several Microsoft signed binaries that are default on Windows installations can be used to proxy execution of other files or commands.
+
+REFERENCE: 
+https://www.proofpoint.com/us/blog/threat-insight/serpent-no-swiping-new-backdoor-targets-french-entities-unique-attack-chain
+https://attack.mitre.org/techniques/T1218/</description>
+    <authored_by>dfir-ronin</authored_by>
+    <authored_date>2023-08-09T03:54:54Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="76a0f220-c341-4abb-904d-a74a957e8681">
+      <Indicator operator="AND" id="5038131d-b59f-4374-96ad-f1f9e2cc8d2d">
+        <IndicatorItem id="280eba50-54b5-428e-b2af-d933d0d6e94e" condition="is" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+          <Content type="string">schtasks.exe</Content>
+        </IndicatorItem>
+        <IndicatorItem id="09982f23-029e-4da7-8d69-031a3e48ebf0" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">/ec</Content>
+        </IndicatorItem>
+        <IndicatorItem id="4623d716-58bf-4939-9298-4af254f42420" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">[System/EventID=</Content>
+        </IndicatorItem>
+        <IndicatorItem id="36b4d7a4-4a6c-4139-b2b8-c08d15acf988" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">/tn run</Content>
+        </IndicatorItem>
+        <IndicatorItem id="c4ebd9b1-7adf-4d34-b31a-6a7f86433f19" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">/so</Content>
+        </IndicatorItem>
+        <IndicatorItem id="a9183776-eb5f-457e-801f-8c45a4b927a9" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">/delete</Content>
+        </IndicatorItem>
+        <IndicatorItem id="811cb1a4-0432-446c-ae8e-fdf15fee0855" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">/create</Content>
+        </IndicatorItem>
+      </Indicator>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>

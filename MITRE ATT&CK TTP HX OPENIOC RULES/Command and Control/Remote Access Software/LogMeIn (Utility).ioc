@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="edc74681-04fa-40a7-916f-56895ddab231" last-modified="2023-06-01T08:20:37Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>LogMeIn (Utility)</short_description>
+    <description>An adversary may use legitimate desktop support and remote access software, such as Team Viewer, AnyDesk, Go2Assist, LogMein, AmmyyAdmin, etc, to establish an interactive command and control channel to target systems within networks. 
+
+MITRE ATT&amp;CK REFERENCE: https://attack.mitre.org/techniques/T1219/</description>
+    <authored_by>dfir-ronin</authored_by>
+    <authored_date>2023-06-01T08:20:37Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="4d511c6c-ebf7-448e-a484-5e08de3eb1a6">
+      <IndicatorItem id="6abed157-6125-4700-9c0c-7ecf05a55560" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/filePath" type="endpoint" />
+        <Content type="string">LogMeIn</Content>
+      </IndicatorItem>
+      <IndicatorItem id="38b1fa3d-feb0-4c1b-ae46-77df9e338efa" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+        <Content type="string">LogMeIn.exe</Content>
+      </IndicatorItem>
+      <IndicatorItem id="49a4832b-1749-41e6-af60-0dfa2eec4394" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+        <Content type="string">LogMeInClient.exe</Content>
+      </IndicatorItem>
+      <IndicatorItem id="3c8c1af3-6f9b-4019-9e5e-51f67076f13b" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/fileName" type="endpoint" />
+        <Content type="string">LogMeIn.cfg</Content>
+      </IndicatorItem>
+      <IndicatorItem id="429ebddf-92cf-4ef1-b8fd-79e70ab6a653" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/fileName" type="endpoint" />
+        <Content type="string">logmein.log</Content>
+      </IndicatorItem>
+      <IndicatorItem id="8832303d-7fbd-461d-bb30-c7235fc0a490" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/fileName" type="endpoint" />
+        <Content type="string">LogMeInClient.log</Content>
+      </IndicatorItem>
+      <IndicatorItem id="4a0618b1-b242-4185-9f5b-d490b342b023" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/regKeyEvent/keyPath" type="endpoint" />
+        <Content type="string">\Software\LogMeIn</Content>
+      </IndicatorItem>
+      <IndicatorItem id="76999337-0793-4172-b1ab-7933e5a15801" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/dnsLookupEvent/hostname" type="endpoint" />
+        <Content type="string">logmein-gateway.com</Content>
+      </IndicatorItem>
+      <IndicatorItem id="f3dcdf21-d1ce-4b3e-8b9c-5055bc37bcf7" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/dnsLookupEvent/hostname" type="endpoint" />
+        <Content type="string">secure.logmein.com</Content>
+      </IndicatorItem>
+      <IndicatorItem id="c495f541-98dd-43bb-a667-8a8ba4b29373" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/dnsLookupEvent/hostname" type="endpoint" />
+        <Content type="string">lmi123.com</Content>
+      </IndicatorItem>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="b96c6bff-a3cc-442b-be74-6b562be812b6" last-modified="2023-04-26T08:59:34Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>Rundll32 execution load with DllRegisterServer (Methodology)</short_description>
+    <description>Adversaries may abuse rundll32.exe to proxy execution of malicious code. Rundll32.exe is commonly associated with executing malicious DLL payloads (ex: rundll32.exe {DLLname, DLLfunction}).
+
+MITRE ATT&amp;CK REFRENCE: https://attack.mitre.org/techniques/T1218/011/</description>
+    <authored_by>dfir-ronin</authored_by>
+    <authored_date>2023-04-26T08:59:34Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="fad6e0bb-dea8-47d9-9f1a-15287709155d">
+      <Indicator operator="AND" id="1a99f862-fc6c-478f-a6b7-035231986070">
+        <IndicatorItem id="8958dcf2-9a0c-4834-9b18-bbb7ebc01c38" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+          <Content type="string">rundll32.exe</Content>
+        </IndicatorItem>
+        <IndicatorItem id="8cbd3140-64c1-464f-ba67-b079f3d57a46" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">DllRegisterServer</Content>
+        </IndicatorItem>
+        <IndicatorItem id="f3ba2d15-8696-49f7-8c14-78137e02f6c1" condition="contains" preserve-case="false" negate="true">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">Windows\System32</Content>
+        </IndicatorItem>
+        <IndicatorItem id="762a351c-76c2-4a35-9cf4-513fc89182cf" condition="contains" preserve-case="false" negate="true">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">Windows\SysWOW64</Content>
+        </IndicatorItem>
+        <IndicatorItem id="ffb01ac3-a4ca-4dda-b1a0-6511bcecbaad" condition="contains" preserve-case="false" negate="true">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">Program Files</Content>
+        </IndicatorItem>
+      </Indicator>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>

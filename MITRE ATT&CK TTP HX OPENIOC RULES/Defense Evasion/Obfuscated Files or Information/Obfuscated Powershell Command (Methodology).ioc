@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="1297e6a6-7f40-4744-8943-08f5603da77d" last-modified="2023-05-30T11:53:21Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>Obfuscated Powershell Command (Methodology)</short_description>
+    <description>Adversaries may obfuscate content during command execution to impede detection. Command-line obfuscation is a method of making strings and patterns within commands and scripts more difficult to signature and analyze. This type of obfuscation can be included within commands executed by delivered payloads (e.g., Phishing and Drive-by Compromise) or interactively via Command and Scripting Interpreter.
+
+MITRE ATT&amp;CK REFERENCE: https://attack.mitre.org/techniques/T1027/010/</description>
+    <authored_by>dfir-ronin</authored_by>
+    <authored_date>2023-05-30T04:14:13Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="2b8d0a8f-befc-4aef-a703-8afd0c6a63a8">
+      <Indicator operator="AND" id="09ee9aa6-9acd-4731-abdb-44131ab7c37b">
+        <IndicatorItem id="5b7b3f5d-539a-4a6f-ab6f-42d610f7aaa0" condition="is" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+          <Content type="string">powershell.exe</Content>
+        </IndicatorItem>
+        <IndicatorItem id="396d8fcd-40b5-4d1d-81b4-0f56361964c3" condition="matches" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">(?:\$|\b)(?:\w+\-)?[a-z]{2,}(?:[a-zA-Z]+\b)?(?:\-[a-zA-Z]+)?(?:(?:\s*?\(|\{)[^\)\}]+(?:\)|\})){0,2}(?:\s*?\(|\{)?[^\)\}]+(?:\)|\})?</Content>
+        </IndicatorItem>
+        <IndicatorItem id="6b64d584-3bf9-4777-b069-70dd1d629848" condition="is" preserve-case="false" negate="true">
+          <Context document="eventItem" search="eventItem/processEvent/parentProcess" type="endpoint" />
+          <Content type="string">nsverctl.exe</Content>
+        </IndicatorItem>
+        <IndicatorItem id="713a9abc-8730-400a-98c8-20d6e353ff93" condition="is" preserve-case="false" negate="true">
+          <Context document="eventItem" search="eventItem/processEvent/parentProcess" type="endpoint" />
+          <Content type="string">CompatTelRunner.exe</Content>
+        </IndicatorItem>
+        <IndicatorItem id="2a0c555e-0bce-4056-9bec-d1cfcbc1352d" condition="is" preserve-case="false" negate="true">
+          <Context document="eventItem" search="eventItem/processEvent/parentProcess" type="endpoint" />
+          <Content type="string">CnTnrStsApp.exe</Content>
+        </IndicatorItem>
+      </Indicator>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>

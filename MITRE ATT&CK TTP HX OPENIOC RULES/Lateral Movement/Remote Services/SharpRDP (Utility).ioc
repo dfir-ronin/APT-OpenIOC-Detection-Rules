@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="26a1a788-4721-4529-9c7f-5afaddf55b18" last-modified="2023-08-22T08:07:27Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>SharpRDP (Utility)</short_description>
+    <description>Remote Desktop Protocol Console Application for Authenticated Command Execution.
+
+
+Reference:
+
+https://github.com/sliverarmory/SharpRDP
+https://attack.mitre.org/techniques/T1003/</description>
+    <authored_by>dfir-ronin</authored_by>
+    <authored_date>2023-08-22T08:07:27Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="03b60d0b-ede6-4f9b-8be7-adda0e5a0260">
+      <IndicatorItem id="b2f218cb-149c-4bf8-b276-80ae161d1b6c" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/fileName" type="endpoint" />
+        <Content type="string">541b8390d662cdc8220d0e166b371972</Content>
+      </IndicatorItem>
+      <IndicatorItem id="07d3bd83-ddb4-4b25-bc2c-a8f8ebe0e71f" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/fileName" type="endpoint" />
+        <Content type="string">SharpRDP</Content>
+      </IndicatorItem>
+      <IndicatorItem id="9ffd8b18-0cdb-4a1e-80ad-a8ff7a7d2487" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+        <Content type="string">SharpRDP</Content>
+      </IndicatorItem>
+      <IndicatorItem id="abfc8354-50f4-4aa2-92ac-7a4d70a9a7d0" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">exec=cmd</Content>
+      </IndicatorItem>
+      <IndicatorItem id="139bc3df-ff36-4731-aeda-299ada45d8fc" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">exec=powershell</Content>
+      </IndicatorItem>
+      <IndicatorItem id="d82ab3eb-0847-44c7-9a23-f7c1c3d40333" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/md5" type="endpoint" />
+        <Content type="md5">541b8390d662cdc8220d0e166b371972</Content>
+      </IndicatorItem>
+      <Indicator operator="AND" id="1ed501ac-9c57-47e9-a8ab-bfeb51286a81">
+        <IndicatorItem id="7bb59380-af1d-4330-80bd-5468c64d58b8" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">computername=</Content>
+        </IndicatorItem>
+        <IndicatorItem id="421bfd1f-53d3-48c7-b2e0-6401f79404b1" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">command=</Content>
+        </IndicatorItem>
+        <IndicatorItem id="45037748-f721-43e4-b653-a3f99b88d240" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">username=</Content>
+        </IndicatorItem>
+      </Indicator>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>

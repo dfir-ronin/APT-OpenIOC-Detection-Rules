@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="bdcd9e5c-cf23-47f9-8e74-af0cbbe19003" last-modified="2023-08-17T11:44:21Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>SCShell (Utility)</short_description>
+    <description>The SCShell attack modifies the binary path of a service on the target. Look for LOLBins and recently created executables in these registry keys:
+	
+
+HKLM\System\CurrentControlSet\Services\*\ImagePath
+
+Reference: 
+https://attack.mitre.org/techniques/T1021/003/
+https://github.com/Mr-Un1k0d3r/SCShell</description>
+    <authored_by>dfir-ronin</authored_by>
+    <authored_date>2023-07-12T07:45:19Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="044f44c7-a563-4712-8fe1-2664f3421ef2">
+      <IndicatorItem id="6f2fdace-5bb1-4c9a-b0e1-e776d1647104" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/md5" type="endpoint" />
+        <Content type="md5">4fdef701d39f8237128d4a8d25a8a4d0</Content>
+      </IndicatorItem>
+      <IndicatorItem id="d442f87a-c82b-4fa9-8727-c016f9665ce7" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/md5" type="endpoint" />
+        <Content type="md5">4f6cd995b75a66bbdd339daf88e346a9</Content>
+      </IndicatorItem>
+      <IndicatorItem id="e3c26a11-e4c6-4571-ac9a-f7262aebf578" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">scshell</Content>
+      </IndicatorItem>
+      <IndicatorItem id="cf3f6f2f-0043-43a1-a2f5-664249296b3c" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/md5" type="endpoint" />
+        <Content type="md5">4fdef701d39f8237128d4a8d25a8a4d0</Content>
+      </IndicatorItem>
+      <IndicatorItem id="9d7b9801-df57-44be-8d47-25c79a8c8daa" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/md5" type="endpoint" />
+        <Content type="md5">4f6cd995b75a66bbdd339daf88e346a9</Content>
+      </IndicatorItem>
+      <Indicator operator="AND" id="05184da4-935f-465f-a41f-41aabea32854">
+        <IndicatorItem id="a53ee3e7-e2fd-454c-883a-80aa76526391" condition="matches" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/regKeyEvent/path" type="endpoint" />
+          <Content type="string">HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\[^\\]+\\ImagePath</Content>
+        </IndicatorItem>
+        <IndicatorItem id="af4168fe-6a8f-4de7-a493-2db150054090" condition="is" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/regKeyEvent/valueType" type="endpoint" />
+          <Content type="string">1</Content>
+        </IndicatorItem>
+      </Indicator>
+      <Indicator operator="AND" id="e5c3c0ea-92c6-472b-8be0-1bb0c7552a70">
+        <IndicatorItem id="7dc8238a-80de-413c-b74e-cbccab606b1b" condition="matches" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/regKeyEvent/path" type="endpoint" />
+          <Content type="string">HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\[^\\]+\\ImagePath</Content>
+        </IndicatorItem>
+        <IndicatorItem id="0b626d88-7d4a-45a3-ac8c-b5c04edf5747" condition="is" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/regKeyEvent/valueType" type="endpoint" />
+          <Content type="string">1</Content>
+        </IndicatorItem>
+        <IndicatorItem id="fe563d97-a8cb-499c-be77-259eca5b5ce1" condition="is" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/regKeyEvent/process" type="endpoint" />
+          <Content type="string">services.exe</Content>
+        </IndicatorItem>
+      </Indicator>
+      <Indicator operator="AND" id="f1d5eb6e-79e3-4f0b-ae38-6e739c28093d">
+        <IndicatorItem id="0e37b186-40a5-4808-822d-c2b3f10e6b32" condition="is" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/regKeyEvent/valueName" type="endpoint" />
+          <Content type="string">ImagePath</Content>
+        </IndicatorItem>
+        <IndicatorItem id="593ffa68-1fa1-4cb2-8ae8-ba3b56f07aec" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/regKeyEvent/path" type="endpoint" />
+          <Content type="string">HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\</Content>
+        </IndicatorItem>
+        <IndicatorItem id="5154b050-c9ec-4712-9d0e-853dcc869ffe" condition="is" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/regKeyEvent/valueType" type="endpoint" />
+          <Content type="string">1</Content>
+        </IndicatorItem>
+      </Indicator>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>

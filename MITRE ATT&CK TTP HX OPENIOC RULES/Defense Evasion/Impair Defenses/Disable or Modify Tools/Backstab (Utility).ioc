@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="162a7ee5-610e-4f2e-afec-fcee18f5b569" last-modified="2023-08-09T10:17:47Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>Backstab (Utility)</short_description>
+    <description>Backstab is a tool capable of killing antimalware protected processes by leveraging sysinternals’ Process Explorer (ProcExp) driver, which is signed by Microsoft.
+
+Reference:
+https://github.com/Yaxser/Backstab
+https://attack.mitre.org/versions/v13/techniques/T1562/001/
+</description>
+    <authored_by>dfir-ronin</authored_by>
+    <authored_date>2023-08-09T10:17:47Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="160b93ea-e76f-4a7e-9f88-b1370afd4d1d">
+      <IndicatorItem id="3b7d2c50-bfc9-4cbb-a077-50b9aa5af62c" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+        <Content type="string">backstab.exe</Content>
+      </IndicatorItem>
+      <IndicatorItem id="bf63ec34-ccb9-4bd8-a5ad-a97473626ffb" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/fileName" type="endpoint" />
+        <Content type="string">backstab.exe</Content>
+      </IndicatorItem>
+      <IndicatorItem id="a5e7d82e-1a0c-4d83-926f-33f8ced6b68c" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/md5" type="endpoint" />
+        <Content type="md5">80a1192d85ad7e8d5c0d4dbf1b117228</Content>
+      </IndicatorItem>
+      <IndicatorItem id="3836bf2f-646e-45da-bda1-a3c9a965f705" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/fileName" type="endpoint" />
+        <Content type="string">backstab64.exe</Content>
+      </IndicatorItem>
+      <IndicatorItem id="836540a3-99fc-499f-997b-ec23f44e4f42" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+        <Content type="string">backstab64.exe</Content>
+      </IndicatorItem>
+      <Indicator operator="AND" id="d6f6ea51-bfe7-4d93-a1b9-8f58d34fa026">
+        <IndicatorItem id="9df484cc-3942-45e8-8b5e-54f1df2da225" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">-n</Content>
+        </IndicatorItem>
+        <IndicatorItem id="f8defd69-f906-46ac-8a3d-5297e129e090" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">-k</Content>
+        </IndicatorItem>
+        <IndicatorItem id="62847045-f72c-4764-8279-414a60b6ab8e" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">backstab.exe</Content>
+        </IndicatorItem>
+      </Indicator>
+      <Indicator operator="AND" id="d4cbc0e8-c907-4f00-8f20-c683ec6ef2a4">
+        <IndicatorItem id="d1c16a7c-f753-4e4f-b425-4a96c55aaa0f" condition="matches" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">^\d{2,4}$</Content>
+        </IndicatorItem>
+        <IndicatorItem id="e4318179-7af3-4691-a73a-9defc9778850" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">-p</Content>
+        </IndicatorItem>
+        <IndicatorItem id="5dbdb037-1cbd-4509-a995-adf9b0f9e55d" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">-k</Content>
+        </IndicatorItem>
+      </Indicator>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>

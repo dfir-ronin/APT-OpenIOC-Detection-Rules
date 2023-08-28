@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="93d6d8f7-1196-4e60-9046-012de2dda285" last-modified="2023-06-20T05:54:36Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>Scheduled Task creation using Schedule.Service COM Object (Methodology)</short_description>
+    <description>Adversaries may abuse the Windows Task Scheduler to perform task scheduling for initial or recurring execution of malicious code. There are multiple ways to access the Task Scheduler in Windows.
+
+MITRE ATT&amp;CK REFERENCE: https://attack.mitre.org/techniques/T1053/005/</description>
+    <authored_by>dfir-ronin</authored_by>
+    <authored_date>2023-06-20T05:29:26Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="1fddb71a-94b6-49e8-a439-c588433ee664">
+      <Indicator operator="AND" id="8857e01c-beda-4d40-a280-c954307171e2">
+        <IndicatorItem id="d3b21773-959c-431c-baf4-fd81b65811ef" condition="is" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+          <Content type="string">powershell.exe</Content>
+        </IndicatorItem>
+        <IndicatorItem id="55e9eb6d-c8ca-410b-8b31-8e7b4c7f020d" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">new-object</Content>
+        </IndicatorItem>
+        <IndicatorItem id="c1e4daf1-c008-466e-b0bb-6c684c71f7fb" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">-comobject</Content>
+        </IndicatorItem>
+        <IndicatorItem id="105bf84f-70a6-42f3-94aa-16fc6c52a50a" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">Schedule.Service</Content>
+        </IndicatorItem>
+      </Indicator>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>

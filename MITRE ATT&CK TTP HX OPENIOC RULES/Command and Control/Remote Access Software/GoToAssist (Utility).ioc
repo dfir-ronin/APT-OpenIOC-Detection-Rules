@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="75d1d116-f2b0-4e79-a97d-f09c837b8f0a" last-modified="2023-06-01T08:34:11Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>GoToAssist (Utility)</short_description>
+    <description>An adversary may use legitimate desktop support and remote access software, such as Team Viewer, AnyDesk, Go2Assist, LogMein, AmmyyAdmin, etc, to establish an interactive command and control channel to target systems within networks. 
+
+MITRE ATT&amp;CK REFERENCE: https://attack.mitre.org/techniques/T1219/</description>
+    <authored_by>dfir-ronin</authored_by>
+    <authored_date>2023-06-01T08:34:11Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="72fc29a3-f055-488b-ab41-1b7cfbf0836f">
+      <IndicatorItem id="5b566321-610f-47dd-abd2-4daebc02ba0b" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/fileName" type="endpoint" />
+        <Content type="string">g2a.exe</Content>
+      </IndicatorItem>
+      <IndicatorItem id="a703a855-b773-4057-8c9b-a6ada40e8ee6" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+        <Content type="string">g2a.exe</Content>
+      </IndicatorItem>
+      <IndicatorItem id="a0ad54af-c06c-43ed-8141-dffee03e47fe" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/fileName" type="endpoint" />
+        <Content type="string">g2a.cfg</Content>
+      </IndicatorItem>
+      <IndicatorItem id="5828fb22-c2e8-495f-8585-8acf2110153d" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/fileName" type="endpoint" />
+        <Content type="string">g2a.log</Content>
+      </IndicatorItem>
+      <IndicatorItem id="d75ef333-87b5-4c23-98f2-1ebafd77c38e" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+        <Content type="string">g2aportable.exe</Content>
+      </IndicatorItem>
+      <IndicatorItem id="f90e72a1-84a5-4f51-b9a8-0c9389012a09" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/fileName" type="endpoint" />
+        <Content type="string">g2aportable.exe</Content>
+      </IndicatorItem>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>

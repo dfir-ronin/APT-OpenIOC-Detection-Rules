@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="a006ba7f-3273-4468-9bfd-ccf70fb14d8a" last-modified="2023-06-01T06:19:19Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>Scheduled Task creation via Powershell (Methodology)</short_description>
+    <description>Windows PowerShell provides a range of ScheduledTasks cmdlets, which can be abused by threat actors for the creation of scheduled tasks on Windows systems for persistence.
+
+MITRE ATT&amp;CK REFERENCE: https://attack.mitre.org/techniques/T1053/005/</description>
+    <authored_by>dfir-ronin</authored_by>
+    <authored_date>2023-06-01T06:19:19Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="764d809d-3963-4ed3-9f03-b06928982915">
+      <Indicator operator="AND" id="d21200e8-459c-46d4-9fc2-b51051e53b22">
+        <IndicatorItem id="5db2997e-e854-484d-b987-c397d95ef23b" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">New-ScheduledTask</Content>
+        </IndicatorItem>
+        <Indicator operator="OR" id="a33be723-bacc-4e2b-ac6c-be7002677f08">
+          <IndicatorItem id="4c810a42-24ea-46f0-8dfa-08e79fa42da7" condition="is" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+            <Content type="string">powershell.exe</Content>
+          </IndicatorItem>
+          <IndicatorItem id="44a1f567-6018-4cc8-9632-2e9d61de03d5" condition="is" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+            <Content type="string">cmd.exe</Content>
+          </IndicatorItem>
+        </Indicator>
+      </Indicator>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>

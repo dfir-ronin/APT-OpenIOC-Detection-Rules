@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="7fd1757a-0409-45a5-95c6-80bfd3fa60c3" last-modified="2023-06-05T08:44:44Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>VNC module backdoor (Utility)</short_description>
+    <description>These backdoors are typically activated during the final initial-access stages to initiate hands-on-keyboard activity. HVNC, HDESK, and/or Dark VNC leverages Windows features allowing the backdoor to create a hidden desktop environment not visible to the compromised user. Within this hidden environment, the threat actors can start leveraging the user interface to perform regular tasks such as web browsing, reading mails in Outlook or executing commands through the Command Prompt and PowerShell.
+
+This rule will detect the activation of Windows "Run" dialog via the following command below.
+
+rundll32.exe shell32.dll,#61
+
+Reference:
+https://blog.nviso.eu/2023/03/20/icedids-vnc-backdoors-dark-cat-anubis-keyhole/
+https://attack.mitre.org/techniques/T1219/</description>
+    <authored_by>dfir-ronin</authored_by>
+    <authored_date>2023-06-05T08:44:44Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="4d5d46df-c371-469a-9fb0-cb07f6d875ed">
+      <IndicatorItem id="f352a9ab-101c-4028-a3c2-c026c9762cac" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">shell32.dll,#61</Content>
+      </IndicatorItem>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>

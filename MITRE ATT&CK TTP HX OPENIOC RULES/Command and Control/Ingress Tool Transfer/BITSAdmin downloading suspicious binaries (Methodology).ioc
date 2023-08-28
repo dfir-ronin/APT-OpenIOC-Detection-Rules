@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="df67bc9e-efb4-4d9b-97f6-41d2141cb709" last-modified="2023-05-01T08:38:16Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>BITSAdmin downloading suspicious binaries (Methodology)</short_description>
+    <description> Adversaries use BITSAdmin to download arbitrary files from the internet in an effort to evade application blocklisting.
+
+MITRE ATT&amp;CK REFRENCE:
+https://attack.mitre.org/software/S0190/
+https://attack.mitre.org/techniques/T1105/</description>
+    <authored_by>dfir-ronin</authored_by>
+    <authored_date>2023-05-01T08:38:16Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="68c59523-52c9-4781-be71-cac6417f7233">
+      <Indicator operator="AND" id="7ce99ea4-2eb5-4650-9b86-a81fccd63fd2">
+        <IndicatorItem id="b90b47e4-a669-480c-814a-6d49281a852d" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">bitsadmin</Content>
+        </IndicatorItem>
+        <Indicator operator="OR" id="70e73839-ad99-4005-8de5-eddab609bcad">
+          <IndicatorItem id="666af663-c0e3-4637-b1a6-b5b9fcb451e3" condition="contains" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+            <Content type="string">download</Content>
+          </IndicatorItem>
+          <IndicatorItem id="624534f2-7a64-4827-a78f-0bebd33c853a" condition="contains" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+            <Content type="string">transfer</Content>
+          </IndicatorItem>
+        </Indicator>
+      </Indicator>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>

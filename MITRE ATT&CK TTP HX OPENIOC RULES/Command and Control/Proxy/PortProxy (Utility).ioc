@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="1013231a-83b3-4016-84b3-c081752953db" last-modified="2023-05-30T11:53:21Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>PortProxy (Utility)</short_description>
+    <description>Adversaries may use a connection proxy to direct network traffic between systems or act as an intermediary for network communications to a command and control server to avoid direct connections to their infrastructure.
+
+MITRE ATT&amp;CK REFERENCE: https://attack.mitre.org/versions/v13/techniques/T1090/</description>
+    <authored_by>dfir-ronin</authored_by>
+    <authored_date>2023-05-30T11:27:09Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="eec4b4c6-04e8-4ef7-96f5-51fdb238e76f">
+      <Indicator operator="AND" id="88701cae-82c7-4ed8-a7d8-872f5e732636">
+        <IndicatorItem id="173edfcd-ded3-4ff8-9b4f-f1e64cc20ddd" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">portproxy</Content>
+        </IndicatorItem>
+        <Indicator operator="OR" id="01cd39e2-144b-4c24-aec2-45f612491282">
+          <IndicatorItem id="267f0f51-a593-4f09-8517-e9198bb28467" condition="contains" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+            <Content type="string">listenaddress=</Content>
+          </IndicatorItem>
+          <IndicatorItem id="068c5815-0f12-4597-b4e3-62cddd4a0085" condition="contains" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+            <Content type="string">listenport=</Content>
+          </IndicatorItem>
+          <IndicatorItem id="a41ac604-2418-4b8d-80b6-0f74115fbdb0" condition="contains" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+            <Content type="string">connectaddress=</Content>
+          </IndicatorItem>
+          <IndicatorItem id="2abd11d0-3def-4bdb-a764-dffa1b8b13d5" condition="contains" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+            <Content type="string">connectport=</Content>
+          </IndicatorItem>
+        </Indicator>
+      </Indicator>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="14b98de5-8582-438a-9e9e-8566776f8729" last-modified="2023-04-13T11:01:06Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>Service Control Manager spawning Command Shell with suspect strings (Methodology)</short_description>
+    <description>This rule will generate an alert when services.exe spawns cmd.exe along with a corresponding echo or /c command, which are common attributes of post exploitation.
+
+MITRE ATT&amp;CK REFERENCE: https://attack.mitre.org/techniques/T1059/003/</description>
+    <authored_by>dfir-ronin</authored_by>
+    <authored_date>2023-04-13T11:01:06Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="ce30d9cd-6c35-4b42-8203-3a3cd5ccf29a">
+      <Indicator operator="AND" id="a2336c46-ef32-460b-9669-957b10fa3a01">
+        <IndicatorItem id="cce697de-8013-4057-8d24-79df05d22dbd" condition="is" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/parentProcess" type="endpoint" />
+          <Content type="string">services.exe</Content>
+        </IndicatorItem>
+        <IndicatorItem id="4b2a777c-7212-412e-a1e9-4e1c5a319bf8" condition="is" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+          <Content type="string">cmd.exe</Content>
+        </IndicatorItem>
+        <Indicator operator="OR" id="2b4025c4-4409-4a76-b824-8cdbffe80a82">
+          <IndicatorItem id="4166f5f8-a7b6-4357-93cc-0936f8e91205" condition="contains" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+            <Content type="string">echo</Content>
+          </IndicatorItem>
+          <IndicatorItem id="761b9224-7a1c-4d5f-8e30-36ae3d89677a" condition="contains" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+            <Content type="string">/c</Content>
+          </IndicatorItem>
+        </Indicator>
+      </Indicator>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>

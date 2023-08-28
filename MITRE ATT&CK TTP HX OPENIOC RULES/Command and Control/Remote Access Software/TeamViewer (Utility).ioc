@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="7532b409-f3f2-4cae-aacd-09d5a2192a9d" last-modified="2023-06-01T08:07:28Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>TeamViewer (Utility)</short_description>
+    <description>An adversary may use legitimate desktop support and remote access software, such as Team Viewer, AnyDesk, Go2Assist, LogMein, AmmyyAdmin, etc, to establish an interactive command and control channel to target systems within networks. 
+
+MITRE ATT&amp;CK REFERENCE:
+https://attack.mitre.org/techniques/T1219/</description>
+    <authored_by>dfir-ronin</authored_by>
+    <authored_date>2023-06-01T08:07:28Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="bcf1ee56-ba8e-4a8b-9670-7c8f460588a2">
+      <IndicatorItem id="155699cc-58ea-4ab5-973d-fb2e38bd2ed5" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/fileName" type="endpoint" />
+        <Content type="string">TeamViewer_Desktop.exe</Content>
+      </IndicatorItem>
+      <IndicatorItem id="f7070746-f15e-4826-80b5-08c3d4a171db" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+        <Content type="string">TeamViewer_Desktop.exe</Content>
+      </IndicatorItem>
+      <IndicatorItem id="5a7a05f7-7aba-46ed-b0d1-a10e0054b4df" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/fileName" type="endpoint" />
+        <Content type="string">tvprint.db</Content>
+      </IndicatorItem>
+      <IndicatorItem id="101f16a8-c6af-4541-97d9-60f198017600" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/fileName" type="endpoint" />
+        <Content type="string">TVNetwork.log</Content>
+      </IndicatorItem>
+      <IndicatorItem id="2f00c0af-1c94-46bb-bd4c-ddd8dca00aad" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/dnsLookupEvent/hostname" type="endpoint" />
+        <Content type="string">teamviewer.com</Content>
+      </IndicatorItem>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>

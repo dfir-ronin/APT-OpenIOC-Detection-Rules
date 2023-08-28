@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="c7864cb7-3918-4721-b2c3-252c8e677e35" last-modified="2023-04-11T05:55:38Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>AdFind (Utility)</short_description>
+    <description>Adversaries may attempt to gather information on domain trust relationships that may be used to identify lateral movement opportunities in Windows multi-domain/forest environments.
+
+AdFInd is a command line Active Directory query tool. Mixture of ldapsearch, search.vbs, ldp, dsquery, and dsget tools with a ton of other features.</description>
+    <authored_by>dfir-ronin</authored_by>
+    <authored_date>2023-04-11T05:55:38Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="18562aed-26e7-40eb-ad8f-64fcc747a4fb">
+      <IndicatorItem id="376490f5-0cbe-4ace-8d30-04a82e441974" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/fileName" type="endpoint" />
+        <Content type="string">adfind</Content>
+      </IndicatorItem>
+      <IndicatorItem id="99ffd552-edc5-45b5-8c87-c21024d43a49" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">trustdmp</Content>
+      </IndicatorItem>
+      <IndicatorItem id="d7579928-4fbc-4d43-90be-b70a47fcafe1" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">-gcb -sc</Content>
+      </IndicatorItem>
+      <IndicatorItem id="c0412473-22e9-4104-8958-7bbaea2eddd8" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">domainlist</Content>
+      </IndicatorItem>
+      <IndicatorItem id="8c4b6a8c-992f-47c1-9088-58f9ced50f7a" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">adinfo</Content>
+      </IndicatorItem>
+      <IndicatorItem id="538a8d5d-78f7-4bfb-866a-996630f1925e" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+        <Content type="string">adfind</Content>
+      </IndicatorItem>
+      <IndicatorItem id="ac8da494-f45f-4959-89a3-336414963c5f" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/md5" type="endpoint" />
+        <Content type="md5">12011c44955fd6631113f68a99447515</Content>
+      </IndicatorItem>
+      <IndicatorItem id="11d824a2-40d7-495e-b6ae-48266a8f76e7" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/md5" type="endpoint" />
+        <Content type="md5">d82eaea0554bcc516d43ae3e1615a88a</Content>
+      </IndicatorItem>
+      <Indicator operator="AND" id="e4a78be2-5da5-4a03-a719-acc922301f39">
+        <IndicatorItem id="4eed45cf-f239-4a6a-b64f-690eb136c0bf" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">objectcategory=</Content>
+        </IndicatorItem>
+        <IndicatorItem id="227ead76-89d7-4f70-89db-e45460b9e430" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">-f</Content>
+        </IndicatorItem>
+      </Indicator>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>

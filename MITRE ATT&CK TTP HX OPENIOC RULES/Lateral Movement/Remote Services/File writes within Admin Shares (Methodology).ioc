@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="bef5a6f7-cc7b-41ee-a6e6-3aeb0cdb7cde" last-modified="2023-05-03T09:51:38Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>File writes within Admin Shares (Methodology)</short_description>
+    <description>This rule detects when a suspicious file is written to an Admin Share.
+
+MITRE ATT&amp;CK REFERENCE: https://attack.mitre.org/techniques/T1021/002/</description>
+    <authored_by>dfir-ronin</authored_by>
+    <authored_date>2023-05-03T09:51:38Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="585698ef-ea24-4a11-85a2-e95d362bed32">
+      <Indicator operator="AND" id="b6ad860f-c138-49d0-9902-f720b47be0e1">
+        <Indicator operator="OR" id="db43eb1f-85fb-4743-8629-9aa19cf4800c">
+          <IndicatorItem id="927938c2-2075-4431-ba55-2634ce5f7f22" condition="contains" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/fileWriteEvent/filePath" type="endpoint" />
+            <Content type="string">ADMIN$</Content>
+          </IndicatorItem>
+          <IndicatorItem id="cda94da4-bcdc-4e93-8772-98b5fcdb7ac2" condition="contains" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/fileWriteEvent/filePath" type="endpoint" />
+            <Content type="string">C$</Content>
+          </IndicatorItem>
+          <IndicatorItem id="a4992e5b-df62-4b24-8bae-9450c2883e56" condition="contains" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/fileWriteEvent/filePath" type="endpoint" />
+            <Content type="string">IPC$</Content>
+          </IndicatorItem>
+        </Indicator>
+        <Indicator operator="OR" id="64bb36a3-5168-4669-87df-13345538550d">
+          <IndicatorItem id="cf9e240e-2bb6-4bf7-83f1-6a11245a838e" condition="is" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/fileWriteEvent/fileExtension" type="endpoint" />
+            <Content type="string">.exe</Content>
+          </IndicatorItem>
+          <IndicatorItem id="284ae605-2951-4f96-9789-7337b484a264" condition="is" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/fileWriteEvent/fileExtension" type="endpoint" />
+            <Content type="string">.dll</Content>
+          </IndicatorItem>
+          <IndicatorItem id="4096ee66-3b35-4c6b-982d-6ceace0a3c8d" condition="is" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/fileWriteEvent/fileExtension" type="endpoint" />
+            <Content type="string">.bat</Content>
+          </IndicatorItem>
+        </Indicator>
+      </Indicator>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>

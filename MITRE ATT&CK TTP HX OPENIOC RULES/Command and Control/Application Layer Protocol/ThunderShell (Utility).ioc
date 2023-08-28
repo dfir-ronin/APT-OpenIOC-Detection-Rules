@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="182f664b-3070-44ff-a9c2-95f20eb355d1" last-modified="2023-08-10T13:41:36Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>ThunderShell (Utility)</short_description>
+    <description>Facilitates remote access via Hypertext Transfer Protocol (HTTP) requests and enables threat actors to remotely access systems while encrypting network traffic. Adversaries may communicate using application layer protocols associated with web traffic to avoid detection/network filtering by blending in with existing traffic. Commands to the remote system, and often the results of those commands, will be embedded within the protocol traffic between the client and server.
+
+References:
+https://github.com/Mr-Un1k0d3r/ThunderShell/wiki/Using-Thundershell
+https://attack.mitre.org/versions/v13/techniques/T1071/001/</description>
+    <authored_by>dfir-ronin</authored_by>
+    <authored_date>2023-08-10T13:41:36Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="2238c9e6-771d-4644-9607-767af56d0a3b">
+      <IndicatorItem id="2f813f0e-afc2-4493-9753-f7eaefaccb6d" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/urlMonitorEvent/httpHeader" type="endpoint" />
+        <Content type="string">/ps/</Content>
+      </IndicatorItem>
+      <IndicatorItem id="c55f9a76-8ea1-4a88-ae25-192104c7c96c" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/urlMonitorEvent/httpHeader" type="endpoint" />
+        <Content type="string">/msbuild/</Content>
+      </IndicatorItem>
+      <IndicatorItem id="e777649c-71b1-45a6-8b60-5ecb54d29553" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/urlMonitorEvent/httpHeader" type="endpoint" />
+        <Content type="string">/exe/</Content>
+      </IndicatorItem>
+      <IndicatorItem id="1617916b-a060-477c-b7a9-0f0a0df52d34" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/urlMonitorEvent/httpHeader" type="endpoint" />
+        <Content type="string">/cs/</Content>
+      </IndicatorItem>
+      <IndicatorItem id="dac755d0-452e-48f6-bd9e-4755108b8d52" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/urlMonitorEvent/httpHeader" type="endpoint" />
+        <Content type="string">.png/ps/</Content>
+      </IndicatorItem>
+      <IndicatorItem id="f819ebfe-3638-4fb8-a400-f81a412cce03" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/urlMonitorEvent/httpHeader" type="endpoint" />
+        <Content type="string">.png/msbuild/</Content>
+      </IndicatorItem>
+      <IndicatorItem id="87c36149-be1b-4884-960c-6fb7e03d26d2" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/urlMonitorEvent/httpHeader" type="endpoint" />
+        <Content type="string">.png/exe/</Content>
+      </IndicatorItem>
+      <IndicatorItem id="4c0d7829-9608-4255-aade-b405e98b55f1" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/urlMonitorEvent/httpHeader" type="endpoint" />
+        <Content type="string">.png/cs/</Content>
+      </IndicatorItem>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>

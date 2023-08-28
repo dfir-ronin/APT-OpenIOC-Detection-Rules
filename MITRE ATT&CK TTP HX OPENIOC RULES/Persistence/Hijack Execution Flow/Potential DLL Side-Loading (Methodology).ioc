@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="2e343332-52a7-4460-91ea-ed5169c972c4" last-modified="2023-07-25T10:13:20Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>Potential DLL Side-Loading (Methodology)</short_description>
+    <description>Adversaries may execute their own malicious payloads by side-loading DLLs. Similar to DLL Search Order Hijacking, side-loading involves hijacking which DLL a program loads. But rather than just planting the DLL within the search order of a program then waiting for the victim application to be invoked, adversaries may directly side-load their payloads by planting then invoking a legitimate application that executes their payload(s).
+
+MITRE ATT&amp;CK REFERENCE: https://attack.mitre.org/techniques/T1574/002/</description>
+    <authored_by>dfir-ronin</authored_by>
+    <authored_date>2023-07-25T10:13:20Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="8474615c-5aa8-4f18-9abb-0519ec75f413">
+      <Indicator operator="AND" id="dc159a5c-3310-4eb9-9e3a-cb99fd825d6c">
+        <IndicatorItem id="23ad079d-d5c1-4868-b3f6-f7a9a0c176a6" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/imageLoadEvent/fullPath" type="endpoint" />
+          <Content type="string">\Downloads\</Content>
+        </IndicatorItem>
+        <IndicatorItem id="011d5bd6-554d-4c76-82b6-47b2c3730568" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/imageLoadEvent/fullPath" type="endpoint" />
+          <Content type="string">\Documents\</Content>
+        </IndicatorItem>
+        <IndicatorItem id="56e7f3ab-8eac-4806-810b-25fa343aee38" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/imageLoadEvent/fullPath" type="endpoint" />
+          <Content type="string">\Pictures\</Content>
+        </IndicatorItem>
+        <IndicatorItem id="74b86dbc-8494-48c5-bb65-16e4ece67600" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/imageLoadEvent/fullPath" type="endpoint" />
+          <Content type="string">\Videos\</Content>
+        </IndicatorItem>
+        <IndicatorItem id="7b263c6b-dae1-48d6-9b64-75f2fe4cf8fc" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/imageLoadEvent/fullPath" type="endpoint" />
+          <Content type="string">\Music\</Content>
+        </IndicatorItem>
+        <IndicatorItem id="808dfa39-e863-4338-b314-23a9ef0b7e63" condition="is" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/imageLoadEvent/fileExtension" type="endpoint" />
+          <Content type="string">dll</Content>
+        </IndicatorItem>
+      </Indicator>
+      <Indicator operator="AND" id="c092ab09-fe4e-47d9-a468-520f6bbc6dd8">
+        <IndicatorItem id="7e5c46f4-9fd7-408f-9b67-ce2166412dbf" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/fileWriteEvent/fullPath" type="endpoint" />
+          <Content type="string">\Downloads\</Content>
+        </IndicatorItem>
+        <IndicatorItem id="5eeba8f4-c7e5-4bdc-b79d-b6245d9c4de6" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/fileWriteEvent/fullPath" type="endpoint" />
+          <Content type="string">\Documents\</Content>
+        </IndicatorItem>
+        <IndicatorItem id="414e12cf-2a85-4889-a7c5-75da401a5e15" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/fileWriteEvent/fullPath" type="endpoint" />
+          <Content type="string">\Pictures\</Content>
+        </IndicatorItem>
+        <IndicatorItem id="4d654512-95aa-4ccd-967a-9ac3c73c002e" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/fileWriteEvent/fullPath" type="endpoint" />
+          <Content type="string">\Videos\</Content>
+        </IndicatorItem>
+        <IndicatorItem id="2067c3fc-0759-419b-846c-5306d22fc344" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/fileWriteEvent/fullPath" type="endpoint" />
+          <Content type="string">\Music\</Content>
+        </IndicatorItem>
+        <IndicatorItem id="4fe82eb4-e205-496c-a1bb-6cbc5520c066" condition="is" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/fileWriteEvent/fileExtension" type="endpoint" />
+          <Content type="string">dll</Content>
+        </IndicatorItem>
+      </Indicator>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>

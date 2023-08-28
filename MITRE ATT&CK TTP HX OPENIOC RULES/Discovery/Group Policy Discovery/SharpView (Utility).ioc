@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="9a38c574-1a1d-4786-a1c0-741ca1b34d03" last-modified="2023-08-22T08:54:29Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>SharpView (Utility)</short_description>
+    <description>This is a .NET port of PowerView.
+
+Reference:
+https://github.com/sliverarmory/SharpView
+https://attack.mitre.org/software/S0194/
+https://attack.mitre.org/tactics/TA0007/</description>
+    <authored_by>dfir-ronin</authored_by>
+    <authored_date>2023-08-22T08:54:29Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="c088f341-87ab-4e0e-9bd9-39f0f45de05e">
+      <IndicatorItem id="5b689d81-4f43-44df-ac75-1086b95308c8" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/md5" type="endpoint" />
+        <Content type="md5">a75de06c30f22db91d05db59b1c7ebb7</Content>
+      </IndicatorItem>
+      <IndicatorItem id="1d67313c-33e4-4ff0-8e29-387685e94cc9" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/fileName" type="endpoint" />
+        <Content type="string">SharpView</Content>
+      </IndicatorItem>
+      <IndicatorItem id="4c0c30db-2db7-4383-8ca2-da30dd748fb2" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+        <Content type="string">SharpView</Content>
+      </IndicatorItem>
+      <IndicatorItem id="24aea248-2b33-4d65-9497-1d1eb96a5088" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/md5" type="endpoint" />
+        <Content type="md5">a75de06c30f22db91d05db59b1c7ebb7</Content>
+      </IndicatorItem>
+      <IndicatorItem id="6b14831d-abb1-471f-a50c-939551ad011d" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">SharpView</Content>
+      </IndicatorItem>
+      <IndicatorItem id="c58e3e33-e5ff-458a-8462-77298e5760d2" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">Find-Interesting</Content>
+      </IndicatorItem>
+      <IndicatorItem id="dd34a30e-394f-4486-8659-b02b52e40d9f" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">Find-DomainObjectPropertyOutlier</Content>
+      </IndicatorItem>
+      <IndicatorItem id="c1d52c47-7bb9-4148-b7df-7c9f217b133c" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">Find-DomainProcess</Content>
+      </IndicatorItem>
+      <IndicatorItem id="13351860-8eea-4937-957e-53d71f42db6c" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">Find-DomainShare</Content>
+      </IndicatorItem>
+      <IndicatorItem id="56b33211-4956-4bf8-8121-8e3b2d767b56" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">Find-DomainUserEvent</Content>
+      </IndicatorItem>
+      <IndicatorItem id="42e18f26-6184-4901-be5f-294451c20628" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">Find-DomainUserLocation</Content>
+      </IndicatorItem>
+      <IndicatorItem id="7c123c4c-b385-4013-88d9-263a9d9b42ba" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">Find-ForeignGroup</Content>
+      </IndicatorItem>
+      <IndicatorItem id="bdde0976-20c1-4359-9372-6c8f89022898" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">Find-ForeignUser</Content>
+      </IndicatorItem>
+      <IndicatorItem id="bd073e0c-a422-4232-bda0-25f2bf33f264" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">Find-GPOComputerAdmin</Content>
+      </IndicatorItem>
+      <IndicatorItem id="a012131f-b305-4d66-b8ca-90b5d301dee2" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">Find-GPOLocation</Content>
+      </IndicatorItem>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>

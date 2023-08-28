@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="7be36c9b-22fc-4dfa-b8f6-870aeeae97cb" last-modified="2023-05-30T11:53:21Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>PowerSploit's Invoke-NinjaCopy (Utility)</short_description>
+    <description>Adversaries may attempt to access or create a copy of the Active Directory domain database in order to steal credential information, as well as obtain other information about domain members such as devices, users, and access rights. By default, the NTDS file (NTDS.dit) is located in %SystemRoot%\NTDS\Ntds.dit of a domain controller.
+
+MITRE ATT&amp;CK REFERENCE: https://attack.mitre.org/techniques/T1003/003/</description>
+    <authored_by>dfir-ronin</authored_by>
+    <authored_date>2023-05-30T10:33:51Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="d9700d57-28cf-4617-a165-ec50ea4fa27d">
+      <IndicatorItem id="021b81a5-9b09-4cea-b1ce-aa3c587378b6" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">Invoke-NinjaCopy</Content>
+      </IndicatorItem>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>

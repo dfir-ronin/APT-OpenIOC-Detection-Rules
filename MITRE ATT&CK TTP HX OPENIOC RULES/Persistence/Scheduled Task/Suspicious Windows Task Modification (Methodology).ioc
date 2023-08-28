@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="a3eb2463-ff25-4a99-b38a-2801c2383f6f" last-modified="2023-06-20T06:56:14Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>Suspicious Windows Task Modification (Methodology)</short_description>
+    <description>Adversaries may abuse the Windows Task Scheduler to perform task scheduling for initial or recurring execution of malicious code. There are multiple ways to access the Task Scheduler in Windows.
+
+MITRE ATT&amp;CK REFERENCE: https://attack.mitre.org/techniques/T1053/005/</description>
+    <authored_by>dfir-ronin</authored_by>
+    <authored_date>2023-06-20T06:56:14Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="6b998ecc-98f1-42ee-91ec-8a10b2ae67d8">
+      <Indicator operator="AND" id="132c16f3-4ba1-462d-a5dc-cbe88b2e2882">
+        <IndicatorItem id="32118943-64c5-47ca-83b3-561d619a6254" condition="is" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+          <Content type="string">schtasks.exe</Content>
+        </IndicatorItem>
+        <IndicatorItem id="897522cc-c831-4bc3-8421-7ca487a88199" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">/change</Content>
+        </IndicatorItem>
+        <IndicatorItem id="df9b2437-c5f9-491e-a548-dbbea6ffaee6" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">/tr</Content>
+        </IndicatorItem>
+        <IndicatorItem id="67144e71-b18c-4002-8eac-aaebac434f43" condition="contains" preserve-case="false" negate="true">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">/windows/system32/</Content>
+        </IndicatorItem>
+        <IndicatorItem id="98e085b3-4c9d-44b7-8a5b-384577345140" condition="contains" preserve-case="false" negate="true">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">/windows/syswow64/</Content>
+        </IndicatorItem>
+        <IndicatorItem id="eae3a6ab-3aaf-46f3-a6db-8b9b8e0e617e" condition="contains" preserve-case="false" negate="true">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">/program files (x86)/</Content>
+        </IndicatorItem>
+        <IndicatorItem id="a479bc38-4034-4cbb-8041-284a726104e8" condition="contains" preserve-case="false" negate="true">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">/program files/</Content>
+        </IndicatorItem>
+      </Indicator>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>

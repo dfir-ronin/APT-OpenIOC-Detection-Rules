@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="38aa9e1b-2cf0-40c9-ab28-21ca1329859a" last-modified="2023-04-13T12:34:57Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>WMI reconnaissance (Methodology)</short_description>
+    <description>This rule detects potential adversaries leveraging WMI to quickly gather domain information such as users, groups, or computers in the domain.
+
+MITRE ATT&amp;CK REFERENCE: https://attack.mitre.org/techniques/T1018/</description>
+    <authored_by>dfir-ronin</authored_by>
+    <authored_date>2023-04-13T12:34:57Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="352283ba-dd3c-49c2-ba28-328aa4264b84">
+      <Indicator operator="AND" id="c282176b-5b27-4319-9a21-193f51130ff9">
+        <IndicatorItem id="a655c991-59c2-4f3f-a3ae-47b9aee5693e" condition="is" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+          <Content type="string">wmic.exe</Content>
+        </IndicatorItem>
+        <Indicator operator="OR" id="123f6bf8-4323-4205-a3d1-176fe334e5be">
+          <IndicatorItem id="04ac250a-02eb-4a83-8db5-d459e92d4f65" condition="contains" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+            <Content type="string">ntdomain</Content>
+          </IndicatorItem>
+          <IndicatorItem id="8c476dbb-4d21-45a1-9abe-ecf80f5fbaae" condition="contains" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+            <Content type="string">\ldap</Content>
+          </IndicatorItem>
+        </Indicator>
+      </Indicator>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>

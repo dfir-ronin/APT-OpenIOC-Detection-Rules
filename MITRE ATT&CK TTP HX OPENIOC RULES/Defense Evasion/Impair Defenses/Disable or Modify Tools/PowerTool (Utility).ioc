@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="9feeb726-5c98-43fe-9eca-0aebfac85055" last-modified="2023-08-10T10:43:11Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>PowerTool (Utility)</short_description>
+    <description>Removes rootkits, as well as detecting, analyzing, and fixing kernel structure modifications. Adversaries may modify and/or disable security tools to avoid possible detection of their malware/tools and activities.
+
+Reference:
+https://attack.mitre.org/versions/v13/techniques/T1562/001/</description>
+    <authored_by>dfir-ronin</authored_by>
+    <authored_date>2023-08-10T10:43:11Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="89220985-fa8c-4c49-8ce9-61483b887cf3">
+      <IndicatorItem id="e89a7552-68f1-4b55-bb54-f6678dc41e69" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/md5" type="endpoint" />
+        <Content type="md5">446d90d6a2ad932af83db026d44fb4ae</Content>
+      </IndicatorItem>
+      <IndicatorItem id="51284896-a9a0-48d0-ae2b-6d3adfe356bc" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/md5" type="endpoint" />
+        <Content type="md5">f6ed9abc2d20ed72f1b1d484fb8fe899</Content>
+      </IndicatorItem>
+      <IndicatorItem id="bbe2ffb0-6cc5-43d8-ba20-23748ff88976" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/md5" type="endpoint" />
+        <Content type="md5">d9db995ac3c6dda5593255cb88699fd2</Content>
+      </IndicatorItem>
+      <IndicatorItem id="6479adcf-7679-4f2d-871f-bc9222eb03cc" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/md5" type="endpoint" />
+        <Content type="md5">07687ed80b70f18ebbc0efaaed73b798</Content>
+      </IndicatorItem>
+      <IndicatorItem id="60843c69-c33c-44a1-9a83-c9db6f4a56c5" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/md5" type="endpoint" />
+        <Content type="md5">cadbd5621dd01b528755c055bbb4175d</Content>
+      </IndicatorItem>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>

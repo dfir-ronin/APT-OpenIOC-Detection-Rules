@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="709c7072-c900-416c-93c6-2b6ac8f1960f" last-modified="2023-08-09T04:13:17Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>Chocolatey (Utility)</short_description>
+    <description>Adversaries may gain access to and use third-party software suites installed within an enterprise network, such as administration, monitoring, and deployment systems, to move laterally through the network. Third-party applications and software deployment systems may be in use in the network environment for administration purposes (e.g., SCCM, HBSS, Altiris, etc.).
+
+REFERENCE: https://attack.mitre.org/versions/v13/techniques/T1072/</description>
+    <authored_by>dfir-ronin</authored_by>
+    <authored_date>2023-08-09T04:13:17Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="e8315582-0a71-4917-86cd-8d2b7ea34bab">
+      <IndicatorItem id="62c3fff0-07ed-4b99-978f-d05a11394c83" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/filePath" type="endpoint" />
+        <Content type="string">\ProgramData\Chocolatey\</Content>
+      </IndicatorItem>
+      <Indicator operator="AND" id="57c8a92f-da0e-4153-bb34-7a230a9702ad">
+        <IndicatorItem id="0b000989-a47f-4c6b-9bfb-8d39eae7a487" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">choco</Content>
+        </IndicatorItem>
+        <Indicator operator="OR" id="e8e9e38c-fc80-47c8-a972-25914dcc7f72">
+          <IndicatorItem id="1dc57204-16e6-4cf5-8c41-233b2ce4d1e3" condition="is" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+            <Content type="string">cmd.exe</Content>
+          </IndicatorItem>
+          <IndicatorItem id="3d3ea54f-33de-491f-a593-a19a717ddf48" condition="is" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+            <Content type="string">powershell.exe</Content>
+          </IndicatorItem>
+        </Indicator>
+        <Indicator operator="OR" id="bb121d82-7222-40b4-a005-4e218b3db3a4">
+          <IndicatorItem id="b3797d5b-0b98-4ecf-9f2c-9744ae61807c" condition="contains" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+            <Content type="string">install</Content>
+          </IndicatorItem>
+          <IndicatorItem id="6e649787-0c2b-4cc8-a49b-d890793f155c" condition="contains" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+            <Content type="string">source add</Content>
+          </IndicatorItem>
+        </Indicator>
+      </Indicator>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>

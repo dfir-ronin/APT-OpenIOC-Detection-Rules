@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="16a001da-dd3c-484c-84d1-6ce247bd191c" last-modified="2023-04-13T10:07:17Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>Windows scheduled task create shell (Methodology)</short_description>
+    <description>Adversaries frequently establish persistence by using scheduled tasks to launch the Windows Command Shell. 
+
+MITRE ATT&amp;CK: https://attack.mitre.org/techniques/T1053/005/</description>
+    <authored_by>dfir-ronin</authored_by>
+    <authored_date>2023-04-13T10:07:17Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="45286a90-8a3f-4aaf-922e-d9f99dd9eda7">
+      <Indicator operator="AND" id="3e048398-2162-49a1-9795-4636ca01e1a4">
+        <IndicatorItem id="73a4afc7-0415-4d9f-b4b2-cbbcbd0aaa46" condition="is" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+          <Content type="string">schtasks.exe</Content>
+        </IndicatorItem>
+        <IndicatorItem id="30e3ab07-2ead-442d-9613-1f26982bc01b" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">create</Content>
+        </IndicatorItem>
+        <Indicator operator="OR" id="131476e3-85cf-4b18-9688-6d42c74215aa">
+          <IndicatorItem id="ea82b12d-42ec-4aed-82ce-a6487b77f2a2" condition="contains" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+            <Content type="string">cmd /c</Content>
+          </IndicatorItem>
+          <IndicatorItem id="f37b0770-7fd6-479a-8c9c-f61dd962bfb8" condition="contains" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+            <Content type="string">cmd.exe /c</Content>
+          </IndicatorItem>
+        </Indicator>
+      </Indicator>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>

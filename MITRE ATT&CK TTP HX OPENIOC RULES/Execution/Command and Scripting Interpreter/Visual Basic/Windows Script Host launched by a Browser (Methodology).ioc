@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="eeac1ab0-0de4-4318-a816-adc64718c14f" last-modified="2023-04-06T04:23:44Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>Windows Script Host launched by a Browser (Methodology)</short_description>
+    <description>Windows Script Host spawned from a browser and making external network connections.
+
+Reference: https://redcanary.com/threat-detection-report/threats/socgholish/</description>
+    <authored_by>dfir-ronin</authored_by>
+    <authored_date>2023-04-06T04:23:44Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="e12e1d18-bcec-4412-8fdf-34d9cb196691">
+      <Indicator operator="AND" id="b19b8121-51f9-4150-864b-9681acfae9b0">
+        <IndicatorItem id="47de9873-3a5b-440e-a47d-0d622e7c531b" condition="matches" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/parentProcess" type="endpoint" />
+          <Content type="string">^(chrome | msedge | firefox | opera | iexplore)\.exe$</Content>
+        </IndicatorItem>
+        <IndicatorItem id="0b34a8c5-a8f0-474e-b0ad-9ed4d47b1f87" condition="is" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/eventType" type="endpoint" />
+          <Content type="string">start</Content>
+        </IndicatorItem>
+        <IndicatorItem id="40f20ee8-526b-40e6-89a1-486f238ed86e" condition="is" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+          <Content type="string">wscript.exe</Content>
+        </IndicatorItem>
+      </Indicator>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>

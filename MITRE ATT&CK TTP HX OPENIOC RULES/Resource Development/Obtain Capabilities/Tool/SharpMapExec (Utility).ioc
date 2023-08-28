@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="0b81d421-59fc-4775-be79-0de48765e18b" last-modified="2023-08-22T06:43:12Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>SharpMapExec (Utility)</short_description>
+    <description>A sharpen version of CrackMapExec. This tool is made to simplify penetration testing of networks and to create a swiss army knife that is made for running on Windows which is often a requirement during insider threat simulation engagements.
+
+
+
+Reference:
+
+https://github.com/sliverarmory/SharpMapExec
+https://attack.mitre.org/techniques/T1588/002/</description>
+    <authored_by>dfir-ronin</authored_by>
+    <authored_date>2023-08-22T06:43:12Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="737d50de-91cd-4cc7-8985-3a4d556d4336">
+      <IndicatorItem id="ee338226-38d2-4c9d-b91a-c1d89e25d13d" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/md5" type="endpoint" />
+        <Content type="md5">cf35164b50b445b68f9524db309ffa71</Content>
+      </IndicatorItem>
+      <IndicatorItem id="0b3ecc38-3bd3-4bf4-85d5-8fa495f08396" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+        <Content type="string">SharpMapExec</Content>
+      </IndicatorItem>
+      <IndicatorItem id="fd7b819c-12dc-4523-b600-1ac2f404af78" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/fileName" type="endpoint" />
+        <Content type="string">SharpMapExec</Content>
+      </IndicatorItem>
+      <IndicatorItem id="8660b1ee-b6d2-48f7-92f0-eaabb4c7b0ab" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">/m:enable_winrm</Content>
+      </IndicatorItem>
+      <IndicatorItem id="45df886f-eff2-44ff-830a-c53979636036" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">/m:disable_pslockdown</Content>
+      </IndicatorItem>
+      <IndicatorItem id="698e2226-f07a-4751-8b38-8ab580b04b7d" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">/m:check_pslogging</Content>
+      </IndicatorItem>
+      <IndicatorItem id="b2ccac63-c049-47d0-af8c-f7c40ac24cb5" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">ntlm reg32</Content>
+      </IndicatorItem>
+      <IndicatorItem id="1710fef2-05a5-4ded-81bb-b7e732805346" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">kerberos reg32</Content>
+      </IndicatorItem>
+      <IndicatorItem id="049e29eb-dfa9-43c8-b3cd-98f4625f7270" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">ntlm smb</Content>
+      </IndicatorItem>
+      <IndicatorItem id="7700866a-7386-4ad0-a39a-f1cfa7530822" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">kerberos smb</Content>
+      </IndicatorItem>
+      <IndicatorItem id="5df1e175-966f-44fb-bd57-194b1c625557" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">ntlm winrm</Content>
+      </IndicatorItem>
+      <IndicatorItem id="53b6691e-7b66-4867-8789-d40019a8b0d1" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">kerberos winrm</Content>
+      </IndicatorItem>
+      <IndicatorItem id="54dcce87-2b17-4a6b-b0b1-d19793a88204" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">/m:exec /a:</Content>
+      </IndicatorItem>
+      <IndicatorItem id="1e23b279-1a95-4b5c-92b6-94e18217581b" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">/m:comsvcs</Content>
+      </IndicatorItem>
+      <IndicatorItem id="506c3793-3490-4919-9034-2046f16ebf3c" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">/m:secrets</Content>
+      </IndicatorItem>
+      <IndicatorItem id="1594e503-71fc-45ca-8ff0-9f7671f12d47" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">/m:assembly</Content>
+      </IndicatorItem>
+      <IndicatorItem id="4655c0a2-ee73-486a-adf1-6902f5813d70" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">/m:download</Content>
+      </IndicatorItem>
+      <IndicatorItem id="20f3fb20-1a2a-412b-b2d5-86dab070fa98" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">/m:upload</Content>
+      </IndicatorItem>
+      <IndicatorItem id="a0896bc3-1527-414c-a366-542d22849750" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">kerbspray</Content>
+      </IndicatorItem>
+      <IndicatorItem id="cf578380-b11b-40e3-962e-718a142faf77" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">ntlm domain /user:</Content>
+      </IndicatorItem>
+      <IndicatorItem id="3a0dff0e-911f-49c6-b7f0-d48b42da527e" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">kerberos ldap</Content>
+      </IndicatorItem>
+      <IndicatorItem id="3c2be6a6-8a49-4889-8984-3fc592d3747f" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">/m:spraydata  </Content>
+      </IndicatorItem>
+      <IndicatorItem id="cfb17e5c-e5c9-4f33-833c-5ef193319bd6" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">/m:shares</Content>
+      </IndicatorItem>
+      <IndicatorItem id="21613a47-0f3b-4be0-9bef-7fb8539c835e" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/md5" type="endpoint" />
+        <Content type="md5">cf35164b50b445b68f9524db309ffa71</Content>
+      </IndicatorItem>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>

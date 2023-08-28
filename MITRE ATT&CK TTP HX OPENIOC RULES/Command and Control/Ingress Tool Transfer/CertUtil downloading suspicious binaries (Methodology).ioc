@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="f96e5d84-070d-4300-ab52-810da726f580" last-modified="2023-05-01T08:31:03Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>CertUtil downloading suspicious binaries (Methodology)</short_description>
+    <description>Adversaries often bypass security controls by using the Windows Certificate Utility (certutil.exe) to download malicious code.
+
+MITRE ATT&amp;CK REFERENCE: 
+https://attack.mitre.org/software/S0160/ 
+https://attack.mitre.org/techniques/T1105/</description>
+    <authored_by>dfir-ronin</authored_by>
+    <authored_date>2023-05-01T08:31:03Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="7fdce117-7167-4107-b3b0-5d8dc4b6eb17">
+      <Indicator operator="AND" id="8583dccd-2a0a-481a-8c64-a10a617b889d">
+        <IndicatorItem id="59cd04ea-fdd4-4255-8806-68266eb09b7e" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+          <Content type="string">certutil.exe</Content>
+        </IndicatorItem>
+        <IndicatorItem id="0dea0f8e-50e6-43ef-ad19-3ebe092b8756" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">split</Content>
+        </IndicatorItem>
+        <IndicatorItem id="b40111bf-c427-4629-8d0b-1a852f1f88e6" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">urlcache</Content>
+        </IndicatorItem>
+      </Indicator>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>

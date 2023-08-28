@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="4841b231-0a5d-4e4b-990f-78e61004b1d1" last-modified="2023-06-20T07:05:25Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>Suspicious image load (taskschd.dll) by Office process (Methodology)</short_description>
+    <description>Identifies a suspicious image load (taskschd.dll) from an unusual processes. This behavior may indicate adversarial activity where a scheduled task is configured via Windows Component Object Model (COM). This technique can be used to configure persistence and evade monitoring by avoiding the usage of the traditional Windows binary (schtasks.exe) used to manage scheduled tasks.
+
+
+MITRE ATT&amp;CK REFERENCE: https://attack.mitre.org/techniques/T1053/005/
+
+</description>
+    <authored_by>dfir-ronin</authored_by>
+    <authored_date>2023-06-20T07:05:25Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="b03af938-3f87-4ade-9394-19176a9b85b3">
+      <Indicator operator="AND" id="af96bcaa-3eef-4dba-b34f-60bfc4d3a2b0">
+        <IndicatorItem id="646cd974-68f1-4e03-b145-f9d62a1952d2" condition="is" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/imageLoadEvent/fileName" type="endpoint" />
+          <Content type="string">taskschd.dll</Content>
+        </IndicatorItem>
+        <Indicator operator="OR" id="b0ca15ea-8234-4336-af82-8b23b6925109">
+          <IndicatorItem id="b8526a14-fdf1-43fa-b17d-d1ec3529e6ed" condition="is" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/imageLoadEvent/process" type="endpoint" />
+            <Content type="string">WINWORD.EXE</Content>
+          </IndicatorItem>
+          <IndicatorItem id="aed59cf5-8eaa-49a4-9936-232c3354c8d4" condition="is" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/imageLoadEvent/process" type="endpoint" />
+            <Content type="string">EXCEL.EXE</Content>
+          </IndicatorItem>
+          <IndicatorItem id="d497df4b-efea-4f07-be25-8b08a5ee7ad0" condition="is" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/imageLoadEvent/process" type="endpoint" />
+            <Content type="string">POWERPNT.EXE</Content>
+          </IndicatorItem>
+          <IndicatorItem id="4291c38a-c880-4012-9a0c-55351058e375" condition="is" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/imageLoadEvent/process" type="endpoint" />
+            <Content type="string">MSPUB.EXE</Content>
+          </IndicatorItem>
+          <IndicatorItem id="da93ac5e-e5f0-4dd5-9183-1beb499eac12" condition="is" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/imageLoadEvent/process" type="endpoint" />
+            <Content type="string">MSACCESS.EXE</Content>
+          </IndicatorItem>
+        </Indicator>
+      </Indicator>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>

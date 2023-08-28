@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="2e0dce0f-dc55-4987-9e5b-466c2b40f597" last-modified="2023-08-16T06:01:39Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>Suspicious Execution of mshta.exe</short_description>
+    <description>Threat actors may use this \W*\\\2\\\msh*e instead of mentioning mshta.exe, to evade detection.
+
+Reference: 
+https://twitter.com/Securityinbits/status/1691081404191260674
+https://attack.mitre.org/techniques/T1027/010/</description>
+    <authored_by>https://attack.mitre.org/techniques/T1649/</authored_by>
+    <authored_date>2023-08-16T06:01:39Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="12704ae9-ec0e-4043-b0fd-ab30d82758fb">
+      <Indicator operator="AND" id="fa518621-0aee-42d3-a314-bbb4bc33a212">
+        <IndicatorItem id="b5bf7a4f-1820-4171-a3e9-69e2214d8dea" condition="is" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+          <Content type="string">powershell.exe</Content>
+        </IndicatorItem>
+        <IndicatorItem id="e7f5d3ef-7168-4292-87be-04641c47b38d" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">\W*\\2\\msh*e</Content>
+        </IndicatorItem>
+      </Indicator>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>

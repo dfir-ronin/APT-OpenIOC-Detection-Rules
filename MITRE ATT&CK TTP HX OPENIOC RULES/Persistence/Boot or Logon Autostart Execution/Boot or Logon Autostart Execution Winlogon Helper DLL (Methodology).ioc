@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="4542250e-6a84-4cb4-8037-3d22aa77c632" last-modified="2023-04-13T05:08:42Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>Boot or Logon Autostart Execution: Winlogon Helper DLL (Methodology)</short_description>
+    <description>Adversaries may abuse features of Winlogon to execute DLLs and/or executables when a user logs in.
+
+MITRE ATT&amp;CK Reference: https://attack.mitre.org/techniques/T1547/004/</description>
+    <authored_by>dfir-ronin</authored_by>
+    <authored_date>2023-04-06T09:41:13Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="991bc609-2409-49ac-830f-9a38a3f03640">
+      <Indicator operator="AND" id="0f9eebad-dba0-4436-894a-82a981842722">
+        <IndicatorItem id="d7c7f526-6e6a-4c8b-9ec8-5091b3d3e7f7" condition="ends-with" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/regKeyEvent/path" type="endpoint" />
+          <Content type="string">\Windows NT\CurrentVersion\Winlogon\Shell</Content>
+        </IndicatorItem>
+        <Indicator operator="OR" id="c93fd4fd-6bcf-4d3e-a7e2-27aec2009a23">
+          <IndicatorItem id="6d774d62-d285-4068-bc67-cf3133d16d3d" condition="is" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/regKeyEvent/eventType" type="endpoint" />
+            <Content type="int">1</Content>
+          </IndicatorItem>
+          <IndicatorItem id="d815a27b-df25-45f3-9261-f2617496cce2" condition="is" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/regKeyEvent/eventType" type="endpoint" />
+            <Content type="int">3</Content>
+          </IndicatorItem>
+        </Indicator>
+        <Indicator operator="OR" id="5e796395-54c1-4085-a706-3408e92a555f">
+          <Indicator operator="AND" id="a9f95e21-8966-4bbd-aaf3-b9be93a43e9e">
+            <IndicatorItem id="890ad89b-139e-419a-a39b-721714202df4" condition="is" preserve-case="false" negate="true">
+              <Context document="eventItem" search="eventItem/regKeyEvent/processPath" type="endpoint" />
+              <Content type="string">C:\$WINDOWS.~BT\Sources</Content>
+            </IndicatorItem>
+            <IndicatorItem id="1bba771c-30d3-444b-a7ed-fd3d19fc596e" condition="is" preserve-case="false" negate="true">
+              <Context document="eventItem" search="eventItem/regKeyEvent/process" type="endpoint" />
+              <Content type="string">SetupHost.exe</Content>
+            </IndicatorItem>
+          </Indicator>
+        </Indicator>
+      </Indicator>
+      <Indicator operator="AND" id="0a85ada1-d14f-462e-a01d-a1d5d997fbec">
+        <IndicatorItem id="d90fd1bb-c012-45a6-9c6a-83ec3d2f65b6" condition="ends-with" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/regKeyEvent/path" type="endpoint" />
+          <Content type="string">\Windows NT\CurrentVersion\Winlogon\userinit</Content>
+        </IndicatorItem>
+        <Indicator operator="OR" id="2e1b311b-c969-4c52-921a-da3d856dc334">
+          <IndicatorItem id="7579b17c-d11f-4c6f-b091-6bc6b1782a73" condition="is" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/regKeyEvent/eventType" type="endpoint" />
+            <Content type="int">3</Content>
+          </IndicatorItem>
+          <IndicatorItem id="395c5aa0-a679-4dff-bc86-8119a25cbc46" condition="is" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/regKeyEvent/eventType" type="endpoint" />
+            <Content type="int">1</Content>
+          </IndicatorItem>
+        </Indicator>
+        <Indicator operator="OR" id="885293cc-58a2-4e85-88d2-06ac25a4c67e">
+          <Indicator operator="AND" id="61318e42-77b4-4eac-b7b0-3c874f9bd191">
+            <IndicatorItem id="01b2b1d4-94ff-4778-a165-c0fb9b1e1576" condition="contains" preserve-case="false" negate="true">
+              <Context document="eventItem" search="eventItem/regKeyEvent/process" type="endpoint" />
+              <Content type="string">SetupHost.exe</Content>
+            </IndicatorItem>
+            <IndicatorItem id="9966ddc4-cbaa-4c1e-871e-677f31cb994c" condition="is" preserve-case="false" negate="true">
+              <Context document="eventItem" search="eventItem/regKeyEvent/processPath" type="endpoint" />
+              <Content type="string">C:\$WINDOWS.~BT\Sources</Content>
+            </IndicatorItem>
+          </Indicator>
+        </Indicator>
+        <Indicator operator="OR" id="85205227-dab5-4683-9d14-c5143cce6b6e">
+          <Indicator operator="AND" id="06ba7a4a-19bb-4a98-9b64-7a0c270970ef">
+            <IndicatorItem id="3183d9e9-916b-4616-92ee-bb6b081ba97f" condition="contains" preserve-case="false" negate="true">
+              <Context document="eventItem" search="eventItem/regKeyEvent/text" type="endpoint" />
+              <Content type="string">CaptureService\Screen Capture Module\wcapwlistener.exe</Content>
+            </IndicatorItem>
+            <IndicatorItem id="85a8056e-df4d-45cf-a899-173d59835c77" condition="is" preserve-case="false" negate="true">
+              <Context document="eventItem" search="eventItem/regKeyEvent/process" type="endpoint" />
+              <Content type="string">wmiprvse.exe</Content>
+            </IndicatorItem>
+            <IndicatorItem id="a1a05832-d308-4663-a35e-34b22648766c" condition="is" preserve-case="false" negate="true">
+              <Context document="eventItem" search="eventItem/regKeyEvent/processPath" type="endpoint" />
+              <Content type="string">C:\Windows\System32\wbem</Content>
+            </IndicatorItem>
+          </Indicator>
+        </Indicator>
+      </Indicator>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="9a38c574-1a1d-4786-a1c0-741ca1b34d03" last-modified="2023-08-22T08:54:29Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>SharpUp (Utility)</short_description>
+    <description>SharpUp is a C# port of various PowerUp functionality. 
+
+
+
+
+
+Reference:
+
+https://github.com/sliverarmory/SharpUp
+
+https://attack.mitre.org/software/S0194/
+https://attack.mitre.org/tactics/TA0004/</description>
+    <authored_by>dfir-ronin</authored_by>
+    <authored_date>2023-08-22T08:54:29Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="c088f341-87ab-4e0e-9bd9-39f0f45de05e">
+      <IndicatorItem id="5b689d81-4f43-44df-ac75-1086b95308c8" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/md5" type="endpoint" />
+        <Content type="md5">468b028514a82f77fd5ffc1e7ffc5622</Content>
+      </IndicatorItem>
+      <IndicatorItem id="1d67313c-33e4-4ff0-8e29-387685e94cc9" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/fileName" type="endpoint" />
+        <Content type="string">SharpUp</Content>
+      </IndicatorItem>
+      <IndicatorItem id="4c0c30db-2db7-4383-8ca2-da30dd748fb2" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+        <Content type="string">SharpUp</Content>
+      </IndicatorItem>
+      <IndicatorItem id="24aea248-2b33-4d65-9497-1d1eb96a5088" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/md5" type="endpoint" />
+        <Content type="md5">468b028514a82f77fd5ffc1e7ffc5622</Content>
+      </IndicatorItem>
+      <IndicatorItem id="6b14831d-abb1-471f-a50c-939551ad011d" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">SharpUp.exe audit</Content>
+      </IndicatorItem>
+      <IndicatorItem id="f6cd8357-f624-4003-bf2b-9ffdd4a90ed1" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">AlwaysInstallElevated</Content>
+      </IndicatorItem>
+      <IndicatorItem id="e0602bd3-3206-40ed-aa69-05bc558940a8" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">CachedGPPPassword</Content>
+      </IndicatorItem>
+      <IndicatorItem id="73e35571-d5d1-43c5-a3cd-00b3be326cb7" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">DomainGPPPassword</Content>
+      </IndicatorItem>
+      <IndicatorItem id="f3b4f79e-4dba-471c-a7bf-1d293cd8aeb8" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">HijackablePaths</Content>
+      </IndicatorItem>
+      <IndicatorItem id="efeaa11e-c813-462d-bb81-14f802bd149a" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">McAfeeSitelistFiles</Content>
+      </IndicatorItem>
+      <IndicatorItem id="2d398edb-6f6f-487e-a045-96f46fda2884" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">ModifiableScheduledTask</Content>
+      </IndicatorItem>
+      <IndicatorItem id="91a8aac8-ea82-4e35-9785-7cafad2fffa4" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">ModifiableServiceBinaries</Content>
+      </IndicatorItem>
+      <IndicatorItem id="22803f8c-9971-4881-8c45-2ade85c1ae78" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">ModifiableServiceRegistryKeys</Content>
+      </IndicatorItem>
+      <IndicatorItem id="e66cbf78-a78a-4f5c-b6e1-655f68be340f" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">ModifiableServices</Content>
+      </IndicatorItem>
+      <IndicatorItem id="3fca3432-bf51-476d-a82d-86430bc81e5e" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">ProcessDLLHijack</Content>
+      </IndicatorItem>
+      <IndicatorItem id="0fe20dbe-3654-4d47-8da1-cb3689b22ae8" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">RegistryAutoLogons</Content>
+      </IndicatorItem>
+      <IndicatorItem id="501f56fb-e29d-464b-8ef0-5f891bff8e96" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">RegistryAutoruns</Content>
+      </IndicatorItem>
+      <IndicatorItem id="1d9f9299-ca4a-4859-83ad-0d1427b92607" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">TokenPrivileges</Content>
+      </IndicatorItem>
+      <IndicatorItem id="305d3572-91f3-454f-abac-a1eb5c2bfab4" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">UnattendedInstallFiles</Content>
+      </IndicatorItem>
+      <IndicatorItem id="667431fa-01dd-4cac-b033-5a268b2c6343" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">UnquotedServicePath</Content>
+      </IndicatorItem>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>

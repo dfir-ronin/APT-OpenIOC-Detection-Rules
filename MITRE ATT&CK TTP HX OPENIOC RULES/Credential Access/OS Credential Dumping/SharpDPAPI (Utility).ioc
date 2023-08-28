@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="80abc562-97b8-4961-b907-bc8c29c76e2c" last-modified="2023-08-22T06:57:25Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>SharpDPAPI (Utility)</short_description>
+    <description>SharpDPAPI is a C# port of some DPAPI functionality from @gentilkiwi's Mimikatz project.
+
+
+
+Reference:
+
+https://github.com/sliverarmory/SharpDPAPI#sharpdpapi-command-line-usage
+https://attack.mitre.org/techniques/T1003/</description>
+    <authored_by>dfir-ronin</authored_by>
+    <authored_date>2023-08-22T06:57:25Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="8c6eb05f-cb00-4c3d-86eb-7367a35f798b">
+      <IndicatorItem id="e778684f-5cc5-4974-bcf9-18a18ebe9c14" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/md5" type="endpoint" />
+        <Content type="md5">0429b5affb8361f1f93af94e729d263b</Content>
+      </IndicatorItem>
+      <IndicatorItem id="b0a6f555-abe6-4365-893d-875f388cc799" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/fileName" type="endpoint" />
+        <Content type="string">SharpDPAPI</Content>
+      </IndicatorItem>
+      <IndicatorItem id="84e77a77-1cd1-4f0e-9931-bac91f5ed5da" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+        <Content type="string">SharpDPAPI</Content>
+      </IndicatorItem>
+      <IndicatorItem id="eae27f14-8e43-4d3d-9276-a46ae2074e2f" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">SharpDPAPI backupkey</Content>
+      </IndicatorItem>
+      <IndicatorItem id="b6fb77c0-293c-42b8-b6bc-98bfaa75ae13" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">search /type:</Content>
+      </IndicatorItem>
+      <IndicatorItem id="b0a706c7-630a-4b31-842b-136aaae43407" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">machinemasterkeys</Content>
+      </IndicatorItem>
+      <IndicatorItem id="14d50ba1-9579-44f2-8032-adc3dc31ff44" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">machinecredentials</Content>
+      </IndicatorItem>
+      <IndicatorItem id="6ab4ec1d-9b06-4ce7-b234-631f4c545254" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">machinevaults</Content>
+      </IndicatorItem>
+      <IndicatorItem id="96633f87-6a3a-40f0-84e7-a9d90d327279" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">machinetriage</Content>
+      </IndicatorItem>
+      <IndicatorItem id="dc9d93e8-256d-42e2-b0ac-ee77ce00478f" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">SharpDPAPI.exe vaults</Content>
+      </IndicatorItem>
+      <IndicatorItem id="5a5ecbd3-f5fc-420e-9fae-78bcb63e8077" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">SharpDPAPI.exe credentials</Content>
+      </IndicatorItem>
+      <IndicatorItem id="701ee59b-ed48-43fa-a67c-e21eb2ae40f4" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">rdg /unprotect</Content>
+      </IndicatorItem>
+      <IndicatorItem id="d63bb034-5693-44bf-9cdb-1359096b91ae" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">rdg /pvk:</Content>
+      </IndicatorItem>
+      <IndicatorItem id="f552b466-2795-42a9-ad43-321272db8b94" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">keepass /unprotect</Content>
+      </IndicatorItem>
+      <IndicatorItem id="df5a3078-293f-4066-8f1e-f9ed98418cb2" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">certificates /pvk:</Content>
+      </IndicatorItem>
+      <IndicatorItem id="f068e081-cee6-466c-8825-4a06255826d1" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">blob /target:</Content>
+      </IndicatorItem>
+      <IndicatorItem id="230ae922-811e-4113-b760-3f23afd520f2" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">/consoleoutfile:</Content>
+      </IndicatorItem>
+      <IndicatorItem id="2f67b1ec-778d-4c44-b657-baf0c4aaf36e" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/md5" type="endpoint" />
+        <Content type="md5">0429b5affb8361f1f93af94e729d263b</Content>
+      </IndicatorItem>
+      <Indicator operator="AND" id="8864a512-23ae-4c5e-91ed-7a070aafd804">
+        <IndicatorItem id="cecdee2e-ce5f-4307-b5c4-1eec54985f5e" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">backupkey</Content>
+        </IndicatorItem>
+        <Indicator operator="OR" id="aee8b2c3-05ac-4f34-ba83-4df2a6e8d9a1">
+          <IndicatorItem id="0cce8dd4-c1a7-4516-a920-1c9c9b070d6b" condition="contains" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+            <Content type="string">/server:</Content>
+          </IndicatorItem>
+          <IndicatorItem id="ade7e12c-cc7f-4a05-a273-e042f88338fb" condition="contains" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+            <Content type="string">/file:</Content>
+          </IndicatorItem>
+        </Indicator>
+      </Indicator>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="9a38c574-1a1d-4786-a1c0-741ca1b34d03" last-modified="2023-08-22T08:54:29Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>sharpsh (Utility)</short_description>
+    <description>C# .Net Framework program that uses RunspaceFactory for Powershell command execution.
+
+Reference:
+https://github.com/sliverarmory/sharpsh
+https://attack.mitre.org/techniques/T1059/001/</description>
+    <authored_by>dfir-ronin</authored_by>
+    <authored_date>2023-08-22T08:54:29Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="c088f341-87ab-4e0e-9bd9-39f0f45de05e">
+      <IndicatorItem id="5b689d81-4f43-44df-ac75-1086b95308c8" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/md5" type="endpoint" />
+        <Content type="md5">0da1be72e3ca31e9765dd857d748b76f</Content>
+      </IndicatorItem>
+      <IndicatorItem id="1d67313c-33e4-4ff0-8e29-387685e94cc9" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/fileName" type="endpoint" />
+        <Content type="string">sharpsh</Content>
+      </IndicatorItem>
+      <IndicatorItem id="4c0c30db-2db7-4383-8ca2-da30dd748fb2" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+        <Content type="string">sharpsh</Content>
+      </IndicatorItem>
+      <IndicatorItem id="24aea248-2b33-4d65-9497-1d1eb96a5088" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/md5" type="endpoint" />
+        <Content type="md5">0da1be72e3ca31e9765dd857d748b76f</Content>
+      </IndicatorItem>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>

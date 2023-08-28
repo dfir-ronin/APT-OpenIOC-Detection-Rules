@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="37ace53e-ac7e-4e6c-ae85-fb823a18352a" last-modified="2023-06-01T09:15:31Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>VNC (Utility)</short_description>
+    <description>An adversary may use legitimate desktop support and remote access software, such as Team Viewer, AnyDesk, Go2Assist, LogMein, AmmyyAdmin, etc, to establish an interactive command and control channel to target systems within networks. 
+
+MITREATT&amp;CK REFERENCE: https://attack.mitre.org/techniques/T1219/</description>
+    <authored_by>dfir-ronin</authored_by>
+    <authored_date>2023-06-01T09:15:31Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="b9d319ab-3922-4bcf-83d9-5088b7e3a5ee">
+      <IndicatorItem id="b8226b65-3948-44ae-afea-a0a0498558f7" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/fileName" type="endpoint" />
+        <Content type="string">vncviewer.exe</Content>
+      </IndicatorItem>
+      <IndicatorItem id="07bae7da-3846-4770-8285-dcd5a5f75440" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/fileName" type="endpoint" />
+        <Content type="string">winvnc.exe</Content>
+      </IndicatorItem>
+      <IndicatorItem id="e79cc484-e35d-43ed-8d6c-46b75a5dcb75" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/fileName" type="endpoint" />
+        <Content type="string">vncserver.conf</Content>
+      </IndicatorItem>
+      <IndicatorItem id="8d01100c-ddf5-4d20-8302-5771f4f3010a" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/fileName" type="endpoint" />
+        <Content type="string">vncviewer.ini</Content>
+      </IndicatorItem>
+      <IndicatorItem id="aa1e04db-66ad-4a8d-b02d-c17a447e188d" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/fileName" type="endpoint" />
+        <Content type="string">vnc.log</Content>
+      </IndicatorItem>
+      <IndicatorItem id="772d3998-1254-45e7-9c3b-cad00258451a" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/regKeyEvent/keyPath" type="endpoint" />
+        <Content type="string">\Software\RealVNC</Content>
+      </IndicatorItem>
+      <IndicatorItem id="a09aa2dc-4db2-488f-bf4e-409687472c8a" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+        <Content type="string">vncviewer.exe</Content>
+      </IndicatorItem>
+      <IndicatorItem id="235ffc9a-3d9c-46c0-845a-03925ab62215" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+        <Content type="string">winvnc.exe</Content>
+      </IndicatorItem>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="6eacf507-44c9-4692-844c-5abf68090fa8" last-modified="2023-04-26T08:07:31Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>Suspicious WMI execution (Methodology)</short_description>
+    <description>This technique is used by adversaries or threat actor to execute their malicious payload in local or remote host.
+
+MITRE ATT&amp;CK REFERENCE: https://attack.mitre.org/techniques/T1047/</description>
+    <authored_by>dfir-ronin</authored_by>
+    <authored_date>2023-04-26T08:07:31Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="338d2c2a-e51a-49aa-a255-286f2eb86714">
+      <Indicator operator="AND" id="e82c5dc2-e17d-4f91-ae76-a058cec85fa3">
+        <IndicatorItem id="a46b3902-44fe-4d15-949d-a3686f6105a2" condition="is" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+          <Content type="string">wmic.exe</Content>
+        </IndicatorItem>
+        <IndicatorItem id="ebb2191d-dc9e-44c3-addc-25f11daccaa9" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">node:</Content>
+        </IndicatorItem>
+        <IndicatorItem id="926aae5b-841f-47ff-8ba7-f55a2f8e598c" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">process</Content>
+        </IndicatorItem>
+        <IndicatorItem id="f9c820d3-1bb8-4334-9749-b63862b423dc" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">call</Content>
+        </IndicatorItem>
+        <IndicatorItem id="0b1c9c31-84c9-424b-89ac-ae112da07161" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">create</Content>
+        </IndicatorItem>
+      </Indicator>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>

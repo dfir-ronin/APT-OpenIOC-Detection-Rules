@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="dbcc3be7-1bcf-495b-ae0e-6bd5e8ee1c12" last-modified="2023-08-09T07:57:19Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>Advanced IP/Port Scanner (Utility)</short_description>
+    <description>Adversaries may attempt to get a listing of services running on remote hosts and local network infrastructure devices, including those that may be vulnerable to remote software exploitation. Common methods to acquire this information include port and/or vulnerability scans using tools that are brought onto a system.
+
+Reference: https://attack.mitre.org/versions/v13/techniques/T1046/</description>
+    <authored_by>dfir-ronin</authored_by>
+    <authored_date>2023-08-09T07:57:19Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="747d5302-5501-47cc-9cbe-5a1ed8bda1f1">
+      <IndicatorItem id="221ee08a-797e-472b-8af1-e9d47912cf99" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/fullPath" type="endpoint" />
+        <Content type="string">C:\Windows\Prefetch\ADVANCED_IP_SCANNER</Content>
+      </IndicatorItem>
+      <IndicatorItem id="75fff9c2-a456-485f-8066-ffb0abbb1376" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/fullPath" type="endpoint" />
+        <Content type="string">\AppData\Local\Temp\Advanced IP Scanner</Content>
+      </IndicatorItem>
+      <IndicatorItem id="6c1982e1-5a2d-4dfd-ba27-d5c1274cd3e9" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/fileName" type="endpoint" />
+        <Content type="string">media1.cab</Content>
+      </IndicatorItem>
+      <IndicatorItem id="5b4cff5e-a646-4f5b-9b4e-43f5ac5a02bc" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/fileName" type="endpoint" />
+        <Content type="string">details_panel_ru_ru.tpl</Content>
+      </IndicatorItem>
+      <IndicatorItem id="680978ee-b59c-4caa-9499-5ad94ed52550" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/regKeyEvent/keyPath" type="endpoint" />
+        <Content type="string">\SOFTWARE\Microsoft\Wow64\x86\Advanced_IP_Scanner</Content>
+      </IndicatorItem>
+      <IndicatorItem id="458b054a-7d71-4a39-8c2b-ef2e956d7f11" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/regKeyEvent/keyPath" type="endpoint" />
+        <Content type="string">\Software\Famatech\</Content>
+      </IndicatorItem>
+      <IndicatorItem id="44319d1b-c680-4d39-aad8-b865269331c6" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/md5" type="endpoint" />
+        <Content type="md5">5537c708edb9a2c21f88e34e8a0f1744</Content>
+      </IndicatorItem>
+      <IndicatorItem id="c12ddfad-c496-4248-b5dd-1f83e0d5706a" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/md5" type="endpoint" />
+        <Content type="md5">b3411927cc7cd05e02ba64b2a789bbde</Content>
+      </IndicatorItem>
+      <IndicatorItem id="149bfc50-80a8-4f19-8e2c-ab4b7e8ccc1f" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/fullPath" type="endpoint" />
+        <Content type="string">ADVANCED_PORT_SCANNER</Content>
+      </IndicatorItem>
+      <IndicatorItem id="b9c4e8d1-3ca0-456f-9188-142e9ada1038" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/md5" type="endpoint" />
+        <Content type="md5">6a58b52b184715583cda792b56a0a1ed</Content>
+      </IndicatorItem>
+      <IndicatorItem id="b12e4d03-fab8-4890-b988-aae68f286eb5" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/md5" type="endpoint" />
+        <Content type="md5">7dbf077665f632bea55c0d88b7f301a3</Content>
+      </IndicatorItem>
+      <IndicatorItem id="6b6b694d-10c4-4a2a-b814-6058a979bff6" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/md5" type="endpoint" />
+        <Content type="md5">8e36eca249c08969ef5c0822928416d6</Content>
+      </IndicatorItem>
+      <IndicatorItem id="ad7a5cdc-1f3c-4f4d-b644-217c27b79f14" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/md5" type="endpoint" />
+        <Content type="md5">0cd04d5fdefd5e7b2a38ab9ec94742e4</Content>
+      </IndicatorItem>
+      <IndicatorItem id="cd4c1436-2360-4a4f-a750-b56f0f1200d4" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/md5" type="endpoint" />
+        <Content type="md5">4fdabe571b66ceec3448939bfb3ffcd1</Content>
+      </IndicatorItem>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>

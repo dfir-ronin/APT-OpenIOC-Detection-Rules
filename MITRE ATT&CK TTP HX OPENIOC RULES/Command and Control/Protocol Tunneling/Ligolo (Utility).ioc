@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="7e8a5e19-ab23-45da-8a83-ebd50b64e83d" last-modified="2023-08-10T09:49:34Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>Ligolo (Utility)</short_description>
+    <description>An advanced, yet simple, tunneling tool that uses a TUN interface. Adversaries may tunnel network communications to and from a victim system within a separate protocol to avoid detection/network filtering and/or enable access to otherwise unreachable systems.
+
+Reference: 
+https://attack.mitre.org/techniques/T1572/</description>
+    <authored_by>dfir-ronin</authored_by>
+    <authored_date>2023-08-10T09:49:34Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="347099c2-b4eb-4801-b82c-19777f27357d">
+      <IndicatorItem id="b8343036-c417-4c0c-87c1-b5813a9d3ebd" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/md5" type="endpoint" />
+        <Content type="md5">98ef1b1800c0433f86f69839bfe110d1</Content>
+      </IndicatorItem>
+      <IndicatorItem id="e06ca14b-3baa-4332-a60e-0b13c723e12c" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/md5" type="endpoint" />
+        <Content type="md5">aabddfad4f927f1170f7b0c91bd9bc25</Content>
+      </IndicatorItem>
+      <IndicatorItem id="7cc34d02-7d9a-46f4-9739-11b63c65ea60" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/md5" type="endpoint" />
+        <Content type="md5">1f437347917f0a4ced71fb7df53b1a05</Content>
+      </IndicatorItem>
+      <IndicatorItem id="7372b78c-2bcc-437f-9d93-14705b659ade" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/md5" type="endpoint" />
+        <Content type="md5">421a4a70c5341c86b26715c5bc561a35</Content>
+      </IndicatorItem>
+      <IndicatorItem id="68ceaadd-381c-4fb9-82dd-22d67c790d0d" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/md5" type="endpoint" />
+        <Content type="md5">8920e02147afefc53d0c098afa0c8d10</Content>
+      </IndicatorItem>
+      <IndicatorItem id="e2028298-b09c-4d85-98bc-cc7efd5782a2" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/md5" type="endpoint" />
+        <Content type="md5">2d27211b578dd8233246a20c07ac6e16</Content>
+      </IndicatorItem>
+      <Indicator operator="AND" id="3cebaa64-656a-4391-898b-7502b311fc9d">
+        <IndicatorItem id="54186874-354a-4c5c-bb79-6d0ef693acdd" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+          <Content type="string">agent.exe</Content>
+        </IndicatorItem>
+        <IndicatorItem id="e68346b9-2088-4ffe-9765-f1374547b965" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">agent</Content>
+        </IndicatorItem>
+        <IndicatorItem id="1d8700c9-e754-4f56-a30e-6565c7a1db7d" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">-connect</Content>
+        </IndicatorItem>
+        <IndicatorItem id="10999c28-1ac0-4cbd-99f1-7ca85553dacc" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">:</Content>
+        </IndicatorItem>
+      </Indicator>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>

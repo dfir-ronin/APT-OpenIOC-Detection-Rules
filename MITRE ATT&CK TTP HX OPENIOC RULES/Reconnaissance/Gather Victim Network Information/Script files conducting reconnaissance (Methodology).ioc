@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="afb583f4-9507-4645-a47d-3ebd29f58aa1" last-modified="2023-04-06T05:25:00Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>Script files conducting reconnaissance (Methodology)</short_description>
+    <description>Script files conducting reconnaissance with whoami and writing the output to a file.
+
+Reference: https://redcanary.com/threat-detection-report/threats/socgholish/</description>
+    <authored_by>dfir-ronin</authored_by>
+    <authored_date>2023-04-06T05:25:00Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="a5d57bca-02bd-419f-8fed-bd577d5dff52">
+      <Indicator operator="AND" id="5cbd809b-a201-4224-b93b-caf35c998aa3">
+        <IndicatorItem id="62d1d14f-7674-4f5a-ad0b-4b42e3a54bc1" condition="is" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/parentProcess" type="endpoint" />
+          <Content type="string">wscript.exe</Content>
+        </IndicatorItem>
+        <IndicatorItem id="0abb188a-3b24-4f46-975c-182958d0af2b" condition="is" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+          <Content type="string">cmd.exe</Content>
+        </IndicatorItem>
+        <IndicatorItem id="26fd7c7d-e3d9-4bac-be87-183829d1a84c" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">whoami /all &gt;&gt;</Content>
+        </IndicatorItem>
+      </Indicator>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>

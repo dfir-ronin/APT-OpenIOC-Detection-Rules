@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="3d1b3d2a-df9c-4a5a-8aca-6828de2c1e78" last-modified="2023-08-17T12:38:34Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>SharpWMI (Utility)</short_description>
+    <description>SharpWMI is a C# implementation of various WMI functionality. This includes local/remote WMI queries, remote WMI process creation through win32_process, and remote execution of arbitrary VBS through WMI event subscriptions. Alternate credentials are also supported for remote methods.
+
+Reference:
+https://github.com/GhostPack/SharpWMI#sharpwmi
+https://attack.mitre.org/techniques/T1047/</description>
+    <authored_by>dfir-ronin</authored_by>
+    <authored_date>2023-08-17T12:38:34Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="5f0f1cba-d73b-4cb7-925d-c534fe074c2d">
+      <IndicatorItem id="4d35569e-2ccf-4ad4-99f3-4d4dcb4b4578" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/fileName" type="endpoint" />
+        <Content type="string">SharpWMI.exe</Content>
+      </IndicatorItem>
+      <IndicatorItem id="0281047e-9160-43a1-ac75-199bfd0f0204" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+        <Content type="string">SharpWMI.exe</Content>
+      </IndicatorItem>
+      <IndicatorItem id="122a2916-1190-4cc9-88e2-c30493dac7e5" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">SharpWMI.exe</Content>
+      </IndicatorItem>
+      <IndicatorItem id="36e00aaa-ab87-4449-908d-f360ce0a2b60" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">action=query</Content>
+      </IndicatorItem>
+      <IndicatorItem id="d08062e7-c51b-44a3-acc5-286e0405fc5a" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">action=loggedon</Content>
+      </IndicatorItem>
+      <IndicatorItem id="3509fbe2-6f60-4bf9-a911-8c4d8c894927" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">action=exec</Content>
+      </IndicatorItem>
+      <IndicatorItem id="67bbcf33-0ab9-4c05-938e-8be63aaa1cce" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">action=executevbs</Content>
+      </IndicatorItem>
+      <IndicatorItem id="4cdb17c7-79b1-436b-9248-56734bf38c46" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">action=upload</Content>
+      </IndicatorItem>
+      <IndicatorItem id="9e6e29e0-199e-43d1-ae0b-716699556d86" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">action=firewall</Content>
+      </IndicatorItem>
+      <IndicatorItem id="58651b70-f940-4065-8e53-3f03cd7b1281" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">action=ps</Content>
+      </IndicatorItem>
+      <IndicatorItem id="634610c6-afac-419d-9611-e15d5356f1b5" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">action=terminate</Content>
+      </IndicatorItem>
+      <IndicatorItem id="ce6d5b64-642e-454c-9723-198959f6aa9f" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">action=getenv</Content>
+      </IndicatorItem>
+      <IndicatorItem id="ee12a8ad-6173-4700-ad37-659b90ce78f4" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">action=install [computername=</Content>
+      </IndicatorItem>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>

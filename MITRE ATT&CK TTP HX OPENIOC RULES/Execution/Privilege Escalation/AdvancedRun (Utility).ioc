@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="23b61874-c58e-424a-a071-d0d0e71474f8" last-modified="2023-08-10T06:52:02Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>AdvancedRun (Utility)</short_description>
+    <description>AdvancedRun is a simple tool for Windows that allows you to run a program with different settings that you choose, including - low or high priority, start directory, main window state (Minimized/Maximized), run the program with different user or permissions, Operating system compatibility settings, and environment variables.
+
+
+
+Reference:
+
+https://www.nirsoft.net/utils/advanced_run.html
+
+https://attack.mitre.org/versions/v13/tactics/TA0004/</description>
+    <authored_by>dfir-ronin</authored_by>
+    <authored_date>2023-08-10T06:52:02Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="64f36990-2305-416c-9a10-1263ca318dea">
+      <IndicatorItem id="f0ad87c6-79f7-44df-a426-d0a252f32b73" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+        <Content type="string">advancedrun.exe</Content>
+      </IndicatorItem>
+      <IndicatorItem id="0fef1615-2410-4ca8-a5ae-1f35e40d8676" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/fileName" type="endpoint" />
+        <Content type="string">advancedrun.exe</Content>
+      </IndicatorItem>
+      <IndicatorItem id="d4938751-1689-48fa-b119-07a4bc43381e" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/md5" type="endpoint" />
+        <Content type="md5">3f44dd7f287da4a9a1be82e5178b7dc8</Content>
+      </IndicatorItem>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>

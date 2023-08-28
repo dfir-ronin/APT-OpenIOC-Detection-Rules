@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="e1d7d08f-fc43-48b9-bfdf-bd2d4eacaa2d" last-modified="2023-06-20T06:42:34Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>Scheduled Task creation using PowerShell cmdlets (Methodology)</short_description>
+    <description>Adversaries may abuse the Windows Task Scheduler to perform task scheduling for initial or recurring execution of malicious code. There are multiple ways to access the Task Scheduler in Windows.
+
+MITRE ATT&amp;CK REFERENCE: https://attack.mitre.org/techniques/T1053/005/</description>
+    <authored_by>dfir-ronin</authored_by>
+    <authored_date>2023-06-20T06:42:34Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="d33ece82-7476-428d-b4e5-4d5452c03df9">
+      <Indicator operator="AND" id="11ab4751-7b2d-464a-8900-2347165fe3b1">
+        <IndicatorItem id="8db2b384-593c-400b-aa47-bb289a7b5217" condition="is" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+          <Content type="string">powershell.exe</Content>
+        </IndicatorItem>
+        <Indicator operator="OR" id="afbfc855-6bf4-4bd5-8cf9-ccba8c1fa971">
+          <IndicatorItem id="2bda3836-e635-43a4-8669-5fbc1a025cbb" condition="contains" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+            <Content type="string">New-ScheduledTaskTrigger</Content>
+          </IndicatorItem>
+          <IndicatorItem id="4ae0d484-e550-439d-aa21-cbf63f99879c" condition="contains" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+            <Content type="string">New-ScheduledTaskAction</Content>
+          </IndicatorItem>
+          <IndicatorItem id="8138d2af-31bf-4461-b500-d5984da5ff3a" condition="contains" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+            <Content type="string">New-ScheduledTaskSettingsSet</Content>
+          </IndicatorItem>
+          <IndicatorItem id="a47cfe79-e88d-4b3a-b9ff-854c0a67b136" condition="contains" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+            <Content type="string">Register-ScheduledTask</Content>
+          </IndicatorItem>
+        </Indicator>
+      </Indicator>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>

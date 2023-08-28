@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="63dfcff2-7542-4f8c-9d5b-197d67df4bfe" last-modified="2023-04-13T09:45:52Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>cmd.exe executing a Windows shortcut (LNK) file (Methodology)</short_description>
+    <description>This rule detects the execution of cmd.exe along with a command line containing .lnk and suspicious child processes. Adversaries have leveraged this behavior in malware.
+
+MITRE ATT&amp;CK REFERENCE: https://attack.mitre.org/techniques/T1059/003/</description>
+    <authored_by>dfir-ronin</authored_by>
+    <authored_date>2023-04-13T09:45:52Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="adf8dcb5-24e0-47e6-88b9-e457c015e95a">
+      <Indicator operator="AND" id="7cb234b8-75f3-4c73-a413-0cbb26544ad8">
+        <IndicatorItem id="3e1c8c6c-76a3-4265-963a-0bcf29914652" condition="is" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/parentProcess" type="endpoint" />
+          <Content type="string">cmd.exe</Content>
+        </IndicatorItem>
+        <IndicatorItem id="e6e2210b-a141-413a-a1b0-ef6d1c82c6b1" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">.lnk</Content>
+        </IndicatorItem>
+        <Indicator operator="OR" id="a3893a05-3c79-4b54-9fb7-543ac0d767fa">
+          <IndicatorItem id="295f9bc6-d561-4803-8496-a959aa7c89cc" condition="is" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+            <Content type="string">powershell.exe</Content>
+          </IndicatorItem>
+          <IndicatorItem id="261a1ce8-aecf-47ed-b6f1-599e37db4d21" condition="is" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+            <Content type="string">cmd.exe</Content>
+          </IndicatorItem>
+          <IndicatorItem id="7617a4f6-ad9d-4b5e-9ebb-b86e5af90ec0" condition="is" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+            <Content type="string">wmic.exe</Content>
+          </IndicatorItem>
+          <IndicatorItem id="f5afe77d-241a-443e-979a-090810afc654" condition="is" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+            <Content type="string">mshta.exe</Content>
+          </IndicatorItem>
+        </Indicator>
+      </Indicator>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>

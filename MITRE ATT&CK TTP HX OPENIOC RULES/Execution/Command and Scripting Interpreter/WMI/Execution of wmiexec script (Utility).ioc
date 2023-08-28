@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="e2e353f8-917c-44a3-915d-1491f5adb923" last-modified="2023-04-26T08:43:10Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>Execution of wmiexec script (Utility)</short_description>
+    <description>Impacket’s wmiexec.py (“wmiexec”) is a popular tool used by red teams and threat actors. It is used to move laterally and execute commands on remote systems as wmiexec leverages Windows native protocols to more easily blend in with benign activity. 
+
+MITRE ATT&amp;CK REFRENCE: https://attack.mitre.org/software/S0357/</description>
+    <authored_by>dfir-ronin</authored_by>
+    <authored_date>2023-04-26T08:43:10Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="b55d1866-697f-4a54-a76c-2c9e1a9b2523">
+      <Indicator operator="AND" id="45b570b1-91ad-4fe9-8de9-99414ff2d8f9">
+        <IndicatorItem id="1ec8300d-a3ad-4cba-afc4-da0a0157dca4" condition="is" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/parentProcess" type="endpoint" />
+          <Content type="string">wmiprvse.exe</Content>
+        </IndicatorItem>
+        <IndicatorItem id="973fb7a0-24f8-43d6-9e0e-f787b70d9404" condition="is" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+          <Content type="string">cmd.exe</Content>
+        </IndicatorItem>
+        <IndicatorItem id="c35b8bba-3641-4fdd-93f8-decba7125fd8" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">/Q /c</Content>
+        </IndicatorItem>
+        <IndicatorItem id="84bf0613-3875-48fc-8277-3c53ca6497fb" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">\\127.0.0.1</Content>
+        </IndicatorItem>
+        <IndicatorItem id="55083b41-5cf2-439e-a29f-2f018f79fd1d" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">2&gt;&amp;1</Content>
+        </IndicatorItem>
+      </Indicator>
+      <Indicator operator="AND" id="af0d27dd-3b1a-4779-a8d2-e4c3034befb6">
+        <IndicatorItem id="ee62a92e-752c-4d9a-815e-b7a036a8edb3" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">wmiexec.py</Content>
+        </IndicatorItem>
+        <IndicatorItem id="6a286f02-99cf-426e-8ead-e8d145c91f6d" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">@</Content>
+        </IndicatorItem>
+        <IndicatorItem id="129e8fd7-3e4d-4746-87c4-07f56295a4e4" condition="is" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+          <Content type="string">cmd.exe</Content>
+        </IndicatorItem>
+      </Indicator>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>

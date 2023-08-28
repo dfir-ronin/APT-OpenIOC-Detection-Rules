@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="c59f9394-c8df-4f07-836a-d0a6beafe6ab" last-modified="2023-08-09T10:07:12Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>Seatbelt (Utility)</short_description>
+    <description>Seatbelt is a C# project that performs a number of security oriented host-survey "safety checks" relevant from both offensive and defensive security perspectives.
+
+Reference:
+https://github.com/GhostPack/Seatbelt
+https://attack.mitre.org/techniques/T1082/
+</description>
+    <authored_by>dfir-ronin</authored_by>
+    <authored_date>2023-08-09T10:07:12Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="fa45e4b9-f48d-4059-968f-2fcc5af46101">
+      <IndicatorItem id="7ed30296-1ad8-4262-b5b3-3bee396db869" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+        <Content type="string">seatbelt.exe</Content>
+      </IndicatorItem>
+      <IndicatorItem id="fc7c36ff-b2c9-49a9-a43e-c91baf531179" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">-group=all</Content>
+      </IndicatorItem>
+      <IndicatorItem id="51d9d214-70df-4cbd-8ea4-87f839ae7671" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">-group=user</Content>
+      </IndicatorItem>
+      <IndicatorItem id="c74c0d8e-1dfc-43a4-a9f5-e4ee16500426" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">-group=system</Content>
+      </IndicatorItem>
+      <IndicatorItem id="922cf5fa-a966-45c0-a8b6-901ad3d1c33e" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">-group=slack</Content>
+      </IndicatorItem>
+      <IndicatorItem id="4c4bf952-c955-4516-a006-3161148918e9" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">-group=chromium</Content>
+      </IndicatorItem>
+      <IndicatorItem id="6a4e436a-2c66-4899-808b-2662f13c5979" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">-group=remote</Content>
+      </IndicatorItem>
+      <IndicatorItem id="54181a13-18fb-4703-ac59-f2ec0acd24f7" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">-group=misc</Content>
+      </IndicatorItem>
+      <IndicatorItem id="ac7e89e5-51c5-43b4-bb61-38ef22c7b8c7" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">seatbelt.exe</Content>
+      </IndicatorItem>
+      <Indicator operator="AND" id="c34f81df-e329-436c-b78a-1f281f7d7af8">
+        <IndicatorItem id="753f5316-ada9-4441-9bc6-bedd8e9e4713" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">-outputfile="\</Content>
+        </IndicatorItem>
+        <Indicator operator="OR" id="d04ea069-e3e3-4ce6-bdfb-7e8290ae46ab">
+          <IndicatorItem id="96051c83-1f30-4783-979d-007ea30d8777" condition="contains" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+            <Content type="string">.json</Content>
+          </IndicatorItem>
+          <IndicatorItem id="6b5bd6f2-c649-4a4d-ac65-294e590b7a83" condition="contains" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+            <Content type="string">.txt</Content>
+          </IndicatorItem>
+        </Indicator>
+      </Indicator>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>

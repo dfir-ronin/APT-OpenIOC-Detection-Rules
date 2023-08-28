@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="0991daa0-ec7e-41ff-a910-56e2a3a684e5" last-modified="2023-06-20T07:02:27Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>Scheduled tasks with suspicious network connections (Methodology)</short_description>
+    <description>Adversaries may abuse the Windows Task Scheduler to perform task scheduling for initial or recurring execution of malicious code. There are multiple ways to access the Task Scheduler in Windows.
+
+
+
+MITRE ATT&amp;CK REFERENCE: https://attack.mitre.org/techniques/T1053/005/</description>
+    <authored_by>dfir-ronin</authored_by>
+    <authored_date>2023-06-20T07:02:27Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="2b495d31-c4fd-4703-91a8-8d48eb6450fe">
+      <Indicator operator="AND" id="c6354b08-2d92-45c3-aeb2-9eb423e75a44">
+        <IndicatorItem id="ba1fdde9-632d-4c53-a6dd-c4656f73c5bc" condition="is" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+          <Content type="string">schtasks.exe</Content>
+        </IndicatorItem>
+        <IndicatorItem id="553e6a67-7392-4a86-a5b9-2334db95d2ba" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">/create</Content>
+        </IndicatorItem>
+        <Indicator operator="OR" id="c05210ee-2929-46cf-bc93-7262c8f2689d">
+          <IndicatorItem id="1428debd-628e-490c-ae86-3aea771c3a8f" condition="contains" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+            <Content type="string">http://</Content>
+          </IndicatorItem>
+          <IndicatorItem id="bdec8f5d-8920-455e-9c71-528d11e9e914" condition="contains" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+            <Content type="string">https://</Content>
+          </IndicatorItem>
+        </Indicator>
+      </Indicator>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>

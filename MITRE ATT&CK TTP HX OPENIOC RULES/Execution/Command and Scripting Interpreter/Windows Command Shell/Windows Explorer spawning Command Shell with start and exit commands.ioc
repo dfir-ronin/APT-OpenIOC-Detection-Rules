@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="9cb02769-3977-419f-9332-a6bf7e97c24b" last-modified="2023-04-13T11:10:13Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>Windows Explorer spawning Command Shell with start and exit commands</short_description>
+    <description>This detection rule looks for instances of explorer.exe spawning cmd.exe along with corresponding start and exit commands that we commonly observe in conjunction with a wide variety of malicious activity.
+
+MITRE ATT&amp;CK REFERENCE: https://attack.mitre.org/techniques/T1059/003/</description>
+    <authored_by>dfir-ronin</authored_by>
+    <authored_date>2023-04-13T11:10:13Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="d8fa9d17-0c72-4a29-9c5c-a671da591856">
+      <Indicator operator="AND" id="c1d3b0b7-392a-4c60-bd16-22e059c9e199">
+        <IndicatorItem id="7eaa8e12-5a26-4aa9-9659-b812dfb8a097" condition="is" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/parentProcess" type="endpoint" />
+          <Content type="string">explorer.exe</Content>
+        </IndicatorItem>
+        <IndicatorItem id="f96b1cb5-bfc3-4207-a7c5-112abe31c52e" condition="is" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+          <Content type="string">cmd.exe</Content>
+        </IndicatorItem>
+        <IndicatorItem id="dfd2c18f-acad-456b-8af1-ae1c87e1ac14" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">start</Content>
+        </IndicatorItem>
+        <IndicatorItem id="d2e7447f-c4ec-485e-aa39-68af0af1e278" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">exit</Content>
+        </IndicatorItem>
+      </Indicator>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>

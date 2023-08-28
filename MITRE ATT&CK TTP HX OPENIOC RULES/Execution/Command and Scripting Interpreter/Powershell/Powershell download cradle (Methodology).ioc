@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="2d7398f2-130d-43e7-91ef-2a383980714c" last-modified="2023-04-13T11:30:28Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>Powershell download cradle (Methodology)</short_description>
+    <description>A download cradle is a single line command for download and code execution. Typically seen at the end of a maldoc or exploit, implementing the second stage download of exploit/infection within the attack lifecycle. A download cradle can also be part of a persistence mechanism, tooling or execution at other attack stages when an attacker attempts to download capability or run fileless.
+
+Reference: https://mgreen27.github.io/posts/2018/04/02/DownloadCradle.html
+MITRE ATT&amp;CK REFERENCE: https://attack.mitre.org/techniques/T1059/001/</description>
+    <authored_by>dfir-ronin</authored_by>
+    <authored_date>2023-04-13T11:30:28Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="ef47ee2e-2eaa-4e9c-9542-2610acd315d9">
+      <Indicator operator="AND" id="481a324b-2f17-462d-87d1-ffb8346f6892">
+        <IndicatorItem id="a57e78d1-8e9a-4db0-8120-6f7d260fd4a2" condition="is" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+          <Content type="string">powershell.exe</Content>
+        </IndicatorItem>
+        <Indicator operator="OR" id="f1f99e81-c3ce-41b4-b2c0-0172c34090f9">
+          <IndicatorItem id="06592fcb-238c-47be-aece-97d102e3d7b3" condition="contains" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+            <Content type="string">iex</Content>
+          </IndicatorItem>
+          <IndicatorItem id="2acdf68c-f6b6-49dc-8240-ea58a56da532" condition="contains" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+            <Content type="string">invoke-expression</Content>
+          </IndicatorItem>
+          <IndicatorItem id="b8f16cff-18bc-4e9f-a295-4ad1460f548c" condition="contains" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+            <Content type="string">-nop</Content>
+          </IndicatorItem>
+          <IndicatorItem id="bab7190d-4955-49c1-ad7d-0e2c03a9d6d4" condition="contains" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+            <Content type="string">-noni</Content>
+          </IndicatorItem>
+          <IndicatorItem id="e2df6e1d-789d-4eae-b53f-17a565fe2ded" condition="contains" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+            <Content type="string">https</Content>
+          </IndicatorItem>
+          <IndicatorItem id="e4e7a11c-3d3a-4a12-b5fd-e1b6a8bf69e2" condition="contains" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+            <Content type="string">tps</Content>
+          </IndicatorItem>
+          <IndicatorItem id="a4545455-37a0-4697-9547-f05791c6f116" condition="contains" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+            <Content type="string">downloaddata</Content>
+          </IndicatorItem>
+          <IndicatorItem id="28e36e11-ed35-452a-9396-dc96ddd4a93c" condition="contains" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+            <Content type="string">hidden</Content>
+          </IndicatorItem>
+        </Indicator>
+        <Indicator operator="OR" id="99f5897b-e55c-4974-aa7a-888b70b98ac2">
+          <IndicatorItem id="565b1b26-3716-4be2-aace-65e328492f4a" condition="contains" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+            <Content type="string">downloadfile</Content>
+          </IndicatorItem>
+          <IndicatorItem id="59606643-e347-49bd-ba8a-4405fd280182" condition="contains" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+            <Content type="string">.downloadstring</Content>
+          </IndicatorItem>
+        </Indicator>
+      </Indicator>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>

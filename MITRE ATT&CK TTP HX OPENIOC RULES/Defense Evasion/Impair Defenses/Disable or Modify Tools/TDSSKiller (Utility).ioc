@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="3dd0d949-c23f-4b69-97d4-60d8d56bfecd" last-modified="2023-08-10T11:32:30Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>TDSSKiller (Utility)</short_description>
+    <description>Removes rootkits, as well as detecting, analyzing, and fixing kernel structure modifications. Adversaries may modify and/or disable security tools to avoid possible detection of their malware/tools and activities.
+
+Reference: https://attack.mitre.org/versions/v13/techniques/T1562/001/</description>
+    <authored_by>dfir-ronin</authored_by>
+    <authored_date>2023-08-10T11:32:30Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="c540e87c-6306-490b-96b5-f4f060747e8e">
+      <IndicatorItem id="74c1b92b-d122-4af6-9a09-f365e1ddd4a3" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/fileName" type="endpoint" />
+        <Content type="string">ff1eff0e0f1f2eabe1199ae71194e560</Content>
+      </IndicatorItem>
+      <IndicatorItem id="c522f66a-122d-4c3e-9b59-68d78ae80a4b" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/fileName" type="endpoint" />
+        <Content type="string">tdsskiller</Content>
+      </IndicatorItem>
+      <IndicatorItem id="fad3dc5a-e2e9-47a0-bc58-19c7577423e5" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+        <Content type="string">tdsskiller.exe</Content>
+      </IndicatorItem>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>

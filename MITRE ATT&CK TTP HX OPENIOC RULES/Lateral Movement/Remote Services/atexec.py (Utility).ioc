@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="1f7870f5-87b0-4e6e-8b04-7b094269c23d" last-modified="2023-05-04T06:28:37Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>atexec.py (Utility)</short_description>
+    <description>This rule detects Impacket’s atexec.py script on a target host. atexec.py is remotely run on an adversary’s machine to execute commands on the victim via scheduled task. 
+
+Reference:
+https://attack.mitre.org/techniques/T1053/</description>
+    <authored_by>dfir-ronin</authored_by>
+    <authored_date>2023-05-04T06:28:37Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="685e5b92-0450-4e2f-8087-bd6fac168dda">
+      <Indicator operator="AND" id="0a5560a2-f873-410d-b7f4-25ed88e51d9b">
+        <IndicatorItem id="2e8d97b5-de6a-4ef2-a012-46a9414c4c50" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">windows\temp</Content>
+        </IndicatorItem>
+        <IndicatorItem id="1613a196-e280-415d-a294-914a51b95c55" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">2&gt;&amp;1</Content>
+        </IndicatorItem>
+        <IndicatorItem id="ce799222-8b38-457a-949d-f20f847b6106" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">/c</Content>
+        </IndicatorItem>
+        <Indicator operator="OR" id="e4a01e4e-a3b9-4f90-9e06-14da312eee58">
+          <IndicatorItem id="36f9a01b-09a0-45e3-ab56-a013bc187377" condition="is" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/parentProcess" type="endpoint" />
+            <Content type="string">svchost.exe</Content>
+          </IndicatorItem>
+          <IndicatorItem id="49dfb05c-a749-458e-ad7f-a15fcc6e66c7" condition="is" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/parentProcess" type="endpoint" />
+            <Content type="string">taskeng.exe</Content>
+          </IndicatorItem>
+        </Indicator>
+      </Indicator>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>

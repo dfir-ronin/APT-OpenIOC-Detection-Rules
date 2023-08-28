@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="21ddf27b-5173-459d-a511-be5d020e142d" last-modified="2023-08-10T09:12:26Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>SharpHound (Utility)</short_description>
+    <description>BloodHound is an Active Directory (AD) reconnaissance tool that can reveal hidden relationships and identify attack paths within an AD environment.
+
+Reference: https://attack.mitre.org/software/S0521/</description>
+    <authored_by>dfir-ronin</authored_by>
+    <authored_date>2023-08-10T09:12:26Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="0c36a4f5-de63-4fc0-9fd3-68eefa32aa20">
+      <IndicatorItem id="9058df9a-78cc-427f-945b-25fb88155256" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/md5" type="endpoint" />
+        <Content type="md5">76a2363d509cc7174c4abee9a7d7ae68</Content>
+      </IndicatorItem>
+      <IndicatorItem id="cd167876-42bf-4498-8ec3-333ae452866d" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/md5" type="endpoint" />
+        <Content type="md5">e3c4f7dce14de2a84a1c8bb7fbc94ea7</Content>
+      </IndicatorItem>
+      <IndicatorItem id="514513e3-c41a-4efe-8fc7-a76dd7830a68" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/md5" type="endpoint" />
+        <Content type="md5">7d9213f8f3cba4035542eff1c9dbb341</Content>
+      </IndicatorItem>
+      <IndicatorItem id="cd15258d-5707-419b-ad94-83d55f6cec8a" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/md5" type="endpoint" />
+        <Content type="md5">31940f6eac72022abc1abf52d1d89e9f</Content>
+      </IndicatorItem>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>

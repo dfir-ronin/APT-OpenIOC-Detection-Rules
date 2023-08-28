@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="67274d29-c69b-4681-92f1-c736303e050a" last-modified="2023-05-30T11:53:20Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>Fgdump (Utility)</short_description>
+    <description>fgdump is a newer version of the pwdump tool for extracting NTLM and LanMan password hashes from Windows.
+
+MITRE ATT&amp;CK REFERENCE: https://attack.mitre.org/techniques/T1003/</description>
+    <authored_by>dfir-ronin</authored_by>
+    <authored_date>2023-05-30T10:43:29Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="57046d42-c1d6-4e20-a8cc-ef7660930fd8">
+      <IndicatorItem id="e0029e11-9c00-424e-8db9-31de07a7b979" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/fileName" type="endpoint" />
+        <Content type="string">fgdump.exe</Content>
+      </IndicatorItem>
+      <IndicatorItem id="b791aecc-9882-43d6-a5d1-10f45874fd73" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/md5" type="endpoint" />
+        <Content type="md5">687442c96d8d1854c7d65b2b8961e712</Content>
+      </IndicatorItem>
+      <IndicatorItem id="a9e6f5c2-f170-418d-a5b2-b59135f619e9" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/md5" type="endpoint" />
+        <Content type="md5">a6057c3321471b8f4149e4e30200f69b</Content>
+      </IndicatorItem>
+      <IndicatorItem id="c43775d0-a0f4-4e6f-a329-e22bf1e4622c" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/md5" type="endpoint" />
+        <Content type="md5">d06b0a97481b2d19f8930715b7c143a3</Content>
+      </IndicatorItem>
+      <IndicatorItem id="ef1eb542-2824-4ce3-a987-2755f7f9bd59" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/md5" type="endpoint" />
+        <Content type="md5">44cf98853b30767d8d0ffb595cc44c2a</Content>
+      </IndicatorItem>
+      <IndicatorItem id="9a56332f-650d-4a95-9aa2-6f034b346c55" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+        <Content type="string">fgdump.exe</Content>
+      </IndicatorItem>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>

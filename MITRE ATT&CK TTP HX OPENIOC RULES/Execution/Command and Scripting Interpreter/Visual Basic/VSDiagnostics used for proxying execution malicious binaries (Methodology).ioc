@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="5bb8b4b2-711a-4bdd-99c0-c67b12abe0e8" last-modified="2023-07-19T07:54:41Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>VSDiagnostics used for proxying execution malicious binaries (Methodology)</short_description>
+    <description>Detects the subvert execution of malicious payloads using vsdiagnostics.exe. VSDiagnostics.exe is an executable part of the Microsoft Visual Studio. 
+
+Threat actors can use the start to start a new session in combination with the /launch and /launchargs parameters to execute a malicious payload on disk.
+
+REFERENCE: https://twitter.com/0xboku/status/1679200664013135872?s=61&amp;t=6z39HX6rrsHrDBR6CqH8DQ
+MITRE ATT&amp;CK REFERENCE: https://attack.mitre.org/tactics/TA0002/</description>
+    <authored_by>dfir-ronin</authored_by>
+    <authored_date>2023-07-19T07:54:41Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="7b235a72-302f-4186-b407-06d9e47bc433">
+      <Indicator operator="AND" id="31783299-8938-46dd-84a4-32ad29856f78">
+        <IndicatorItem id="05050cdd-8b52-47c3-bfa6-01e091cb7030" condition="is" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/parentProcess" type="endpoint" />
+          <Content type="string">VSDiagnostics.exe</Content>
+        </IndicatorItem>
+        <Indicator operator="OR" id="2edd8dcf-83dd-41ca-9bf5-ed75c6726109">
+          <IndicatorItem id="d60721ef-2ea5-4b28-ae82-56ca1161f5ff" condition="contains" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+            <Content type="string">/launch:</Content>
+          </IndicatorItem>
+          <IndicatorItem id="984b869f-be56-4535-9f03-62b2bcb9efe4" condition="contains" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+            <Content type="string">start</Content>
+          </IndicatorItem>
+        </Indicator>
+      </Indicator>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>

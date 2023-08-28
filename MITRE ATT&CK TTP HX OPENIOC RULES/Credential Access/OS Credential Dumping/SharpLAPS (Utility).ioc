@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="3d368db9-2960-4dbe-b8d6-48ebca200ea6" last-modified="2023-08-22T05:05:39Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>SharpLAPS (Utility)</short_description>
+    <description>This executable is made to be executed within Cobalt Strike session using execute-assembly. It will retrieve the LAPS password from the Active Directory.
+
+	
+
+Reference:
+
+https://github.com/swisskyrepo/SharpLAPS
+https://attack.mitre.org/techniques/T1003/</description>
+    <authored_by>dfir-ronin</authored_by>
+    <authored_date>2023-08-22T05:05:39Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="ba6381cf-941d-4574-a9b4-b6cb0f59f266">
+      <IndicatorItem id="63660ec0-dcd0-46f3-aa41-2ad8adeab7ae" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/md5" type="endpoint" />
+        <Content type="md5">83cc63adfdf5f61db1c23d61792f348b</Content>
+      </IndicatorItem>
+      <IndicatorItem id="a5512c9f-86e8-48b8-98fd-ebd251bf12df" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+        <Content type="string">SharpLAPS</Content>
+      </IndicatorItem>
+      <IndicatorItem id="e7ace5b7-c176-4c0e-8d26-122b83daa364" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/fileName" type="endpoint" />
+        <Content type="string">SharpLAPS</Content>
+      </IndicatorItem>
+      <IndicatorItem id="ed3f3e55-2f0f-4194-a22e-0524b0d2b6a0" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/md5" type="endpoint" />
+        <Content type="md5">83cc63adfdf5f61db1c23d61792f348b</Content>
+      </IndicatorItem>
+      <Indicator operator="AND" id="5c167bb2-493d-45e6-9295-0f8cb3ef454e">
+        <IndicatorItem id="4d6578df-67e5-4d8c-92d1-5a8ddc9e866c" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">/out:</Content>
+        </IndicatorItem>
+        <IndicatorItem id="9255df3b-b0a1-4029-a692-9f3e86c3116c" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">/ssl</Content>
+        </IndicatorItem>
+      </Indicator>
+      <Indicator operator="AND" id="b32b5cd8-d804-4451-9373-6581f393a59c">
+        <IndicatorItem id="eefbc1d8-cb5b-45b7-bf1f-376e934687a4" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">/pass:</Content>
+        </IndicatorItem>
+        <IndicatorItem id="4bf4ebae-e7fc-4d57-970a-f852ee9cd9a7" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">/user:</Content>
+        </IndicatorItem>
+      </Indicator>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>

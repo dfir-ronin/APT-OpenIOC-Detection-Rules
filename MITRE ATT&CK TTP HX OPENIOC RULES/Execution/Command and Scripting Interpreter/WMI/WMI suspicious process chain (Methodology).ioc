@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="378621c9-0db6-4b41-a86c-3cd849772101" last-modified="2023-04-13T12:05:31Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>WMI suspicious process chain (Methodology)</short_description>
+    <description>This detection rule identifies suspicious child process spawned by wmiprvse.exe which maybe possibly a sign of malicious code execution.
+
+MITRE ATT&amp;CK REFERENCE: https://attack.mitre.org/techniques/T1047/</description>
+    <authored_by>dfir-ronin</authored_by>
+    <authored_date>2023-04-13T12:05:31Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="8346878f-d063-4842-8528-ab4969a8b0ce">
+      <Indicator operator="AND" id="983851dc-3e69-44aa-b281-8eb9729c9baa">
+        <IndicatorItem id="f42ea84b-982d-4e5f-9987-4d0f209d1cee" condition="is" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/parentProcess" type="endpoint" />
+          <Content type="string">wmiprvse.exe</Content>
+        </IndicatorItem>
+        <Indicator operator="OR" id="e8edbdb9-e7c4-40e0-825d-c82c0620765c">
+          <IndicatorItem id="d54c63f3-53ed-4b34-b28c-5efb51d3a683" condition="is" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+            <Content type="string">rundll32.exe</Content>
+          </IndicatorItem>
+          <IndicatorItem id="8f83af95-1863-46b6-a328-6a13032e3fab" condition="is" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+            <Content type="string">msbuild.exe</Content>
+          </IndicatorItem>
+          <IndicatorItem id="45d56ce0-7a09-4cfc-b159-ff44fcb58cac" condition="is" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+            <Content type="string">mshta.exe</Content>
+          </IndicatorItem>
+        </Indicator>
+      </Indicator>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>

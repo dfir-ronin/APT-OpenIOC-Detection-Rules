@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="c182f215-a288-4b07-a527-607f0e535870" last-modified="2023-08-22T05:01:59Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>SQLRecon (Utility)</short_description>
+    <description>A C# MS-SQL toolkit designed for offensive reconnaissance and post-exploitation.
+
+Reference: 
+https://github.com/xforcered/SQLRecon
+https://attack.mitre.org/techniques/T1588/002/</description>
+    <authored_by>dfir-ronin</authored_by>
+    <authored_date>2023-08-22T02:40:15Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="6aa61f7d-bc33-4618-9931-fbc543ab3fca">
+      <IndicatorItem id="0555a9ca-be2c-4409-a562-d652d90282d4" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/fileName" type="endpoint" />
+        <Content type="string">SQLRecon</Content>
+      </IndicatorItem>
+      <IndicatorItem id="49740949-9d12-4f52-a5fe-ac1ad07611e7" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/md5" type="endpoint" />
+        <Content type="md5">af1eac6cd1b838d1824b44441cd73e1e</Content>
+      </IndicatorItem>
+      <IndicatorItem id="e5390a27-d7d8-4566-8563-5add5ecb704b" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+        <Content type="string">SQLRecon</Content>
+      </IndicatorItem>
+      <IndicatorItem id="02db3b94-90af-4fbd-ae50-40c8b81f99bf" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">/enum:sqlspns</Content>
+      </IndicatorItem>
+      <IndicatorItem id="e71f5795-9e97-4bfe-821c-40c963a9c733" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">/a:WinToken</Content>
+      </IndicatorItem>
+      <IndicatorItem id="94d291cf-60a9-4ba9-8a2c-1607b70aba17" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">/i:sa</Content>
+      </IndicatorItem>
+      <IndicatorItem id="3f11e15e-87c1-4c4f-b4a8-e849ef4aba48" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">/table:</Content>
+      </IndicatorItem>
+      <IndicatorItem id="e80dbf99-c78a-423d-8762-20486b17401c" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">/c:"select @@version"</Content>
+      </IndicatorItem>
+      <IndicatorItem id="50b51bbf-2298-4f86-9e52-99081f218b09" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">/m:icheckrpc</Content>
+      </IndicatorItem>
+      <IndicatorItem id="0d921fbb-fe8c-4dc3-a9e5-97c4807faf6f" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">/m:ienablerpc</Content>
+      </IndicatorItem>
+      <IndicatorItem id="3480cb5d-3994-4021-9c04-a65983a59c08" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">/m:ienablexp</Content>
+      </IndicatorItem>
+      <IndicatorItem id="ff66ddbd-d8a3-4628-af55-f4c6d8ab201e" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">/m:ixpcmd</Content>
+      </IndicatorItem>
+      <IndicatorItem id="31c5b7d3-a317-43a6-9c4c-6bea5722f5f4" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">m:ienableole</Content>
+      </IndicatorItem>
+      <IndicatorItem id="d32fba79-74ea-431c-8ce8-773a018bbd3a" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">/m:iolecmd</Content>
+      </IndicatorItem>
+      <IndicatorItem id="b44952d0-9503-4029-b5d1-553707d0be0c" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">/m:ienableclr</Content>
+      </IndicatorItem>
+      <IndicatorItem id="7719774a-bb96-44e9-9856-03def95c96bd" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">/m:iclr</Content>
+      </IndicatorItem>
+      <IndicatorItem id="fe60b646-9410-4f11-a897-87734d72ade5" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">/m:iadsi</Content>
+      </IndicatorItem>
+      <IndicatorItem id="92460f9d-ac0c-45bd-928f-b7ef89442030" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/md5" type="endpoint" />
+        <Content type="md5">af1eac6cd1b838d1824b44441cd73e1e</Content>
+      </IndicatorItem>
+      <Indicator operator="AND" id="5c3fbf62-3927-4bbf-bf15-9391f4e108c0">
+        <IndicatorItem id="6b410dc4-75a0-4acc-a77d-98137f208f06" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">/m:</Content>
+        </IndicatorItem>
+        <IndicatorItem id="8e7b9c62-3d28-42f0-9885-367569057e11" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">/h:</Content>
+        </IndicatorItem>
+      </Indicator>
+      <Indicator operator="AND" id="7f83e340-384d-4b12-b144-9b7acb41ffea">
+        <IndicatorItem id="10a802e3-e262-460c-830d-6b9210aa749a" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">/host:</Content>
+        </IndicatorItem>
+        <IndicatorItem id="dda01f03-d006-4342-bd7e-b4727a66250b" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">/module:</Content>
+        </IndicatorItem>
+      </Indicator>
+      <Indicator operator="AND" id="266965c5-1e64-4a0c-a401-3e86817e901e">
+        <IndicatorItem id="f407b8c1-1483-4483-bbe3-e0d612423e6e" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">/m:</Content>
+        </IndicatorItem>
+        <IndicatorItem id="8bda8ad9-8e54-469f-9164-766bb0ecffad" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">/db:</Content>
+        </IndicatorItem>
+      </Indicator>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>

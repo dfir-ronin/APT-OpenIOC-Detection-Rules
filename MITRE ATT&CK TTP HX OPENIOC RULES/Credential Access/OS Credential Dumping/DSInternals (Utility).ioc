@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="55e80eda-0919-4460-b46d-dd329c768f12" last-modified="2023-05-30T11:53:21Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>DSInternals (Utility)</short_description>
+    <description>Dsinternals is a powerful toolset for Active Directory security auditing and penetration testing. It provides a wide range of functionality for interacting with and analyzing Active Directory environments.</description>
+    <authored_by>dfir-ronin</authored_by>
+    <authored_date>2023-05-30T10:38:47Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="0249a9f2-1a0c-4b59-a392-a194d640ff71">
+      <IndicatorItem id="41765302-0231-4278-8379-f46592018421" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">DumpHashes</Content>
+      </IndicatorItem>
+      <IndicatorItem id="d6366555-3b39-41ec-bb94-da327cf46828" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">GetADDBAccount</Content>
+      </IndicatorItem>
+      <IndicatorItem id="f2bb236b-6f3d-49e8-83f6-e1e1ec57457c" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">GetADDBAccountLink</Content>
+      </IndicatorItem>
+      <IndicatorItem id="0dcc4fef-93e6-4f0f-baa4-52a45093cfc3" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">GetADDBAccountSD</Content>
+      </IndicatorItem>
+      <IndicatorItem id="e30302f6-4493-4a93-a780-0216d4e0acb9" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">GetADDBAccountSD</Content>
+      </IndicatorItem>
+      <IndicatorItem id="b66cacf6-864a-451a-958e-19c510507b9f" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">GetADDBAccountKerberosKeys</Content>
+      </IndicatorItem>
+      <IndicatorItem id="862afe5e-5156-43d3-b245-4d0c7d93cd92" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">GetADDBAccountFAS</Content>
+      </IndicatorItem>
+      <IndicatorItem id="ffb1c190-60ca-448a-a08c-268877dc2201" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">GetADDBAccountExtendedRights</Content>
+      </IndicatorItem>
+      <IndicatorItem id="4901e440-1316-41fb-b7bb-2f9ec63e248f" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">GetADDBAccountReplicationMetadata</Content>
+      </IndicatorItem>
+      <IndicatorItem id="074cfb77-057e-4695-a942-e6e9f15d2c9c" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">GetADDBAccountReplicationMetadata</Content>
+      </IndicatorItem>
+      <IndicatorItem id="3f10837d-c43e-426b-a4e6-dcb7b54ef607" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">GetADDBAccountHashes</Content>
+      </IndicatorItem>
+      <IndicatorItem id="eb3bdc89-6c05-4ee1-abbd-856c4b9a911e" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">GetADDBAccountHashes</Content>
+      </IndicatorItem>
+      <IndicatorItem id="824c0036-dc76-4878-81b2-4c7c5232eb2d" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">GetADDBAccountHashes</Content>
+      </IndicatorItem>
+      <IndicatorItem id="a5e80e57-c3c9-41c0-bb4f-7749e12cfad8" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">GetADDBDomain</Content>
+      </IndicatorItem>
+      <IndicatorItem id="b4c306b6-d019-4468-b0ca-eb94676d7920" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+        <Content type="string">GetADDBDomain</Content>
+      </IndicatorItem>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>

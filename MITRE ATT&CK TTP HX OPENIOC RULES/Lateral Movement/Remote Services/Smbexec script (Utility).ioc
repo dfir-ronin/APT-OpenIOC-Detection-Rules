@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="f8bb9940-a266-40b2-8f03-d864338c4243" last-modified="2023-05-04T03:59:02Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>Smbexec script (Utility)</short_description>
+    <description>This rule detects execution of Impacket smbexec script, which allows a semi-interactive shell used through SMB. 
+
+MITRE ATT&amp;CK REFERENCE: 
+https://attack.mitre.org/software/S0357/
+https://attack.mitre.org/techniques/T1021/002/</description>
+    <authored_by>dfir-ronin</authored_by>
+    <authored_date>2023-05-04T03:59:02Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="595820f5-b7f5-4711-8f50-0fd18fd84e41">
+      <Indicator operator="AND" id="247be1e3-7062-4c80-83c9-1bdbb44afec2">
+        <IndicatorItem id="b0600f5b-5d50-481a-b6e3-5c7a04ac10fa" condition="is" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+          <Content type="string">cmd.exe</Content>
+        </IndicatorItem>
+        <IndicatorItem id="b93a71db-4ac9-4070-89a8-9e48a3497efa" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">\\127.0.0.1\C$\__output 2&gt;&amp;1</Content>
+        </IndicatorItem>
+        <IndicatorItem id="43002eb9-38ef-42b0-99fb-d35fec9248f3" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">/Q /c echo</Content>
+        </IndicatorItem>
+      </Indicator>
+      <Indicator operator="AND" id="430a37ef-c549-452b-82c3-be3ea9f507b4">
+        <IndicatorItem id="20b28c43-815d-4dee-ac18-2cee6dc33d8e" condition="is" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/fileWriteEvent/process" type="endpoint" />
+          <Content type="string">cmd.exe</Content>
+        </IndicatorItem>
+        <IndicatorItem id="13a07712-4db7-426c-ba99-71f28d03e598" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/fileWriteEvent/fullPath" type="endpoint" />
+          <Content type="string">\TEMP\execute.bat</Content>
+        </IndicatorItem>
+      </Indicator>
+      <Indicator operator="AND" id="c5cb022f-01c3-42a0-8262-8bccc167fa59">
+        <IndicatorItem id="ce379ba0-7e3a-43a3-b435-efc58950d409" condition="is" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+          <Content type="string">cmd.exe</Content>
+        </IndicatorItem>
+        <Indicator operator="OR" id="e245daa4-a1c4-48e2-b86a-53813b9824c5">
+          <IndicatorItem id="f4d9b779-09d6-4331-92a1-38d990ae69a8" condition="contains" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+            <Content type="string">/Q /c C:\Windows\TEMP\execute.bat</Content>
+          </IndicatorItem>
+          <IndicatorItem id="423c016c-b578-4cf5-8de4-67fbb46b6a8e" condition="contains" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+            <Content type="string">del C:\Windows\TEMP\execute.bat</Content>
+          </IndicatorItem>
+        </Indicator>
+      </Indicator>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>

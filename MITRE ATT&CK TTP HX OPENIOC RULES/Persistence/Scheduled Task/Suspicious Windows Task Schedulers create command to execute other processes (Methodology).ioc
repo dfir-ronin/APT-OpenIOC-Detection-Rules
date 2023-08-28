@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="a3eb2463-ff25-4a99-b38a-2801c2383f6f" last-modified="2023-06-20T06:56:14Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>Suspicious Windows Task Scheduler command to execute other processes (Methodology)</short_description>
+    <description>Adversaries may abuse the Windows Task Scheduler to perform task scheduling for initial or recurring execution of malicious code. There are multiple ways to access the Task Scheduler in Windows.
+
+MITRE ATT&amp;CK REFERENCE: https://attack.mitre.org/techniques/T1053/005/</description>
+    <authored_by>dfir-ronin</authored_by>
+    <authored_date>2023-06-20T06:56:14Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="6b998ecc-98f1-42ee-91ec-8a10b2ae67d8">
+      <Indicator operator="AND" id="132c16f3-4ba1-462d-a5dc-cbe88b2e2882">
+        <IndicatorItem id="32118943-64c5-47ca-83b3-561d619a6254" condition="is" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+          <Content type="string">schtasks.exe</Content>
+        </IndicatorItem>
+        <Indicator operator="OR" id="2f5076aa-f712-4f0a-bacb-25ebc7d3d3f4">
+          <IndicatorItem id="b7ac50cb-97a8-4920-8e41-b5b4c7838b1b" condition="contains" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+            <Content type="string">cmd.exe</Content>
+          </IndicatorItem>
+          <IndicatorItem id="f893b10a-c406-4d37-9bc0-ee7be708833e" condition="contains" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+            <Content type="string">regsvr32.exe</Content>
+          </IndicatorItem>
+          <IndicatorItem id="1d7c0666-0a5c-43d2-87c9-96d6ef36ca9c" condition="contains" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+            <Content type="string">rundll32.exe</Content>
+          </IndicatorItem>
+          <IndicatorItem id="d8525f97-77e4-4233-84bb-8a40d42e9e27" condition="contains" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+            <Content type="string">mshta.exe</Content>
+          </IndicatorItem>
+          <IndicatorItem id="7d675041-8efc-4069-a88a-5a9c821dee00" condition="contains" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+            <Content type="string">powershell.exe</Content>
+          </IndicatorItem>
+        </Indicator>
+        <Indicator operator="OR" id="8439d732-fcb1-4f1f-89bf-81f5fc51576a">
+          <IndicatorItem id="02297200-080e-4778-bf4d-1c819dbb3ddc" condition="contains" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+            <Content type="string">/create</Content>
+          </IndicatorItem>
+          <IndicatorItem id="897522cc-c831-4bc3-8421-7ca487a88199" condition="contains" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+            <Content type="string">/change</Content>
+          </IndicatorItem>
+        </Indicator>
+      </Indicator>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>

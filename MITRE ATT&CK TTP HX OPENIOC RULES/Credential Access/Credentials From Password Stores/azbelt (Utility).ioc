@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="9a38c574-1a1d-4786-a1c0-741ca1b34d03" last-modified="2023-08-22T08:54:29Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>azbelt (Utility)</short_description>
+    <description>Standalone DLL and sliver extension for enumerating Azure related credentials, primarily on AAD joined machines.
+
+
+
+Reference:
+
+https://github.com/sliverarmory/azbelt
+
+https://attack.mitre.org/tactics/TA0006/
+https://attack.mitre.org/techniques/T1555/004/</description>
+    <authored_by>dfir-ronin</authored_by>
+    <authored_date>2023-08-22T08:54:29Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="c088f341-87ab-4e0e-9bd9-39f0f45de05e">
+      <IndicatorItem id="4c0c30db-2db7-4383-8ca2-da30dd748fb2" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+        <Content type="string">azbelt</Content>
+      </IndicatorItem>
+      <IndicatorItem id="24aea248-2b33-4d65-9497-1d1eb96a5088" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/md5" type="endpoint" />
+        <Content type="md5">4b080b5a0c355975a0ffd64681bd4715</Content>
+      </IndicatorItem>
+      <IndicatorItem id="cfa40308-3c0c-42a7-bf0b-4ae7329a7480" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/md5" type="endpoint" />
+        <Content type="md5">59ba5c54c7f8cf759c88012fcef8867f</Content>
+      </IndicatorItem>
+      <IndicatorItem id="a11a58ee-14a3-442e-ba2e-99bcc0bb8885" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/md5" type="endpoint" />
+        <Content type="md5">76e4566c76611e9c3b63b020ad3393e8</Content>
+      </IndicatorItem>
+      <IndicatorItem id="ff347a23-ae96-4c08-a401-b48a122e3496" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/md5" type="endpoint" />
+        <Content type="md5">96b040598238b20be951447130151fc1</Content>
+      </IndicatorItem>
+      <Indicator operator="AND" id="df719c30-d37c-4ea3-863d-7f7e01d2f402">
+        <IndicatorItem id="e20cefa1-84d0-46af-a314-da15301b9f84" condition="is" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/fileWriteEvent/fileName" type="endpoint" />
+          <Content type="string">DSREG.DLL</Content>
+        </IndicatorItem>
+        <IndicatorItem id="5b418373-6714-471e-8861-3fa6e8adef13" condition="is" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/fileWriteEvent/fileName" type="endpoint" />
+          <Content type="string">msvcp110_win.dll</Content>
+        </IndicatorItem>
+        <IndicatorItem id="29095c72-0f61-45c2-8680-17fcbde8f386" condition="is" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/fileWriteEvent/fileName" type="endpoint" />
+          <Content type="string">winhttp.DLL</Content>
+        </IndicatorItem>
+        <IndicatorItem id="1d67313c-33e4-4ff0-8e29-387685e94cc9" condition="is" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/fileWriteEvent/fileName" type="endpoint" />
+          <Content type="string">netapi32.DLL</Content>
+        </IndicatorItem>
+        <IndicatorItem id="74d78f1b-bf15-410d-86cd-a0061cf7d0ab" condition="contains" preserve-case="false" negate="true">
+          <Context document="eventItem" search="eventItem/fileWriteEvent/filePath" type="endpoint" />
+          <Content type="string">\Windows\System32\</Content>
+        </IndicatorItem>
+      </Indicator>
+      <Indicator operator="AND" id="37a9192f-a184-4a76-b791-e37694c21cc8">
+        <IndicatorItem id="2f0b5030-2563-48d4-a262-284503a5914e" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/fileWriteEvent/fileName" type="endpoint" />
+          <Content type="string">azbelt</Content>
+        </IndicatorItem>
+        <Indicator operator="OR" id="e0ae268d-721f-4620-a65f-de5e667e9bc2">
+          <IndicatorItem id="78e8ec27-7217-4f89-bc45-fd792292b394" condition="contains" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/fileWriteEvent/fileExtension" type="endpoint" />
+            <Content type="string">dll</Content>
+          </IndicatorItem>
+          <IndicatorItem id="8e589d69-c62f-4361-95a9-ed22112f3403" condition="contains" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/fileWriteEvent/fileExtension" type="endpoint" />
+            <Content type="string">exe</Content>
+          </IndicatorItem>
+        </Indicator>
+      </Indicator>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>

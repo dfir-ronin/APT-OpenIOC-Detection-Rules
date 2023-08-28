@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="9149775a-5d92-4e8a-8a01-16efb9b6408e" last-modified="2023-04-06T05:32:27Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>Domain Trust Discovery with nltest.exe (Methodology)</short_description>
+    <description>Adversaries may attempt to gather information on domain trust relationships that may be used to identify lateral movement opportunities in Windows multi-domain/forest environments. 
+
+MITRE ATT&amp;CK Reference: https://attack.mitre.org/techniques/T1482/</description>
+    <authored_by>dfir-ronin</authored_by>
+    <authored_date>2023-04-06T05:32:27Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="63c0f1b6-c899-454f-9ac6-f1a8735c83cd">
+      <Indicator operator="AND" id="d8fcebe1-437b-46a3-839a-8d51cfea8ef8">
+        <IndicatorItem id="a6145977-2f9b-4178-983b-0109880e4944" condition="is" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+          <Content type="string">nltest.exe</Content>
+        </IndicatorItem>
+        <Indicator operator="OR" id="9134f53b-9e13-4e4e-94c1-3f93d2dfa278">
+          <IndicatorItem id="c60991f4-faea-4e83-a8ef-f9ce11953872" condition="contains" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+            <Content type="string">/domain_trusts</Content>
+          </IndicatorItem>
+          <IndicatorItem id="4791c94b-a4c1-4d7b-b5c5-01c4622fc889" condition="contains" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+            <Content type="string">/all_trusts</Content>
+          </IndicatorItem>
+        </Indicator>
+      </Indicator>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>
