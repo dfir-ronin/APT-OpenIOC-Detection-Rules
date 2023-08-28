@@ -3,7 +3,7 @@ This repository contains OpenIOC rules to aid in hunting for indicators of compr
 
 These rules can be utilized as hunting or detection rules that can be imported to your EDR security solution's user-defined and/or custom rule intelligence database to enhance its detection capabilities. Environment-specific tuning is recommended before deploying these as detection rules.
 
-Detection engineering is based on the tools, techniques, tactics, and procedures observed from the following references including, but not limited to:
+Detection engineering is based on the tools, techniques, tactics, and procedures observed from the following references, including but not limited to:
 
 https://www.cisa.gov/news-events/cybersecurity-advisories/aa23-165a
 
