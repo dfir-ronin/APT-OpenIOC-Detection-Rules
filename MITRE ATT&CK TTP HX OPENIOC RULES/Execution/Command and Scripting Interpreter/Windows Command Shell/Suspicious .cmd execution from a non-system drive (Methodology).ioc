@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="40b283c9-4906-4d95-aa69-ad8fd6fe32f7" last-modified="2023-08-29T03:43:12Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>Suspicious .cmd execution from a non-system drive (Methodology)</short_description>
+    <description>Adversaries may abuse the Windows command shell for execution. This rule will detect execution of .cmd file from any drives except c:\.
+
+Reference: 
+https://attack.mitre.org/techniques/T1059/003/</description>
+    <authored_by>dfir-ronin</authored_by>
+    <authored_date>2023-08-29T03:43:12Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="bdfbe5ca-0ac4-4c02-be4d-a46f403a11fd">
+      <Indicator operator="AND" id="7518b78d-172a-41e2-8556-adffc3a0ed1d">
+        <IndicatorItem id="81bdccc0-38a1-45d8-82c0-bf57bcf8ef83" condition="is" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+          <Content type="string">cmd.exe</Content>
+        </IndicatorItem>
+        <Indicator operator="OR" id="9f6519fe-d6ad-43df-9413-f7010206f13a">
+          <IndicatorItem id="d2f209e8-9fff-48bb-8c59-5f545f796891" condition="matches" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+            <Content type="string">^c:\\windows\\system32\\cmd.exe  \/c [a-bd-zA-BD-Z]:\\[^\\]*\.cmd$</Content>
+          </IndicatorItem>
+          <IndicatorItem id="ebc60080-4f18-4080-b8cd-effc96d872bb" condition="matches" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+            <Content type="string">^C:\\Windows\\System32\\cmd.exe  \/c [a-bd-zA-BD-Z]:\\[^\\]*\.cmd$</Content>
+          </IndicatorItem>
+        </Indicator>
+      </Indicator>
+      <Indicator operator="AND" id="1540b4dc-f958-4640-bf59-386c3b2f0602">
+        <IndicatorItem id="ae8f486a-ec8c-4416-bc5d-709b12266f9b" condition="is" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+          <Content type="string">cmd.exe</Content>
+        </IndicatorItem>
+        <IndicatorItem id="b50e001a-2e40-4f7c-823a-21814e246a3c" condition="matches" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">^%comspec%  \/c [a-bd-zA-BD-Z]:\\[^\\]*\.cmd$</Content>
+        </IndicatorItem>
+      </Indicator>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>
