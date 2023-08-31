@@ -17,15 +17,15 @@ https://attack.mitre.org/techniques/T1059/001/</description>
         <Context document="eventItem" search="eventItem/fileWriteEvent/md5" type="endpoint" />
         <Content type="md5">0da1be72e3ca31e9765dd857d748b76f</Content>
       </IndicatorItem>
-      <IndicatorItem id="1d67313c-33e4-4ff0-8e29-387685e94cc9" condition="contains" preserve-case="false" negate="false">
-        <Context document="eventItem" search="eventItem/fileWriteEvent/fileName" type="endpoint" />
-        <Content type="string">sharpsh</Content>
-      </IndicatorItem>
-      <IndicatorItem id="4c0c30db-2db7-4383-8ca2-da30dd748fb2" condition="contains" preserve-case="false" negate="false">
+      <IndicatorItem id="aaedbd6a-097a-465a-aab6-fa887978d337" condition="is" preserve-case="false" negate="false">
         <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
-        <Content type="string">sharpsh</Content>
+        <Content type="string">sharpsh.exe</Content>
       </IndicatorItem>
-      <IndicatorItem id="24aea248-2b33-4d65-9497-1d1eb96a5088" condition="is" preserve-case="false" negate="false">
+      <IndicatorItem id="1d67313c-33e4-4ff0-8e29-387685e94cc9" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/fileName" type="endpoint" />
+        <Content type="string">sharpsh.exe</Content>
+      </IndicatorItem>
+      <IndicatorItem id="6de9a1e8-0dc8-40be-b8bd-f37a7ceab4e1" condition="is" preserve-case="false" negate="false">
         <Context document="eventItem" search="eventItem/processEvent/md5" type="endpoint" />
         <Content type="md5">0da1be72e3ca31e9765dd857d748b76f</Content>
       </IndicatorItem>
