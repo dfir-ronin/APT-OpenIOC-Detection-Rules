@@ -14,7 +14,7 @@ https://attack.mitre.org/techniques/T1105/</description>
   <criteria>
     <Indicator operator="OR" id="7fdce117-7167-4107-b3b0-5d8dc4b6eb17">
       <Indicator operator="AND" id="8583dccd-2a0a-481a-8c64-a10a617b889d">
-        <IndicatorItem id="59cd04ea-fdd4-4255-8806-68266eb09b7e" condition="contains" preserve-case="false" negate="false">
+        <IndicatorItem id="59cd04ea-fdd4-4255-8806-68266eb09b7e" condition="is" preserve-case="false" negate="false">
           <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
           <Content type="string">certutil.exe</Content>
         </IndicatorItem>
