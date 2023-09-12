@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="f69f4f50-edec-444c-add2-f8cbb523255b" last-modified="2023-09-07T05:48:59Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>Suspicious file transfer using xcopy (Methodology)</short_description>
+    <description>Adversaries may abuse .lnk files to run cmd scripts that will transfer and execute a dll originating from an inserted container iso to a non-standard location 
+
+Reference:
+https://attack.mitre.org/techniques/T1059/003/</description>
+    <authored_by>dfir-ronin</authored_by>
+    <authored_date>2023-09-07T05:48:59Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="f06a1445-ae93-4689-94be-117858069fc4">
+      <Indicator operator="AND" id="e5b9fabc-5217-4865-a20d-a097ccd8d03b">
+        <IndicatorItem id="a3535338-101e-4baa-adb3-34806773b0a4" condition="is" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+          <Content type="string">xcopy.exe</Content>
+        </IndicatorItem>
+        <IndicatorItem id="f04f907e-7617-4e2d-aa25-edcc768bbd85" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">\Appdata\Local\Temp</Content>
+        </IndicatorItem>
+        <IndicatorItem id="dae84e74-472a-42c1-891e-a8657a0951ee" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">/h</Content>
+        </IndicatorItem>
+        <IndicatorItem id="8dce217c-8008-4942-b056-f08b6eccd672" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">,</Content>
+        </IndicatorItem>
+        <IndicatorItem id="e3c7ee34-f155-4beb-8ba9-704853b66874" condition="is" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/parentProcess" type="endpoint" />
+          <Content type="string">cmd.exe</Content>
+        </IndicatorItem>
+      </Indicator>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>
