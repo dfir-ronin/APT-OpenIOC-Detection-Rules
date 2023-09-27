@@ -27,6 +27,14 @@ MITRE ATT&amp;CK REFERENCE: https://attack.mitre.org/techniques/T1219/</descript
         <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
         <Content type="string">splashtop</Content>
       </IndicatorItem>
+      <IndicatorItem id="20489b82-9b19-4a24-ac32-72a57b3e2cc9" condition="contains" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/fileName" type="endpoint" />
+        <Content type="string">srutility.exe</Content>
+      </IndicatorItem>
+      <IndicatorItem id="fe908019-8c99-480b-b36c-91c268499a92" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+        <Content type="string">srutility.exe</Content>
+      </IndicatorItem>
     </Indicator>
   </criteria>
   <parameters />
