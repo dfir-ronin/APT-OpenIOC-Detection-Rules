@@ -23,6 +23,38 @@ MITRE ATT&amp;CK REFERENCE: https://attack.mitre.org/techniques/T1219/</descript
         <Context document="eventItem" search="eventItem/fileWriteEvent/filePath" type="endpoint" />
         <Content type="string">ProgramData\Atera</Content>
       </IndicatorItem>
+      <IndicatorItem id="edf7b12b-6c41-45c1-8457-43efa040b7e3" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+        <Content type="string">AgentPackageSTRemote.exe</Content>
+      </IndicatorItem>
+      <IndicatorItem id="6164b378-bb51-420f-a90a-9d9bcf5202f3" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+        <Content type="string">AgentPackageHeartbeat.exe</Content>
+      </IndicatorItem>
+      <IndicatorItem id="c3a33fff-538a-4a60-81e3-a997d8075b25" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+        <Content type="string">AgentPackageWindowsUpdate.exe</Content>
+      </IndicatorItem>
+      <IndicatorItem id="f7292dc9-b485-462f-8448-8f44d5073896" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+        <Content type="string">AgentPackageADRemote.exe</Content>
+      </IndicatorItem>
+      <IndicatorItem id="bb79e9ba-ee9f-41c6-a224-a19d8cf93754" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/fileName" type="endpoint" />
+        <Content type="string">AgentPackageWindowsUpdate.exe</Content>
+      </IndicatorItem>
+      <IndicatorItem id="ef4baa5d-da74-4cbb-8f81-a46c87413883" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/fileName" type="endpoint" />
+        <Content type="string">AgentPackageWindowsUpdate.exe</Content>
+      </IndicatorItem>
+      <IndicatorItem id="7ee5e437-f90a-4fcf-9adb-0abe1b57821f" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/fileName" type="endpoint" />
+        <Content type="string">AgentPackageHeartbeat.exe</Content>
+      </IndicatorItem>
+      <IndicatorItem id="a28bb813-aea9-4e63-b762-123b6a58ea59" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/fileName" type="endpoint" />
+        <Content type="string">AgentPackageSTRemote.exe</Content>
+      </IndicatorItem>
     </Indicator>
   </criteria>
   <parameters />
