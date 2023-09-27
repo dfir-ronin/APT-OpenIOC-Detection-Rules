@@ -27,6 +27,18 @@ MITRE ATT&amp;CK REFERENCE: https://attack.mitre.org/techniques/T1219/</descript
         <Context document="eventItem" search="eventItem/fileWriteEvent/fileName" type="endpoint" />
         <Content type="string">ScreenConnect.Service.exe</Content>
       </IndicatorItem>
+      <IndicatorItem id="3f0115eb-1c3d-474a-b227-6c9b0ada3fe0" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/fileName" type="endpoint" />
+        <Content type="string">ScreenConnect.WindowsBackstageShell.exe</Content>
+      </IndicatorItem>
+      <IndicatorItem id="7c89f6de-882b-40a4-9c83-3049623fc987" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/fileName" type="endpoint" />
+        <Content type="string">ScreenConnect.WindowsClient.exe</Content>
+      </IndicatorItem>
+      <IndicatorItem id="f024e46f-d289-40db-99aa-6469a8c569b3" condition="is" preserve-case="false" negate="false">
+        <Context document="eventItem" search="eventItem/fileWriteEvent/fileName" type="endpoint" />
+        <Content type="string">ScreenConnect.ClientService.exe</Content>
+      </IndicatorItem>
       <Indicator operator="AND" id="81020c25-ecab-4298-b564-6d2347246227">
         <IndicatorItem id="4b88ffb0-d624-4540-aba5-4dcd01a9245b" condition="contains" preserve-case="false" negate="false">
           <Context document="eventItem" search="eventItem/fileWriteEvent/fileName" type="endpoint" />
