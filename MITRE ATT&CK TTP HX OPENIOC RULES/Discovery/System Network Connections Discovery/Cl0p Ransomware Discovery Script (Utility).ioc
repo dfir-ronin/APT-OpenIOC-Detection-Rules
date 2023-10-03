@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="29cfaaa9-32bb-4627-910c-4e116b3cc281" last-modified="2023-10-03T10:08:44Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>Cl0p Ransomware Discovery Script (Utility)</short_description>
+    <description>Cl0p Ransomware threat actors found to be utilizing for loops to iterate through text files located in some common malware directory. These files contained the hostname of all workstations and servers within the network environment. The aim of this loop was to execute discovery commands using ping to locate live endpoints and net view to enumerate their open shares. In addition, they used the dir command to test the feasibility of connecting to remote servers within the network through the local administrator’s account.
+
+Reference:
+https://attack.mitre.org/tactics/TA0007/
+https://thedfirreport.com/2023/06/12/a-truly-graceful-wipe-out/</description>
+    <authored_by>dfir-ronin</authored_by>
+    <authored_date>2023-10-03T10:08:44Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="836c3b0c-b8e9-4fb6-9d2b-5aaca539a78d">
+      <Indicator operator="AND" id="e873f215-87a9-429b-94d2-3542272d4763">
+        <IndicatorItem id="9fc36ade-7bf6-4ee3-b7c4-2eac652a7553" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">&gt;&gt;</Content>
+        </IndicatorItem>
+        <IndicatorItem id="bc7124d8-dfa2-4d16-b2c0-dff4d032ca16" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">do net view</Content>
+        </IndicatorItem>
+        <IndicatorItem id="84e51189-ee66-4bcc-8cb0-7db5cb359f7d" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">.txt</Content>
+        </IndicatorItem>
+        <IndicatorItem id="c0cb7899-5f36-490c-9186-8dad69abcbec" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">for /f %i in</Content>
+        </IndicatorItem>
+        <IndicatorItem id="9f31032c-a7a3-4820-8f6c-66438de1de48" condition="is" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+          <Content type="string">cmd.exe</Content>
+        </IndicatorItem>
+      </Indicator>
+      <Indicator operator="AND" id="af66529b-2810-4f04-9a27-bf68a2c98714">
+        <IndicatorItem id="3ae23211-bb01-4f4b-9846-7a830885d43d" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">.txt</Content>
+        </IndicatorItem>
+        <IndicatorItem id="65a4d249-8603-49ce-beae-d5898e700819" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">do dir</Content>
+        </IndicatorItem>
+        <IndicatorItem id="b8550952-4cca-4463-a75f-b616874e6bf6" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">C$</Content>
+        </IndicatorItem>
+        <IndicatorItem id="6a11d34f-00fc-49cf-88c5-a5d9407c9ca4" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">&gt;&gt;</Content>
+        </IndicatorItem>
+        <IndicatorItem id="3bd4f9da-038d-4992-87cd-cf47d80388bc" condition="is" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+          <Content type="string">cmd.exe</Content>
+        </IndicatorItem>
+      </Indicator>
+      <Indicator operator="AND" id="7e74abf5-23f8-469a-bcc0-464828cba4a4">
+        <IndicatorItem id="07a50a55-da70-4c14-9386-7e50f00ffd74" condition="is" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+          <Content type="string">cmd.exe</Content>
+        </IndicatorItem>
+        <IndicatorItem id="6856f311-0a6c-4374-8d2f-a6ad5deb082d" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">.txt</Content>
+        </IndicatorItem>
+        <IndicatorItem id="23711002-7795-4661-9d2c-b786cd08d4fe" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">do ping</Content>
+        </IndicatorItem>
+        <IndicatorItem id="73a1270f-173e-4f96-910f-fdc9cefc103e" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">-n 1</Content>
+        </IndicatorItem>
+        <IndicatorItem id="40f8c4cb-35ca-4330-a2a0-f260e1ef8e6c" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">-v 4</Content>
+        </IndicatorItem>
+        <IndicatorItem id="41378940-d79a-4938-a536-508d21b129a3" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">| find /I "TTL"</Content>
+        </IndicatorItem>
+      </Indicator>
+      <Indicator operator="AND" id="a0dc501f-6c0d-41ae-8326-ccb8fa6bc3c3">
+        <IndicatorItem id="9b923eaf-7c5e-42b1-8cf7-40f6e38c00de" condition="is" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+          <Content type="string">cmd.exe</Content>
+        </IndicatorItem>
+        <IndicatorItem id="0d4e0ba8-01dd-435a-b757-cb399f471a90" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">2&gt;&amp;1 reg query HKEY_USERS\\</Content>
+        </IndicatorItem>
+        <IndicatorItem id="d3ef5f03-cb80-4ba4-b073-b2331ff36240" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">Network</Content>
+        </IndicatorItem>
+      </Indicator>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>
