@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="955992bc-3a6b-4f71-9122-776d9b8464ac" last-modified="2023-10-03T08:31:58Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>Suspicious Powershell Command Obfuscation (Methodology)</short_description>
+    <description>Adversaries may obfuscate content during command execution to impede detection. Command-line obfuscation is a method of making strings and patterns within commands and scripts more difficult to signature and analyze. 
+
+Reference:
+https://attack.mitre.org/techniques/T1027/010/</description>
+    <authored_by>dfir-ronin</authored_by>
+    <authored_date>2023-10-03T08:31:58Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="4978d52c-eed3-4a09-97fc-3f0ac6d2c503">
+      <Indicator operator="AND" id="3e858aa4-7acf-4640-a496-ccccf55e35e1">
+        <IndicatorItem id="3a2d6086-3041-4f15-b6be-b7598752014d" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">join(</Content>
+        </IndicatorItem>
+        <IndicatorItem id="fe5aceeb-e463-4f37-acb6-5a957e4757cf" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">[convert]::ToUInt32</Content>
+        </IndicatorItem>
+        <IndicatorItem id="50c4d154-17a3-4ea3-800f-f22bf5f7aaf6" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">.replace(</Content>
+        </IndicatorItem>
+      </Indicator>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>
