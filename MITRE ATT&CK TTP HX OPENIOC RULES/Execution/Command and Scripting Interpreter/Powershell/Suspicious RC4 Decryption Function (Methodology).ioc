@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenIOC xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="352299ee-9ae2-4832-b9cb-5833a247a628" last-modified="2023-10-03T08:41:39Z" published-date="0001-01-01T00:00:00" xmlns="http://openioc.org/schemas/OpenIOC_1.1">
+  <metadata>
+    <short_description>Suspicious RC4 Decryption Function (Methodology)</short_description>
+    <description>This rule will detect known RC4 Decryption Function names used by FlawedGrace malware.
+
+Reference:
+https://attack.mitre.org/techniques/T1059/001/</description>
+    <authored_by>dfir-ronin</authored_by>
+    <authored_date>2023-10-03T08:41:39Z</authored_date>
+    <links />
+  </metadata>
+  <criteria>
+    <Indicator operator="OR" id="9ce80527-db07-4b45-a329-aff588a33b74">
+      <Indicator operator="AND" id="62c25814-66cf-42d1-8e6a-1826cfca7b39">
+        <IndicatorItem id="57737806-9ac0-4e97-8460-7fedc8566c17" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">ldrbin_rc4</Content>
+        </IndicatorItem>
+        <IndicatorItem id="2704a664-eee1-453f-be44-fdab6a820872" condition="contains" preserve-case="false" negate="false">
+          <Context document="eventItem" search="eventItem/processEvent/processCmdLine" type="endpoint" />
+          <Content type="string">ldrbin_get</Content>
+        </IndicatorItem>
+        <Indicator operator="OR" id="3aba74f2-06bd-4bbb-8054-6d95feaa8895">
+          <IndicatorItem id="02f3e3f2-4be2-4e7b-8884-54cc9889b7af" condition="is" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+            <Content type="string">cmd.exe</Content>
+          </IndicatorItem>
+          <IndicatorItem id="cf2e6290-49e1-4483-9671-b2c32e2fb3dd" condition="is" preserve-case="false" negate="false">
+            <Context document="eventItem" search="eventItem/processEvent/process" type="endpoint" />
+            <Content type="string">powershell.exe</Content>
+          </IndicatorItem>
+        </Indicator>
+      </Indicator>
+    </Indicator>
+  </criteria>
+  <parameters />
+</OpenIOC>
